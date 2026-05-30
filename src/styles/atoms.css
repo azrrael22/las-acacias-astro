@@ -1,0 +1,105 @@
+/* ============================================
+   ATOMS — Las Acacias Coffee Farm
+   ============================================ */
+
+/* --- Reset base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-oscuro);
+  font-family: var(--fuente-cuerpo);  /* heredado por todos los hijos */
+  min-height: 100vh;
+}
+img { display: block; max-width: 100%; }
+address { font-style: normal; }
+
+/* --- .img-circular (átomo compartido: logo header, hero, misión, visión, footer) --- */
+.img-circular {
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- .nav-link --- */
+.nav-link {
+  font-weight: 600;
+  font-size: var(--fs-base);
+  color: var(--color-oscuro);
+  text-decoration: none;
+  text-transform: capitalize;
+  letter-spacing: -0.08px;
+  line-height: 1.45;
+  transition: color var(--transition);
+}
+.nav-link:hover,
+.nav-link.active { color: var(--color-verde); }
+
+/* --- .badge-item --- */
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 500;
+  font-size: var(--fs-base);
+  color: var(--color-medio);
+  letter-spacing: -0.48px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.badge-item img {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* --- .social-link --- */
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-footer-texto);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  text-decoration: none;
+  line-height: normal;
+  padding: var(--space-sm) 0;
+  transition: opacity var(--transition);
+}
+.social-link:hover { opacity: 0.8; }
+.social-link img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* --- .carousel-dot --- */
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-dot-inactivo);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--transition);
+  flex-shrink: 0;
+}
+.carousel-dot.active { background-color: var(--color-medio); }
+.carousel-dot:hover  { background-color: var(--color-oscuro); }
+
+/* --- .cafe-card --- */
+.cafe-card {
+  flex-shrink: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  position: relative;
+}
+.cafe-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

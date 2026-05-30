@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Carousel from '../components/Carousel.astro';
+---
+<BaseLayout title="Las Acacias · Coffee Farm · Salento">
+
+  <!-- ORGANISMO: Hero -->
+  <section class="hero section-inner" id="home">
+    <div class="hero-texto">
+      <p class="hero-ubicacion">Salento · Quindío · 1.850 m.s.n.m</p>
+      <h1 class="hero-titular">
+        <span class="hero-bold">Vive el café</span>
+        <span class="hero-italic">desde la semilla</span>
+        <span class="hero-bold">hasta la taza.</span>
+      </h1>
+      <p class="hero-descripcion">
+        Una finca cafetera familiar en la cordillera central colombiana.
+        Recorre el cultivo, el beneficio y el tueste con nosotros,
+        y llévate a casa un café cosechado y procesado a mano.
+      </p>
+      <div class="badge-group">
+        <span class="badge-item">
+          <img src="https://www.figma.com/api/mcp/asset/18a2ac30-2c77-4d7f-bead-0e6b1c1596a1" alt="" />
+          Proceso 100% manual
+        </span>
+        <span class="badge-item">
+          <img src="https://www.figma.com/api/mcp/asset/29e54957-5306-4b91-b6f7-962fcf658d11" alt="" />
+          Finca familiar
+        </span>
+      </div>
+    </div>
+    <div class="hero-imagen">
+      <img class="img-circular"
+           src="/Imagenes/logo.png"
+           onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
+           alt="Logo Las Acacias Coffee Farm" />
+    </div>
+  </section>
+
+  <!-- ORGANISMO: Carousel -->
+  <Carousel />
+
+  <!-- ORGANISMO: Cómo llegar -->
+  <section class="como-llegar section-inner" id="tour">
+    <h2 class="como-llegar-titulo">Cómo llegar</h2>
+    <p class="como-llegar-subtitulo">Estamos a solo 3.5 km de la plaza de Salento</p>
+    <div class="como-llegar-mapa">
+      <iframe
+        src="https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%ADo,+Colombia&daddr=Las+Acacias+Coffee+Farm,+Palestina,+Salento,+Quind%C3%ADo&output=embed"
+        title="Ruta desde la Plaza de Salento hasta Finca Las Acacias"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <div class="como-llegar-grid">
+      <div class="transport-card">
+        <div class="transport-icon">
+          <img src="https://www.figma.com/api/mcp/asset/deeab38a-57bf-4b03-9686-f201c30e720c" alt="A caballo" />
+        </div>
+        <h3 class="transport-titulo">A caballo</h3>
+        <p class="transport-desc">Una opción de transporte muy atractiva es realizar un recorrido a caballo desde el casco urbano de Salento hasta la finca. Esta experiencia permite disfrutar del paisaje de una manera diferente y relajada, convirtiendo el trayecto en parte de la aventura. Es una alternativa ideal para quienes desean agregar un toque especial y auténtico a su visita.</p>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <img src="https://www.figma.com/api/mcp/asset/eaed6e0b-db55-4325-aefc-e11637d40243" alt="En Jeep" />
+        </div>
+        <h3 class="transport-titulo">En Jeep</h3>
+        <p class="transport-desc">Puedes llegar a la finca en un tradicional Jeep Willys, utilizando un servicio público o privado desde Salento. Estos emblemáticos vehículos de la región tienen capacidad para grupos de hasta 10 personas y ofrecen una experiencia auténtica, permitiendo disfrutar del paisaje cafetero durante el recorrido de una forma cómoda y memorable.</p>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <img src="https://www.figma.com/api/mcp/asset/7d742013-93a9-4b59-b492-7c8fd046e712" alt="Caminando" />
+        </div>
+        <h3 class="transport-titulo">Caminando</h3>
+        <p class="transport-desc">Si disfrutas de la aventura y el contacto con la naturaleza, puedes llegar caminando desde la plaza principal de Salento. La finca se encuentra a solo 3.5 km, en un recorrido de aproximadamente una hora. El trayecto es mayormente en descenso, lo que lo hace cómodo y agradable. Además, es una ruta segura y frecuentada por viajeros de todo el mundo.</p>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <img src="https://www.figma.com/api/mcp/asset/954e698c-6eec-4d05-9a10-48d0a3b40ab3" alt="En carro" />
+        </div>
+        <h3 class="transport-titulo">En carro</h3>
+        <p class="transport-desc">Desde Salento, toma la vía que pasa junto al cementerio y continúa por la misma carretera durante aproximadamente 3 kilómetros, sin tomar desvíos. Nos encontrarás al costado derecho de la vía. Además, el recorrido cuenta con una señalización clara y visible que facilita la llegada a la finca.</p>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

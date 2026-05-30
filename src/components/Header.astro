@@ -1,0 +1,33 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/nuestra-finca', label: 'Nuestra finca' },
+  { href: '/#tour',         label: 'Coffee Tour' },
+  { href: '/#cafe',         label: 'Café de origen' },
+];
+
+function isActive(href: string) {
+  if (href.includes('#')) return false;
+  return pathname === href || pathname === href + '/';
+}
+---
+<header class="site-header">
+  <div class="logo-bloque">
+    <img class="logo-img img-circular"
+         src="/Imagenes/logo.png"
+         onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
+         alt="Logo Las Acacias" />
+    <div class="logo-texto">
+      <span class="logo-nombre">Las Acacias</span>
+      <span class="logo-subtitulo">Coffee Farm - Salento</span>
+    </div>
+  </div>
+  <nav class="nav-menu">
+    {navLinks.map(link => (
+      <a href={link.href} class:list={['nav-link', { active: isActive(link.href) }]}>
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</header>

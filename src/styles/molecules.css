@@ -1,0 +1,133 @@
+/* ============================================
+   MOLECULES — Las Acacias Coffee Farm
+   ============================================ */
+
+/* --- .logo-bloque --- */
+.logo-bloque {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.logo-bloque .logo-img {
+  width: var(--logo-header);
+  height: var(--logo-header);
+  flex-shrink: 0;
+}
+.logo-bloque .logo-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.logo-bloque .logo-nombre {
+  font-family: var(--fuente-display);
+  font-size: var(--fs-2xl);
+  line-height: 1.1;
+  letter-spacing: -1.68px;
+  color: var(--color-medio);
+  white-space: nowrap;
+}
+.logo-bloque .logo-subtitulo {
+  font-weight: 500;
+  font-size: var(--fs-base);
+  line-height: 1.1;
+  letter-spacing: -0.48px;
+  color: var(--color-oscuro);
+  white-space: nowrap;
+}
+
+/* --- .nav-menu --- */
+.nav-menu {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+/* --- .badge-group --- */
+.badge-group {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* --- .transport-card --- */
+.transport-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-md);
+}
+.transport-card .transport-icon {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-sm);
+}
+.transport-card .transport-icon img {
+  max-height: 150px;
+  width: auto;
+  object-fit: contain;
+}
+.transport-card .transport-titulo {
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--color-verde);
+  text-align: center;
+  letter-spacing: -0.84px;
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
+.transport-card .transport-desc {
+  font-weight: 400;
+  font-size: var(--fs-md);
+  color: var(--color-medio);
+  text-align: center;
+  line-height: normal;
+  max-width: 500px;
+}
+
+/* --- .carousel-controls --- */
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--gap-dots);
+  padding: var(--space-sm) 0;
+}
+
+/* --- .footer-brand --- */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.footer-brand .footer-logo {
+  width: var(--logo-footer);
+  height: var(--logo-footer);
+}
+.footer-brand .footer-address {
+  font-size: var(--fs-sm);
+  color: var(--color-footer-texto);
+  line-height: 1.6;
+}
+
+/* --- .footer-col-info --- */
+.footer-col-info { display: flex; flex-direction: column; }
+.footer-col-titulo {
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  color: var(--color-footer-acent);
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+.footer-col-info p {
+  font-size: var(--fs-sm);
+  color: var(--color-footer-texto);
+  line-height: normal;
+  margin-bottom: 4px;
+}
+
+/* --- .footer-telefono (fuente mono para números) --- */
+.footer-telefono {
+  font-family: var(--fuente-mono);
+}

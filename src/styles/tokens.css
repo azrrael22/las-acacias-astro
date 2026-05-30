@@ -1,0 +1,59 @@
+/* ============================================
+   DESIGN TOKENS — Las Acacias Coffee Farm
+   ============================================ */
+:root {
+  /* --- Colores --- */
+  --color-fondo:         #f4ebdd;
+  --color-header:        #8fbfcc;
+  --color-oscuro:        #2a1a0d;   /* también usado como fondo del footer */
+  --color-medio:         #422712;
+  --color-verde:         #385617;
+  --color-blanco:        #ffffff;
+  --color-footer-texto:  #f4ebdd;
+  --color-footer-acent:  #8fbfcc;
+  --color-dot-inactivo:  #c8b8a2;
+
+  /* --- Tipografías --- */
+  --fuente-display:  'Great Vibes', cursive;
+  --fuente-titulo:   'Playfair Display', serif;
+  --fuente-cursiva:  'Cormorant Garamond', serif;
+  --fuente-cuerpo:   'Montserrat', sans-serif;
+  --fuente-mono:     'Inter', sans-serif;
+
+  /* --- Tamaños de fuente --- */
+  --fs-xs:    11px;
+  --fs-sm:    13px;
+  --fs-base:  16px;
+  --fs-md:    20px;
+  --fs-lg:    28px;
+  --fs-xl:    51px;
+  --fs-2xl:   56px;
+  --fs-3xl:   70px;
+  --fs-firma: 22px;
+
+  /* --- Espaciado base --- */
+  --space-xs: 5px;
+  --space-sm: 10px;
+  --space-md: 20px;
+  --space-lg: 40px;
+  --space-xl: 80px;
+
+  /* --- Gaps específicos --- */
+  --gap-carousel:    12px;
+  --gap-dots:         8px;
+  --gap-footer-grid:  9px;
+  --gap-seccion:     90px;
+
+  /* --- Layout --- */
+  --max-width:      1200px;
+  --header-height:  117px;
+  --logo-header:     77px;
+  --logo-hero:      450px;
+  --logo-footer:     90px;
+  --card-width:     280px;
+  --card-height:    300px;
+  --card-radius:     12px;
+
+  /* --- Transiciones --- */
+  --transition: 0.25s ease;
+}
