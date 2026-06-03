@@ -13,7 +13,7 @@ function isActive(href: string) {
 }
 ---
 <header class="site-header">
-  <div class="logo-bloque">
+  <a href="/" class="logo-bloque" aria-label="Las Acacias Coffee Farm — inicio">
     <img class="logo-img img-circular"
          src="/Imagenes/logo.png"
          onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
@@ -22,10 +22,14 @@ function isActive(href: string) {
       <span class="logo-nombre">Las Acacias</span>
       <span class="logo-subtitulo">Coffee Farm - Salento</span>
     </div>
-  </div>
-  <nav class="nav-menu">
+  </a>
+  <nav class="nav-menu" aria-label="Navegación principal">
     {navLinks.map(link => (
-      <a href={link.href} class:list={['nav-link', { active: isActive(link.href) }]}>
+      <a
+        href={link.href}
+        class:list={['nav-link', { active: isActive(link.href) }]}
+        aria-current={isActive(link.href) ? 'page' : undefined}
+      >
         {link.label}
       </a>
     ))}

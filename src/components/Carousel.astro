@@ -8,7 +8,7 @@ const slides = [
   { src: '/Imagenes/Carrucel1/SaveClip.App_633796539_18359922067204659_521136257556392024_n.jpg',  alt: 'Finca Las Acacias' },
 ];
 ---
-<section class="carousel-seccion section-inner" id="cafe">
+<section class="carousel-seccion section-inner" id="cafe" aria-label="Galería de imágenes de la finca">
   <div class="carousel-viewport">
     <div class="carousel-track" id="carouselTrack">
       {slides.map(slide => (
@@ -16,17 +16,18 @@ const slides = [
           <img src={slide.src} alt={slide.alt} />
         </div>
       ))}
-      {/* clones para loop circular seamless */}
+      {/* clones para loop circular seamless — ocultos a lectores de pantalla */}
       {slides.map(slide => (
         <div class="cafe-card" aria-hidden="true">
-          <img src={slide.src} alt={slide.alt} />
+          <img src={slide.src} alt="" />
         </div>
       ))}
     </div>
   </div>
-  <div class="carousel-controls" id="carouselDots">
+  <div class="carousel-controls" id="carouselDots" role="group" aria-label="Controles del carrusel">
     {slides.map((_, i) => (
       <button
+        type="button"
         class:list={['carousel-dot', { active: i === 0 }]}
         data-index={i}
         aria-label={`Foto ${i + 1}`}
