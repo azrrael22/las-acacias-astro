@@ -40,7 +40,7 @@
   grid-template-columns: 1fr auto;
   gap: var(--gap-seccion);
   align-items: center;
-  padding: var(--space-md) 0;
+  /*padding: var(--space-md) 0;*/
 }
 .hero-texto {
   display: flex;
