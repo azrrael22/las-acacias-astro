@@ -129,7 +129,8 @@
   letter-spacing: 0.5px;
   margin-bottom: var(--space-sm);
 }
-.footer-col-info p {
+.footer-col-info p,
+.footer-col-info li {
   font-size: var(--fs-sm);
   color: var(--color-footer-texto);
   line-height: normal;
@@ -138,5 +139,5 @@
 
 /* --- .footer-telefono (fuente mono para números) --- */
 .footer-telefono {
-  font-family: var(--fuente-mono);
+  font-family: var(--fuente-cuerpo);
 }
