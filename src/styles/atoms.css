@@ -47,10 +47,20 @@ address { font-style: normal; }
   line-height: 1.1;
   white-space: nowrap;
 }
-.badge-item img {
+.badge-dot {
   width: 14px;
   height: 14px;
+  border-radius: 50%;
   flex-shrink: 0;
+  border: 1px solid transparent;
+}
+.badge-dot-verde {
+  background-color: var(--color-verde);
+  border-color: var(--color-verde);
+}
+.badge-dot-header {
+  background-color: var(--color-header);
+  border-color: var(--color-header);
 }
 
 /* --- .social-link --- */
