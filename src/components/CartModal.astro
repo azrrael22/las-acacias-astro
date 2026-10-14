@@ -1,0 +1,265 @@
+---
+// Modal del carrito de compras
+---
+
+<div id="cart-modal" class="cart-modal" role="dialog" aria-labelledby="cart-modal-title" aria-hidden="true">
+  <div class="cart-overlay"></div>
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h2 id="cart-modal-title" class="cart-title">Tu Pedido</h2>
+      <button id="cart-close-btn" class="cart-close-btn" type="button" aria-label="Cerrar carrito">
+        ✕
+      </button>
+    </div>
+
+    <div class="cart-body">
+      <!-- Input nombre del cliente -->
+      <div class="cart-customer-section">
+        <label for="customer-name" class="customer-label">Tu nombre:</label>
+        <input 
+          type="text" 
+          id="customer-name" 
+          class="customer-input" 
+          placeholder="Ingresa tu nombre"
+          autocomplete="name"
+        />
+        <p id="customer-name-error" class="error-message" role="alert"></p>
+      </div>
+
+      <!-- Lista de productos -->
+      <div id="cart-items-container" class="cart-items">
+        <!-- Los items se renderizarán dinámicamente aquí -->
+      </div>
+
+      <!-- Mensaje de carrito vacío -->
+      <div id="empty-cart-message" class="empty-cart-message">
+        <p>🛒 Tu carrito está vacío</p>
+        <p class="empty-cart-subtitle">Agrega productos para comenzar tu pedido</p>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="total-label">Total:</span>
+        <span id="cart-total-amount" class="total-amount">$0</span>
+      </div>
+      <button id="checkout-btn" class="checkout-btn" type="button">
+        Enviar pedido por WhatsApp
+      </button>
+      <p id="checkout-error" class="error-message" role="alert"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { 
+    getCart, 
+    getCartTotal, 
+    updateCartItemQuantity, 
+    removeFromCart, 
+    setCustomerName,
+    getCustomerName,
+    CART_UPDATED_EVENT,
+    formatPrice 
+  } from '../scripts/cart';
+
+  // ============================================
+  // ELEMENTOS DEL DOM
+  // ============================================
+
+  const modal = document.getElementById('cart-modal');
+  const overlay = modal?.querySelector('.cart-overlay');
+  const closeBtn = document.getElementById('cart-close-btn');
+  const itemsContainer = document.getElementById('cart-items-container');
+  const emptyMessage = document.getElementById('empty-cart-message');
+  const totalAmountEl = document.getElementById('cart-total-amount');
+  const customerNameInput = document.getElementById('customer-name') as HTMLInputElement;
+  const customerNameError = document.getElementById('customer-name-error');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const checkoutError = document.getElementById('checkout-error');
+
+  // ============================================
+  // FUNCIONES DE UI
+  // ============================================
+
+  function openModal() {
+    if (modal) {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      renderCart();
+      
+      // Cargar nombre guardado
+      if (customerNameInput) {
+        customerNameInput.value = getCustomerName();
+      }
+    }
+  }
+
+  function closeModal() {
+    if (modal) {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      
+      // Limpiar errores
+      if (customerNameError) customerNameError.textContent = '';
+      if (checkoutError) checkoutError.textContent = '';
+    }
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    
+    if (!itemsContainer || !emptyMessage || !totalAmountEl) return;
+
+    // Mostrar/ocultar mensaje de carrito vacío
+    if (cart.items.length === 0) {
+      itemsContainer.style.display = 'none';
+      emptyMessage.style.display = 'block';
+    } else {
+      itemsContainer.style.display = 'block';
+      emptyMessage.style.display = 'none';
+    }
+
+    // Renderizar items
+    itemsContainer.innerHTML = cart.items.map(item => {
+      if (!item.product) return '';
+      
+      const subtotal = item.product.precio * item.quantity;
+      
+      return `
+        <div class="cart-item" data-product-id="${item.productId}">
+          <div class="cart-item-info">
+            <h3 class="cart-item-name">${item.product.nombre}</h3>
+            <p class="cart-item-meta">${item.product.tipo} · ${item.product.peso}</p>
+            <p class="cart-item-price">${formatPrice(item.product.precio)} c/u</p>
+          </div>
+          <div class="cart-item-controls">
+            <div class="quantity-controls">
+              <button class="qty-btn qty-decrease" data-product-id="${item.productId}" aria-label="Disminuir cantidad">−</button>
+              <span class="qty-display">${item.quantity}</span>
+              <button class="qty-btn qty-increase" data-product-id="${item.productId}" aria-label="Aumentar cantidad">+</button>
+            </div>
+            <p class="cart-item-subtotal">${formatPrice(subtotal)}</p>
+            <button class="cart-item-remove" data-product-id="${item.productId}" aria-label="Eliminar ${item.product.nombre}">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Actualizar total
+    totalAmountEl.textContent = formatPrice(getCartTotal());
+
+    // Agregar event listeners a los controles
+    addCartItemListeners();
+  }
+
+  function addCartItemListeners() {
+    // Botones de cantidad
+    document.querySelectorAll('.qty-decrease').forEach(btn => {
+      btn.addEventListener('click', function(this: HTMLButtonElement) {
+        const productId = this.dataset.productId;
+        if (!productId) return;
+        
+        const cart = getCart();
+        const item = cart.items.find(i => i.productId === productId);
+        if (item) {
+          updateCartItemQuantity(productId, item.quantity - 1);
+        }
+      });
+    });
+
+    document.querySelectorAll('.qty-increase').forEach(btn => {
+      btn.addEventListener('click', function(this: HTMLButtonElement) {
+        const productId = this.dataset.productId;
+        if (!productId) return;
+        
+        const cart = getCart();
+        const item = cart.items.find(i => i.productId === productId);
+        if (item) {
+          updateCartItemQuantity(productId, item.quantity + 1);
+        }
+      });
+    });
+
+    // Botones de eliminar
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+      btn.addEventListener('click', function(this: HTMLButtonElement) {
+        const productId = this.dataset.productId;
+        if (productId) {
+          removeFromCart(productId);
+        }
+      });
+    });
+  }
+
+  // ============================================
+  // EVENT LISTENERS
+  // ============================================
+
+  // Abrir modal
+  window.addEventListener('cart:open', openModal);
+
+  // Cerrar modal
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', closeModal);
+
+  // Cerrar con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('open')) {
+      closeModal();
+    }
+  });
+
+  // Actualizar carrito cuando cambia
+  window.addEventListener(CART_UPDATED_EVENT, () => {
+    if (modal?.classList.contains('open')) {
+      renderCart();
+    }
+  });
+
+  // Guardar nombre del cliente
+  customerNameInput?.addEventListener('input', function(this: HTMLInputElement) {
+    setCustomerName(this.value);
+    // Limpiar error al escribir
+    if (customerNameError) customerNameError.textContent = '';
+  });
+
+  // Botón de checkout
+  checkoutBtn?.addEventListener('click', () => {
+    const cart = getCart();
+    const customerName = customerNameInput?.value.trim() || '';
+
+    // Limpiar errores previos
+    if (customerNameError) customerNameError.textContent = '';
+    if (checkoutError) checkoutError.textContent = '';
+
+    // Validaciones
+    let hasError = false;
+
+    if (!customerName) {
+      if (customerNameError) {
+        customerNameError.textContent = '⚠️ Por favor ingresa tu nombre';
+      }
+      hasError = true;
+    }
+
+    if (cart.items.length === 0) {
+      if (checkoutError) {
+        checkoutError.textContent = '⚠️ Tu carrito está vacío';
+      }
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Guardar nombre y disparar evento para abrir modal de WhatsApp
+    setCustomerName(customerName);
+    window.dispatchEvent(new CustomEvent('cart:checkout', { 
+      detail: { customerName } 
+    }));
+  });
+</script>

@@ -141,3 +141,120 @@
 .footer-telefono {
   font-family: var(--fuente-cuerpo);
 }
+
+/* --- .product-card --- */
+.product-card {
+  background-color: var(--color-blanco);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(42, 26, 13, 0.1);
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(42, 26, 13, 0.15);
+}
+.product-image {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background-color: var(--color-header);
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-badge {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background-color: var(--color-verde);
+  color: var(--color-blanco);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.product-info {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;
+}
+.product-name {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--color-oscuro);
+  line-height: 1.2;
+  margin: 0;
+}
+.product-meta {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.product-type,
+.product-weight {
+  font-size: var(--fs-sm);
+  color: var(--color-medio);
+  font-weight: 500;
+}
+.product-description {
+  font-size: var(--fs-sm);
+  color: var(--color-medio);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+.product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+.product-price {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--color-verde);
+}
+.btn-add-to-cart {
+  background-color: var(--color-verde);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 8px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--fuente-cuerpo);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition), transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-add-to-cart:hover {
+  background-color: #2d4512;
+}
+.btn-add-to-cart:active {
+  transform: scale(0.95);
+}
+.btn-add-to-cart.added {
+  background-color: var(--color-header);
+  animation: pulse 0.3s ease;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}

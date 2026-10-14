@@ -1,0 +1,67 @@
+---
+import type { Product } from '../data/products';
+import { formatPrice } from '../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const priceFormatted = formatPrice(product.precio);
+---
+
+<article class="product-card" data-product-id={product.id}>
+  <div class="product-image">
+    <img src={product.imagen} alt={`${product.nombre} - ${product.tipo}`} />
+    <span class="product-badge">{product.proceso}</span>
+  </div>
+  <div class="product-info">
+    <h3 class="product-name">{product.nombre}</h3>
+    <div class="product-meta">
+      <span class="product-type">{product.tipo === 'molido' ? '☕ Molido' : '🫘 Grano'}</span>
+      <span class="product-weight">{product.peso}</span>
+    </div>
+    {product.descripcion && (
+      <p class="product-description">{product.descripcion}</p>
+    )}
+    <div class="product-footer">
+      <span class="product-price">{priceFormatted}</span>
+      <button class="btn-add-to-cart" type="button" aria-label={`Agregar ${product.nombre} al carrito`}>
+        <span class="btn-text">Agregar</span>
+        <span class="btn-icon">🛒</span>
+      </button>
+    </div>
+  </div>
+</article>
+
+<script>
+  import { addToCart } from '../scripts/cart';
+
+  // Este script se ejecuta para cada instancia del componente ProductCard
+  const buttons = document.querySelectorAll('.btn-add-to-cart');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function(this: HTMLButtonElement) {
+      const card = this.closest('.product-card') as HTMLElement;
+      const productId = card?.dataset.productId;
+      
+      if (!productId) return;
+
+      // Agregar al carrito
+      addToCart(productId, 1);
+
+      // Feedback visual
+      this.classList.add('added');
+      const originalText = this.querySelector('.btn-text');
+      if (originalText) {
+        const originalContent = originalText.textContent;
+        originalText.textContent = '✓ Agregado';
+        
+        setTimeout(() => {
+          originalText.textContent = originalContent;
+          this.classList.remove('added');
+        }, 1500);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,132 @@
+---
+// Componente del botón flotante del carrito
+---
+
+<button 
+  id="floating-cart-btn" 
+  class="floating-cart-btn" 
+  type="button"
+  aria-label="Abrir carrito de compras"
+>
+  <span class="cart-icon">🛒</span>
+  <span id="cart-badge" class="cart-badge" aria-live="polite">0</span>
+</button>
+
+<style>
+  .floating-cart-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-verde);
+    border: none;
+    box-shadow: 0 4px 16px rgba(42, 26, 13, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition: transform var(--transition), box-shadow var(--transition);
+    position: relative;
+  }
+
+  .floating-cart-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(42, 26, 13, 0.4);
+  }
+
+  .floating-cart-btn:active {
+    transform: scale(0.95);
+  }
+
+  .cart-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #d32f2f;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    border: 2px solid var(--color-fondo);
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .cart-badge.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .cart-badge.pulse {
+    animation: badgePulse 0.4s ease;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .floating-cart-btn {
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+    }
+    
+    .cart-icon {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<script>
+  import { getCartCount, CART_UPDATED_EVENT } from '../scripts/cart';
+
+  // Obtener elementos del DOM
+  const cartButton = document.getElementById('floating-cart-btn');
+  const cartBadge = document.getElementById('cart-badge');
+
+  if (cartButton && cartBadge) {
+    // Función para actualizar el badge
+    function updateCartBadge() {
+      const count = getCartCount();
+      cartBadge.textContent = count.toString();
+      
+      if (count > 0) {
+        cartBadge.classList.add('visible', 'pulse');
+        setTimeout(() => cartBadge.classList.remove('pulse'), 400);
+      } else {
+        cartBadge.classList.remove('visible');
+      }
+    }
+
+    // Actualizar badge al cargar la página
+    updateCartBadge();
+
+    // Escuchar cambios en el carrito
+    window.addEventListener(CART_UPDATED_EVENT, updateCartBadge);
+
+    // Abrir modal del carrito al hacer click
+    cartButton.addEventListener('click', () => {
+      // Este evento será escuchado por el CartModal
+      window.dispatchEvent(new CustomEvent('cart:open'));
+    });
+  }
+</script>
