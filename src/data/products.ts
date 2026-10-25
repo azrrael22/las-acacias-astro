@@ -39,8 +39,8 @@ export const products: Product[] = [
     peso: '500g',
     tipo: 'molido',
     proceso: 'lavado',
-    precio: 35000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/500g.jpg',
+    precio: 38000, // ← EDITAR PRECIO AQUÍ
+    imagen: '/Imagenes/Productos/500.webp',
     descripcion: 'Café lavado molido, ideal para métodos de filtrado y cafetera italiana.'
   },
   {
@@ -49,8 +49,8 @@ export const products: Product[] = [
     peso: '500g',
     tipo: 'grano',
     proceso: 'lavado',
-    precio: 35000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/500g.jpg',
+    precio: 38000, // ← EDITAR PRECIO AQUÍ
+    imagen: '/Imagenes/Productos/500.webp',
     descripcion: 'Café lavado en grano entero, perfecto para moler en casa y disfrutar fresco.'
   },
   {
@@ -59,8 +59,8 @@ export const products: Product[] = [
     peso: '250g',
     tipo: 'molido',
     proceso: 'lavado',
-    precio: 20000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/250g.jpg',
+    precio: 23000, // ← EDITAR PRECIO AQUÍ
+    imagen: '/Imagenes/Productos/250.webp',
     descripcion: 'Presentación mediana ideal para probar nuestro café lavado molido.'
   },
   {
@@ -69,8 +69,8 @@ export const products: Product[] = [
     peso: '250g',
     tipo: 'grano',
     proceso: 'lavado',
-    precio: 20000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/250g.jpg',
+    precio: 23000, // ← EDITAR PRECIO AQUÍ
+    imagen: '/Imagenes/Productos/250.webp',
     descripcion: 'Presentación mediana de café lavado en grano entero.'
   },
   {
@@ -80,7 +80,7 @@ export const products: Product[] = [
     tipo: 'molido',
     proceso: 'lavado',
     precio: 12000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/125g.jpg',
+    imagen: '/Imagenes/Productos/125.webp',
     descripcion: 'Presentación pequeña perfecta como recuerdo o para probar por primera vez.'
   },
   {
@@ -90,7 +90,7 @@ export const products: Product[] = [
     tipo: 'grano',
     proceso: 'lavado',
     precio: 12000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/125g.jpg',
+    imagen: '/Imagenes/Productos/125.webp',
     descripcion: 'Muestra de café lavado en grano, ideal para llevar de recuerdo.'
   },
   {
@@ -100,7 +100,7 @@ export const products: Product[] = [
     tipo: 'grano',
     proceso: 'natural',
     precio: 22000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/250g.jpg',
+    imagen: '/Imagenes/Productos/250.webp',
     descripcion: 'Café de proceso natural con notas afrutadas y dulces, en grano entero.'
   },
   {
@@ -110,7 +110,7 @@ export const products: Product[] = [
     tipo: 'molido',
     proceso: 'lavado',
     precio: 120000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/5libras.jpg',
+    imagen: '/Imagenes/Productos/5libras.webp',
     descripcion: 'Presentación grande de café lavado molido, ideal para familias o negocios.'
   },
   {
@@ -120,7 +120,7 @@ export const products: Product[] = [
     tipo: 'grano',
     proceso: 'lavado',
     precio: 120000, // ← EDITAR PRECIO AQUÍ
-    imagen: '/Imagenes/Productos/5libras.jpg',
+    imagen: '/Imagenes/Productos/5libras.webp',
     descripcion: 'Presentación grande de café lavado en grano, para los verdaderos amantes del café.'
   },
 ];
