@@ -80,15 +80,34 @@ Actualmente hay 4 imágenes placeholder:
 - `500g.jpg` - Para productos de 500g
 - `5libras.jpg` - Para productos de 5 libras
 
-**Para reemplazar una imagen:**
-1. Guarda tu nueva imagen con el mismo nombre (ejemplo: `500g.jpg`)
-2. Colócala en la carpeta `public/Imagenes/Productos/`
-3. La imagen se actualizará automáticamente
+#### **📐 Tamaño Ideal de Imágenes:**
 
-**Formatos recomendados:**
-- JPG, PNG, o WebP
-- Tamaño recomendado: 400x400px (cuadrada)
-- Peso máximo: 200KB por imagen
+**Dimensiones recomendadas:**
+- **Ancho:** 500px
+- **Alto:** 500px
+- **Formato:** Cuadrado (1:1)
+
+**Especificaciones técnicas:**
+```
+Tamaño:  500px × 500px (o 400px × 400px mínimo)
+Formato: JPG o WebP
+Peso:    50KB - 150KB máximo
+Fondo:   Beige (#f4ebdd) o blanco
+Producto: Centrado, ocupando 70-80% del espacio
+```
+
+#### **¿Por qué estas dimensiones?**
+- El contenedor de imagen mide 240px de altura
+- Con padding interno, el área útil es ~200px
+- Una imagen cuadrada de 500×500px se escala perfectamente
+- `object-fit: contain` muestra la imagen completa sin recortes
+
+**Para reemplazar una imagen:**
+1. Prepara tu imagen en 500px × 500px (cuadrada)
+2. Comprímela a menos de 150KB (usa [TinyPNG.com](https://tinypng.com))
+3. Guárdala con el nombre correcto (ejemplo: `500g.jpg`)
+4. Colócala en la carpeta `public/Imagenes/Productos/`
+5. La imagen se actualizará automáticamente
 
 **Para usar imágenes diferentes por producto:**
 1. Agrega nuevas imágenes en `public/Imagenes/Productos/`
@@ -96,6 +115,8 @@ Actualmente hay 4 imágenes placeholder:
 ```typescript
 imagen: '/Imagenes/Productos/nombre-de-tu-imagen.jpg'
 ```
+
+📖 **Para más detalles sobre imágenes, consulta:** `GUIA-IMAGENES-PRODUCTOS.md`
 
 ---
 
