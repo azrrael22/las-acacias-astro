@@ -7,11 +7,11 @@ import Carousel from '../components/Carousel.astro';
   <!-- ORGANISMO: Hero -->
   <section class="hero section-inner" id="home">
     <div class="hero-texto">
-      <p class="hero-ubicacion">Salento · Quindío · 1.850 m.s.n.m</p>
+      <p class="hero-ubicacion">Salento · Quindío · 1.850 m s. n. m.</p>
       <h1 class="hero-titular">
         <span class="hero-bold">Vive el café</span>
         <span class="hero-italic">desde la semilla</span>
-        <span class="hero-bold">hasta la taza.</span>
+        <span class="hero-bold">hasta la taza</span>
       </h1>
       <p class="hero-descripcion">
         Una finca cafetera familiar en la cordillera central colombiana.
@@ -30,10 +30,11 @@ import Carousel from '../components/Carousel.astro';
       </div>
     </div>
     <div class="hero-imagen">
-      <img class="img-circular"
-           src="/Imagenes/logo.png"
-           onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
-           alt="Logo Las Acacias Coffee Farm" />
+      <img src="/Imagenes/Carrucel1/1.webp"
+           width="1080" height="1440"
+           fetchpriority="high"
+           decoding="async"
+           alt="Visitante recolectando café con un canasto entre los cafetos de la finca" />
     </div>
   </section>
 
@@ -43,7 +44,7 @@ import Carousel from '../components/Carousel.astro';
   <!-- ORGANISMO: Cómo llegar -->
   <section class="como-llegar section-inner" id="tour">
     <h2 class="como-llegar-titulo">Cómo llegar</h2>
-    <p class="como-llegar-subtitulo">Estamos a solo 3.5 km de la plaza de Salento</p>
+    <p class="como-llegar-subtitulo">Estamos a solo 3,5 km de la plaza de Salento</p>
     <div class="como-llegar-mapa">
       <iframe
         src="https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%ADo,+Colombia&daddr=Las+Acacias+Coffee+Farm,+Palestina,+Salento,+Quind%C3%ADo&output=embed"
@@ -55,40 +56,24 @@ import Carousel from '../components/Carousel.astro';
     </div>
     <div class="como-llegar-grid">
       <article class="transport-card">
-        <h3 class="transport-header">A caballo</h3>
-        <div class="transport-body">
-          <div class="transport-icon">
-            <img src="/Imagenes/Llegada/caballo_1.png" alt="Ícono de caballo" />
-          </div>
-          <p class="transport-desc">Una opción de transporte muy atractiva es realizar un recorrido a caballo desde el casco urbano de Salento hasta la finca. Esta experiencia permite disfrutar del paisaje de una manera diferente y relajada, convirtiendo el trayecto en parte de la aventura. Es una alternativa ideal para quienes desean agregar un toque especial y auténtico a su visita.</p>
-        </div>
+        <img class="transport-icon" src="/Imagenes/Llegada/caballo_1.png" width="64" height="64" loading="lazy" alt="" />
+        <h3 class="transport-titulo">A caballo</h3>
+        <p class="transport-desc">Una opción de transporte muy atractiva es realizar un recorrido a caballo desde el casco urbano de Salento hasta la finca. Esta experiencia permite disfrutar del paisaje de una manera diferente y relajada, convirtiendo el trayecto en parte de la aventura. Es una alternativa ideal para quienes desean agregar un toque especial y auténtico a su visita.</p>
       </article>
       <article class="transport-card">
-        <h3 class="transport-header">En Jeep</h3>
-        <div class="transport-body">
-          <div class="transport-icon">
-            <img src="/Imagenes/Llegada/Jeep_4.png" alt="Ícono de Jeep Willys" />
-          </div>
-          <p class="transport-desc">Puedes llegar a la finca en un tradicional Jeep Willys, utilizando un servicio público o privado desde Salento. Estos emblemáticos vehículos de la región tienen capacidad para grupos de hasta 10 personas y ofrecen una experiencia auténtica, permitiendo disfrutar del paisaje cafetero durante el recorrido de una forma cómoda y memorable.</p>
-        </div>
+        <img class="transport-icon" src="/Imagenes/Llegada/Jeep_4.png" width="64" height="64" loading="lazy" alt="" />
+        <h3 class="transport-titulo">En Jeep</h3>
+        <p class="transport-desc">Puedes llegar a la finca en un tradicional Jeep Willys, utilizando un servicio público o privado desde Salento. Estos emblemáticos vehículos de la región tienen capacidad para grupos de hasta 10 personas y ofrecen una experiencia auténtica, permitiendo disfrutar del paisaje cafetero durante el recorrido de una forma cómoda y memorable.</p>
       </article>
       <article class="transport-card">
-        <h3 class="transport-header">Caminando</h3>
-        <div class="transport-body">
-          <div class="transport-icon">
-            <img src="/Imagenes/Llegada/caminando.png" alt="Ícono de persona caminando" />
-          </div>
-          <p class="transport-desc">Si disfrutas de la aventura y el contacto con la naturaleza, puedes llegar caminando desde la plaza principal de Salento. La finca se encuentra a solo 3.5 km, en un recorrido de aproximadamente una hora. El trayecto es mayormente en descenso, lo que lo hace cómodo y agradable. Además, es una ruta segura y frecuentada por viajeros de todo el mundo.</p>
-        </div>
+        <img class="transport-icon" src="/Imagenes/Llegada/caminando.png" width="64" height="64" loading="lazy" alt="" />
+        <h3 class="transport-titulo">Caminando</h3>
+        <p class="transport-desc">Si disfrutas de la aventura y el contacto con la naturaleza, puedes llegar caminando desde la plaza principal de Salento. La finca se encuentra a solo 3,5 km, en un recorrido de aproximadamente una hora. El trayecto es mayormente en descenso, lo que lo hace cómodo y agradable. Además, es una ruta segura y frecuentada por viajeros de todo el mundo.</p>
       </article>
       <article class="transport-card">
-        <h3 class="transport-header">En carro</h3>
-        <div class="transport-body">
-          <div class="transport-icon">
-            <img src="/Imagenes/Llegada/carro.png" alt="Ícono de carro" />
-          </div>
-          <p class="transport-desc">Desde Salento, toma la vía que pasa junto al cementerio y continúa por la misma carretera durante aproximadamente 3 kilómetros, sin tomar desvíos. Nos encontrarás al costado derecho de la vía. Además, el recorrido cuenta con una señalización clara y visible que facilita la llegada a la finca.</p>
-        </div>
+        <img class="transport-icon" src="/Imagenes/Llegada/carro.png" width="64" height="64" loading="lazy" alt="" />
+        <h3 class="transport-titulo">En carro</h3>
+        <p class="transport-desc">Desde Salento, toma la vía que pasa junto al cementerio y continúa por la misma carretera durante aproximadamente 3 kilómetros, sin tomar desvíos. Nos encontrarás al costado derecho de la vía. Además, el recorrido cuenta con una señalización clara y visible que facilita la llegada a la finca.</p>
       </article>
     </div>
   </section>

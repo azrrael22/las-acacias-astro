@@ -4,24 +4,25 @@ import ProductCard from '../components/ProductCard.astro';
 import FloatingCartButton from '../components/FloatingCartButton.astro';
 import CartModal from '../components/CartModal.astro';
 import WhatsAppModal from '../components/WhatsAppModal.astro';
+import Icon from '../components/Icon.astro';
 import { products } from '../data/products';
 
-const title = 'Café de Origen · Las Acacias Coffee Farm · Salento';
+const title = 'Café de origen · Las Acacias Coffee Farm · Salento';
 const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Quindío. Disponible en grano y molido, diferentes presentaciones. Envíos a toda Colombia.';
 ---
 
 <BaseLayout title={title} description={description}>
-  
+
   <!-- ORGANISMO: Hero de la Tienda -->
   <section class="tienda-hero section-inner" id="tienda">
     <div class="tienda-hero-content">
       <h1 class="tienda-titulo">
-        <span class="tienda-bold">Café de Origen</span>
+        <span class="tienda-bold">Café de origen</span>
         <span class="tienda-italic">Las Acacias</span>
       </h1>
       <p class="tienda-descripcion">
-        Nuestro café es 100% artesanal, cultivado y procesado a mano en nuestra finca familiar 
-        en Salento, Quindío. Cada bolsa representa el trabajo dedicado de varias generaciones 
+        Nuestro café es 100% artesanal, cultivado y procesado a mano en nuestra finca familiar
+        en Salento, Quindío. Cada bolsa representa el trabajo dedicado de varias generaciones
         y el amor por el café colombiano de altura.
       </p>
       <div class="badge-group">
@@ -35,14 +36,15 @@ const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Q
         </span>
       </div>
       <p class="tienda-nota">
-        📦 <strong>Envíos a toda Colombia</strong> · Coordinaremos los detalles de entrega por WhatsApp
+        <Icon name="truck" size={16} />
+        Coordinamos la entrega por WhatsApp
       </p>
     </div>
   </section>
 
   <!-- ORGANISMO: Grid de Productos -->
   <section class="productos-seccion section-inner">
-    <h2 class="productos-seccion-titulo">Nuestros Productos</h2>
+    <h2 class="productos-seccion-titulo">Nuestros productos</h2>
     <div class="productos-grid">
       {products.map(product => (
         <ProductCard product={product} />

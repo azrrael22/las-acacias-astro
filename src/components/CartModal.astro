@@ -1,49 +1,51 @@
 ---
-// Modal del carrito de compras
+// Modal del carrito de compras (estilos en organisms.css)
+import Icon from './Icon.astro';
 ---
 
-<div id="cart-modal" class="cart-modal" role="dialog" aria-labelledby="cart-modal-title" aria-hidden="true">
+<div id="cart-modal" class="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title" aria-hidden="true">
   <div class="cart-overlay"></div>
   <div class="cart-panel">
     <div class="cart-header">
-      <h2 id="cart-modal-title" class="cart-title">Tu Pedido</h2>
-      <button id="cart-close-btn" class="cart-close-btn" type="button" aria-label="Cerrar carrito">
-        ✕
+      <h2 id="cart-modal-title" class="cart-title">Tu pedido</h2>
+      <button id="cart-close-btn" class="btn-icono cart-close-btn" type="button" aria-label="Cerrar carrito">
+        <Icon name="x" />
       </button>
     </div>
 
     <div class="cart-body">
-      <!-- Input nombre del cliente -->
+      <!-- Nombre del cliente -->
       <div class="cart-customer-section">
-        <label for="customer-name" class="customer-label">Tu nombre:</label>
-        <input 
-          type="text" 
-          id="customer-name" 
-          class="customer-input" 
-          placeholder="Ingresa tu nombre"
+        <label for="customer-name" class="customer-label">Tu nombre</label>
+        <input
+          type="text"
+          id="customer-name"
+          class="customer-input"
+          placeholder="Nombre y apellido"
           autocomplete="name"
+          aria-describedby="customer-name-error"
         />
         <p id="customer-name-error" class="error-message" role="alert"></p>
       </div>
 
-      <!-- Lista de productos -->
-      <div id="cart-items-container" class="cart-items">
-        <!-- Los items se renderizarán dinámicamente aquí -->
-      </div>
+      <!-- Lista de productos (se renderiza en el cliente) -->
+      <div id="cart-items-container" class="cart-items"></div>
 
-      <!-- Mensaje de carrito vacío -->
+      <!-- Carrito vacío -->
       <div id="empty-cart-message" class="empty-cart-message">
-        <p>🛒 Tu carrito está vacío</p>
+        <Icon name="shopping-bag" size={24} />
+        <p class="empty-cart-titulo">Tu carrito está vacío</p>
         <p class="empty-cart-subtitle">Agrega productos para comenzar tu pedido</p>
       </div>
     </div>
 
     <div class="cart-footer">
       <div class="cart-total">
-        <span class="total-label">Total:</span>
+        <span class="total-label">Total</span>
         <span id="cart-total-amount" class="total-amount">$0</span>
       </div>
-      <button id="checkout-btn" class="checkout-btn" type="button">
+      <button id="checkout-btn" class="btn btn-primario btn-lg checkout-btn" type="button">
+        <Icon name="send" />
         Enviar pedido por WhatsApp
       </button>
       <p id="checkout-error" class="error-message" role="alert"></p>
@@ -62,6 +64,7 @@
     CART_UPDATED_EVENT,
     formatPrice 
   } from '../scripts/cart';
+  import { iconSvg } from '../scripts/icons';
 
   // ============================================
   // ELEMENTOS DEL DOM
@@ -103,9 +106,15 @@
       document.body.style.overflow = '';
       
       // Limpiar errores
-      if (customerNameError) customerNameError.textContent = '';
-      if (checkoutError) checkoutError.textContent = '';
+      clearErrors();
     }
+  }
+
+  function clearErrors() {
+    if (customerNameError) customerNameError.textContent = '';
+    if (checkoutError) checkoutError.textContent = '';
+    customerNameInput?.classList.remove('error');
+    customerNameInput?.removeAttribute('aria-invalid');
   }
 
   function renderCart() {
@@ -114,38 +123,33 @@
     if (!itemsContainer || !emptyMessage || !totalAmountEl) return;
 
     // Mostrar/ocultar mensaje de carrito vacío
-    if (cart.items.length === 0) {
-      itemsContainer.style.display = 'none';
-      emptyMessage.style.display = 'block';
-    } else {
-      itemsContainer.style.display = 'block';
-      emptyMessage.style.display = 'none';
-    }
+    const isEmpty = cart.items.length === 0;
+    itemsContainer.style.display = isEmpty ? 'none' : '';
+    emptyMessage.style.display = isEmpty ? '' : 'none';
 
     // Renderizar items
     itemsContainer.innerHTML = cart.items.map(item => {
       if (!item.product) return '';
-      
-      const subtotal = item.product.precio * item.quantity;
-      
+
+      const { nombre, tipo, precio } = item.product;
+      const tipoLabel = tipo === 'molido' ? 'Molido' : 'Grano';
+      const subtotal = precio * item.quantity;
+
       return `
         <div class="cart-item" data-product-id="${item.productId}">
           <div class="cart-item-info">
-            <h3 class="cart-item-name">${item.product.nombre}</h3>
-            <p class="cart-item-meta">${item.product.tipo} · ${item.product.peso}</p>
-            <p class="cart-item-price">${formatPrice(item.product.precio)} c/u</p>
+            <h3 class="cart-item-name">${nombre}</h3>
+            <p class="cart-item-meta">${tipoLabel} · ${formatPrice(precio)} c/u</p>
           </div>
+          <p class="cart-item-subtotal">${formatPrice(subtotal)}</p>
           <div class="cart-item-controls">
             <div class="quantity-controls">
-              <button class="qty-btn qty-decrease" data-product-id="${item.productId}" aria-label="Disminuir cantidad">−</button>
-              <span class="qty-display">${item.quantity}</span>
-              <button class="qty-btn qty-increase" data-product-id="${item.productId}" aria-label="Aumentar cantidad">+</button>
+              <button class="qty-btn qty-decrease" type="button" data-product-id="${item.productId}" aria-label="Quitar uno de ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('minus', 16)}</button>
+              <span class="qty-display" aria-label="Cantidad">${item.quantity}</span>
+              <button class="qty-btn qty-increase" type="button" data-product-id="${item.productId}" aria-label="Agregar uno de ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('plus', 16)}</button>
             </div>
-            <p class="cart-item-subtotal">${formatPrice(subtotal)}</p>
-            <button class="cart-item-remove" data-product-id="${item.productId}" aria-label="Eliminar ${item.product.nombre}">
-              🗑️
-            </button>
           </div>
+          <button class="btn-icono btn-icono-sm cart-item-remove" type="button" data-product-id="${item.productId}" aria-label="Eliminar ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('trash-2', 16)}</button>
         </div>
       `;
     }).join('');
@@ -226,6 +230,8 @@
     setCustomerName(this.value);
     // Limpiar error al escribir
     if (customerNameError) customerNameError.textContent = '';
+    this.classList.remove('error');
+    this.removeAttribute('aria-invalid');
   });
 
   // Botón de checkout
@@ -234,22 +240,23 @@
     const customerName = customerNameInput?.value.trim() || '';
 
     // Limpiar errores previos
-    if (customerNameError) customerNameError.textContent = '';
-    if (checkoutError) checkoutError.textContent = '';
+    clearErrors();
 
     // Validaciones
     let hasError = false;
 
     if (!customerName) {
       if (customerNameError) {
-        customerNameError.textContent = '⚠️ Por favor ingresa tu nombre';
+        customerNameError.textContent = 'Escribe tu nombre para enviar el pedido';
       }
+      customerNameInput?.classList.add('error');
+      customerNameInput?.setAttribute('aria-invalid', 'true');
       hasError = true;
     }
 
     if (cart.items.length === 0) {
       if (checkoutError) {
-        checkoutError.textContent = '⚠️ Tu carrito está vacío';
+        checkoutError.textContent = 'Tu carrito está vacío';
       }
       hasError = true;
     }

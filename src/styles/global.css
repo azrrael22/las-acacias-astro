@@ -13,20 +13,20 @@
   .mision,
   .vision {
     grid-template-columns: 1fr;
-    gap: var(--space-lg);
-    text-align: center;
+    gap: var(--space-2xl);
   }
   .vision .mv-texto { order: 1; }
   .vision .mv-imagen { order: 2; }
-  .hero-imagen,
-  .mv-imagen { display: flex; justify-content: center; }
-  .hero-imagen img,
-  .mv-imagen img { width: 300px; height: 300px; }
-  .hero-texto { max-width: 100%; }
-  .hero-ubicacion,
-  .hero-titular { text-align: left; }
-  .badge-group { justify-content: flex-start; }
-  .como-llegar-grid { grid-template-columns: 1fr; }
+  .hero-texto { max-width: 36rem; }
+  .hero-imagen { justify-content: flex-start; }
+  .hero-imagen img {
+    max-width: 100%;
+    aspect-ratio: 3 / 2;
+    object-position: center 40%;
+  }
+  .mv-imagen { display: flex; justify-content: flex-start; }
+  .mv-imagen img { width: 280px; height: 280px; }
+  .productos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -35,22 +35,57 @@
   .site-header {
     flex-direction: column;
     height: auto;
-    gap: var(--space-md);
-    padding: var(--space-md);
+    gap: var(--space-sm);
+    padding: var(--space-ms) var(--space-md);
   }
-  .nav-menu { gap: var(--space-md); flex-wrap: wrap; justify-content: center; }
-  .contenido { padding: var(--space-md); gap: var(--space-md); }
+  .nav-menu { gap: var(--space-lg); }
+  .contenido {
+    padding: var(--space-xl) var(--space-md) var(--space-4xl);
+    gap: var(--space-3xl);
+  }
   .hero-bold,
-  .hero-italic { font-size: 40px; }
-  .mv-titulo { font-size: 48px; }
-  .como-llegar-titulo { font-size: 36px; }
-  .footer-grid { grid-template-columns: 1fr; }
+  .hero-italic,
+  .tienda-bold { font-size: var(--fs-lg); }
+  .tienda-italic { font-size: var(--fs-titulo-sm); }
+  .hero-descripcion,
+  .tienda-descripcion,
+  .mv-descripcion,
+  .como-llegar-subtitulo { font-size: var(--fs-base); }
+  .hero-imagen img { aspect-ratio: 1 / 1; }
+  .mv-titulo { font-size: var(--fs-xl); }
+  .como-llegar-titulo { font-size: var(--fs-lg); }
+  .productos-seccion-titulo { font-size: var(--fs-titulo-sm); }
+  .como-llegar-mapa { height: 320px; }
+  .como-llegar-grid,
+  .productos-grid { grid-template-columns: 1fr; }
+  .site-footer { padding: var(--space-3xl) var(--space-md) var(--space-lg); }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
   .footer-bottom {
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-sm);
-    text-align: center;
   }
-  .como-llegar-mapa { height: 300px; }
+  .floating-cart-btn {
+    right: var(--space-md);
+    bottom: var(--space-md);
+  }
+  .cart-panel { max-width: 100%; }
+  .whatsapp-actions { grid-template-columns: 1fr; }
+  .whatsapp-textarea { min-height: 200px; }
+}
+
+/* ---- Movimiento reducido ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 /* Accesibilidad: oculto visualmente pero legible por lectores de pantalla */

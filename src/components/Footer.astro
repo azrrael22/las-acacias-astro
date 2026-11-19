@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 ---
 <footer class="site-footer">
   <div class="footer-grid section-inner">
@@ -7,6 +8,8 @@
       <img class="footer-logo img-circular"
            src="/Imagenes/logo.png"
            onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
+           width="72" height="72"
+           loading="lazy"
            alt="Logo Las Acacias" />
       <address class="footer-address">
         Finca Las Acacias · Vereda Palestina<br />
@@ -15,37 +18,47 @@
     </div>
 
     <div class="footer-col-info">
-      <h4 class="footer-col-titulo">VISÍTANOS</h4>
+      <h2 class="footer-col-titulo">Visítanos</h2>
       <ul class="footer-list">
-        <li>Tours diarios 9:00 a.m - 4:00 pm</li>
-        <li>Tours en Inglés o en Español</li>
+        <li>Tours diarios de 9:00 a. m. a 4:00 p. m.</li>
+        <li>Tours en español o inglés</li>
       </ul>
     </div>
 
     <div class="footer-col-info">
-      <h4 class="footer-col-titulo">CONTACTO</h4>
-      <a href="https://instagram.com/las_acacias_coffee_farm" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Instagram (@las_acacias_coffee_farm)">
-        <img src="/Imagenes/Instagram.png" alt="Instagram"/>
-        <span>@las_acacias_coffee_farm</span>
-      </a>
-      <a href="https://facebook.com/LasAcaciasCoffee" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Facebook (Las Acacias Coffee)">
-        <img src="/Imagenes/Facebook.png" alt="Facebook"/>
-        <span>Las Acacias Coffee</span>
-      </a>
-      <a href="https://wa.me/573175336091" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 317 533 6091">
-        <img src="/Imagenes/Telefono.png" alt="Teléfono"/>
-        <span class="footer-telefono">+57 317 533 6091</span>
-      </a>
-      <a href="https://wa.me/573104638585" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 310 463 8585">
-        <img src="/Imagenes/Telefono.png" alt="Teléfono"/>
-        <span class="footer-telefono">+57 310 463 8585</span>
-      </a>
+      <h2 class="footer-col-titulo">Contacto</h2>
+      <ul class="footer-list">
+        <li>
+          <a href="https://instagram.com/las_acacias_coffee_farm" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Instagram (@las_acacias_coffee_farm)">
+            <Icon name="instagram" />
+            <span>@las_acacias_coffee_farm</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://facebook.com/LasAcaciasCoffee" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Facebook (Las Acacias Coffee)">
+            <Icon name="facebook" />
+            <span>Las Acacias Coffee</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/573175336091" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 317 533 6091">
+            <Icon name="phone" />
+            <span class="footer-telefono">+57 317 533 6091</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/573104638585" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 310 463 8585">
+            <Icon name="phone" />
+            <span class="footer-telefono">+57 310 463 8585</span>
+          </a>
+        </li>
+      </ul>
     </div>
 
   </div>
 
   <div class="footer-bottom section-inner">
-    <span class="footer-copyright">© 2026 Todos los derechos Reservados Las Acacias Coffee Farm - Creado por AMRR</span>
+    <span class="footer-copyright">© 2026 Las Acacias Coffee Farm · Todos los derechos reservados · Creado por AMRR</span>
     <span class="footer-firma">Hecho con amor en Salento</span>
   </div>
 </footer>
