@@ -1,6 +1,7 @@
 ---
 import type { Product } from '../data/products';
 import { formatPrice } from '../data/products';
+import Icon from './Icon.astro';
 
 interface Props {
   product: Product;
@@ -8,27 +9,31 @@ interface Props {
 
 const { product } = Astro.props;
 const priceFormatted = formatPrice(product.precio);
+const proceso = product.proceso === 'lavado' ? 'Lavado' : 'Natural';
+const tipo = product.tipo === 'molido' ? 'Molido' : 'Grano';
 ---
 
 <article class="product-card" data-product-id={product.id}>
   <div class="product-image">
-    <img src={product.imagen} alt={`${product.nombre} - ${product.tipo}`} />
-    <span class="product-badge">{product.proceso}</span>
+    <img src={product.imagen}
+         width="500" height="500"
+         loading="lazy" decoding="async"
+         alt={`Bolsa de ${product.nombre}, ${tipo.toLowerCase()}`} />
   </div>
   <div class="product-info">
     <h3 class="product-name">{product.nombre}</h3>
-    <div class="product-meta">
-      <span class="product-type">{product.tipo === 'molido' ? '☕ Molido' : '🫘 Grano'}</span>
-      <span class="product-weight">{product.peso}</span>
-    </div>
+    <p class="product-meta">{proceso} · {tipo}</p>
     {product.descripcion && (
       <p class="product-description">{product.descripcion}</p>
     )}
     <div class="product-footer">
       <span class="product-price">{priceFormatted}</span>
-      <button class="btn-add-to-cart" type="button" aria-label={`Agregar ${product.nombre} al carrito`}>
+      <button class="btn btn-secundario btn-sm btn-add-to-cart" type="button" aria-label={`Agregar ${product.nombre} ${tipo.toLowerCase()} al carrito`}>
+        <span class="btn-icon-swap" aria-hidden="true">
+          <Icon name="plus" size={16} class="icon-default" />
+          <Icon name="check" size={16} class="icon-done" />
+        </span>
         <span class="btn-text">Agregar</span>
-        <span class="btn-icon">🛒</span>
       </button>
     </div>
   </div>
@@ -37,31 +42,28 @@ const priceFormatted = formatPrice(product.precio);
 <script>
   import { addToCart } from '../scripts/cart';
 
-  // Este script se ejecuta para cada instancia del componente ProductCard
-  const buttons = document.querySelectorAll('.btn-add-to-cart');
-  
+  // Astro incluye este script una sola vez aunque haya varias tarjetas
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.btn-add-to-cart');
+  const timers = new WeakMap<HTMLButtonElement, number>();
+
   buttons.forEach(button => {
-    button.addEventListener('click', function(this: HTMLButtonElement) {
-      const card = this.closest('.product-card') as HTMLElement;
+    button.addEventListener('click', () => {
+      const card = button.closest<HTMLElement>('.product-card');
       const productId = card?.dataset.productId;
-      
       if (!productId) return;
 
-      // Agregar al carrito
       addToCart(productId, 1);
 
-      // Feedback visual
-      this.classList.add('added');
-      const originalText = this.querySelector('.btn-text');
-      if (originalText) {
-        const originalContent = originalText.textContent;
-        originalText.textContent = '✓ Agregado';
-        
-        setTimeout(() => {
-          originalText.textContent = originalContent;
-          this.classList.remove('added');
-        }, 1500);
-      }
+      // Feedback visual: el botón pasa a verde con check durante 1,5 s
+      const label = button.querySelector('.btn-text');
+      button.classList.add('added');
+      if (label) label.textContent = 'Agregado';
+
+      window.clearTimeout(timers.get(button));
+      timers.set(button, window.setTimeout(() => {
+        button.classList.remove('added');
+        if (label) label.textContent = 'Agregar';
+      }, 1500));
     });
   });
 </script>

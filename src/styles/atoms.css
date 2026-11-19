@@ -10,11 +10,25 @@ body {
   color: var(--color-oscuro);
   font-family: var(--fuente-cuerpo);  /* heredado por todos los hijos */
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; }
 address { font-style: normal; }
+button, input, textarea { font: inherit; color: inherit; }
 
-/* --- .img-circular (átomo compartido: logo header, hero, misión, visión, footer) --- */
+/* --- Foco visible para teclado --- */
+:focus-visible {
+  outline: 2px solid var(--color-verde);
+  outline-offset: 2px;
+}
+
+/* --- .icon (SVG de línea, ver Icon.astro) --- */
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* --- .img-circular (logo: header, misión, visión, footer) --- */
 .img-circular {
   border-radius: 50%;
   object-fit: cover;
@@ -23,95 +37,178 @@ address { font-style: normal; }
 
 /* --- .nav-link --- */
 .nav-link {
-  font-weight: 600;
-  font-size: var(--fs-base);
+  font-weight: 500;
+  font-size: var(--fs-ui);
   color: var(--color-oscuro);
   text-decoration: none;
-  text-transform: capitalize;
-  letter-spacing: -0.08px;
-  line-height: 1.45;
+  line-height: 1.4;
+  padding-block: var(--space-xs);
   transition: color var(--transition);
 }
 .nav-link:hover,
 .nav-link.active { color: var(--color-verde); }
 .nav-link.active {
   text-decoration: underline;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
-/* --- .badge-item --- */
+/* --- .badge-item + .badge-dot (el punto de color es la firma del sitio) --- */
 .badge-item {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   font-weight: 500;
-  font-size: var(--fs-base);
+  font-size: var(--fs-ui);
   color: var(--color-medio);
-  letter-spacing: -0.48px;
-  line-height: 1.1;
+  line-height: 1.4;
   white-space: nowrap;
 }
 .badge-dot {
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+.badge-dot-verde  { background-color: var(--color-verde); }
+.badge-dot-header { background-color: var(--color-header); }
+
+/* --- .btn --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  height: 40px;
+  padding: 0 var(--space-md);
   border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-family: var(--fuente-cuerpo);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition);
 }
-.badge-dot-verde {
+.btn:active { transform: scale(0.97); }
+.btn-sm { height: 36px; padding: 0 var(--space-ms); }
+.btn-lg { height: 48px; padding: 0 var(--space-lg); font-size: var(--fs-base); }
+
+.btn-primario {
   background-color: var(--color-verde);
-  border-color: var(--color-verde);
+  color: var(--color-blanco);
 }
-.badge-dot-header {
-  background-color: var(--color-header);
-  border-color: var(--color-header);
+.btn-primario:hover { background-color: var(--color-verde-hover); }
+
+.btn-secundario {
+  background-color: var(--color-superficie-alta);
+  border-color: var(--color-linea);
+  color: var(--color-oscuro);
+}
+.btn-secundario:hover {
+  background-color: var(--color-superficie-alta-hover);
+  border-color: var(--color-linea-fuerte);
+}
+
+.btn:disabled {
+  background-color: var(--color-superficie-alta);
+  border-color: var(--color-linea);
+  color: var(--color-tenue);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Dos íconos apilados que se intercambian con un estado (.added, .copied) */
+.btn-icon-swap { display: inline-grid; }
+.btn-icon-swap > .icon {
+  grid-area: 1 / 1;
+  transition: opacity var(--transition);
+}
+.btn-icon-swap > .icon-done { opacity: 0; }
+
+/* --- .btn-icono (solo ícono: cerrar, eliminar) --- */
+.btn-icono {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-control);
+  background-color: transparent;
+  color: var(--color-medio);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--transition), color var(--transition);
+}
+.btn-icono:hover {
+  background-color: var(--color-superficie-alta);
+  color: var(--color-oscuro);
+}
+.btn-icono-sm {
+  width: 32px;
+  height: 32px;
+  color: var(--color-tenue);
 }
 
 /* --- .social-link --- */
 .social-link {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
+  min-height: 32px;
   color: var(--color-footer-texto);
   font-size: var(--fs-sm);
-  font-weight: 400;
+  line-height: 1.4;
   text-decoration: none;
-  line-height: normal;
-  padding: var(--space-sm) 0;
-  transition: opacity var(--transition);
+  transition: color var(--transition);
 }
-.social-link:hover { opacity: 0.8; }
-.social-link img {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  object-fit: contain;
+.social-link .icon {
+  color: var(--color-footer-tenue);
+  transition: color var(--transition);
 }
+.social-link:hover,
+.social-link:hover .icon { color: var(--color-footer-acent); }
 
-/* --- .carousel-dot --- */
+/* --- .carousel-dot (área táctil de 24, punto de 8) --- */
 .carousel-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--color-dot-inactivo);
-  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
   padding: 0;
-  transition: background-color var(--transition);
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
   flex-shrink: 0;
 }
-.carousel-dot.active { background-color: var(--color-medio); }
-.carousel-dot:hover  { background-color: var(--color-oscuro); }
+.carousel-dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-dot-inactivo);
+  transition: background-color var(--transition);
+}
+.carousel-dot:hover::before  { background-color: var(--color-oscuro); }
+.carousel-dot.active::before { background-color: var(--color-medio); }
 
-/* --- .cafe-card --- */
+/* --- .cafe-card (slide del carrusel) --- */
 .cafe-card {
   flex-shrink: 0;
   width: var(--card-width);
   height: var(--card-height);
-  border-radius: var(--card-radius);
+  border-radius: var(--radius-foto);
   overflow: hidden;
   position: relative;
+  background-color: var(--color-superficie-alta);
 }
 .cafe-card img {
   width: 100%;

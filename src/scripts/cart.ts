@@ -200,7 +200,7 @@ export function generateWhatsAppMessage(customerName?: string): string {
     return '';
   }
 
-  let message = `Hola! Soy *${name}* y me interesa hacer el siguiente pedido:\n\n`;
+  let message = `¡Hola! Soy *${name}* y quiero hacer este pedido:\n\n`;
 
   // Agregar cada producto
   cart.items.forEach(item => {

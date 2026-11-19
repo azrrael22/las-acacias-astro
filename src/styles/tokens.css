@@ -2,58 +2,101 @@
    DESIGN TOKENS — Las Acacias Coffee Farm
    ============================================ */
 :root {
-  /* --- Colores --- */
-  --color-fondo:         #f4ebdd;
-  --color-header:        #8fbfcc;
-  --color-oscuro:        #2a1a0d;   /* también usado como fondo del footer */
-  --color-medio:         #422712;
-  --color-verde:         #385617;
-  --color-blanco:        #ffffff;
+  /* --- Neutros: papel crema + tinta café --- */
+  --color-fondo:                 #f4ebdd;   /* página */
+  --color-superficie:            #fbf7f0;   /* tarjetas, paneles, inputs */
+  --color-superficie-alta:       #ece2d2;   /* botón secundario, stepper */
+  --color-superficie-alta-hover: #e5d9c5;
+  --color-foto:                  #f2f1ee;   /* fondo de estudio de las fotos de producto */
+  --color-oscuro:                #2a1a0d;   /* texto principal; fondo del footer */
+  --color-medio:                 #422712;   /* texto secundario */
+  --color-tenue:                 #7a6552;   /* meta, captions e íconos (4,6:1 sobre el fondo) */
+  --color-linea:                 rgba(42, 26, 13, 0.10);
+  --color-linea-fuerte:          rgba(42, 26, 13, 0.18);
+  --color-overlay:               rgba(42, 26, 13, 0.5);
+
+  /* --- Marca --- */
+  --color-header:       #8fbfcc;   /* cielo: cabecera, rótulos del footer, firma, punto de badge */
+  --color-verde:        #385617;   /* acento: acción principal, selección y estados */
+  --color-verde-hover:  #2d4512;
+  --color-blanco:       #ffffff;
+  --color-error:        #a8322a;
+
+  /* --- Footer (sobre --color-oscuro) --- */
   --color-footer-texto:  #f4ebdd;
+  --color-footer-tenue:  rgba(244, 235, 221, 0.72);
+  --color-footer-linea:  rgba(244, 235, 221, 0.15);
   --color-footer-acent:  #8fbfcc;
+
+  /* --- Carrusel --- */
   --color-dot-inactivo:  #c8b8a2;
 
   /* --- Tipografías --- */
-  --fuente-display:  'Great Vibes', cursive;
-  --fuente-titulo:   'Playfair Display', serif;
-  --fuente-cursiva:  'Cormorant Garamond', serif;
-  --fuente-cuerpo:   'Montserrat', sans-serif;
-  /* --fuente-mono:     'Inter', sans-serif; */
+  --fuente-display:  'Great Vibes', cursive;          /* solo marca escrita y firma */
+  --fuente-titulo:   'Playfair Display', serif;       /* titulares */
+  --fuente-cursiva:  'Cormorant Garamond', serif;     /* solo la línea itálica de los titulares */
+  --fuente-cuerpo:   'Montserrat', sans-serif;        /* interfaz y texto */
 
   /* --- Tamaños de fuente --- */
-  --fs-xs:    11px;
-  --fs-sm:    13px;
-  --fs-base:  16px;
-  --fs-md:    20px;
-  --fs-lg:    40px;
-  --fs-xl:    51px;
-  --fs-2xl:   56px;
-  --fs-3xl:   70px;
-  --fs-firma: 22px;
+  --fs-xs:        12px;
+  --fs-sm:        14px;
+  --fs-ui:        15px;
+  --fs-base:      16px;
+  --fs-lead:      18px;
+  --fs-md:        20px;
+  --fs-precio:    22px;
+  --fs-card:      24px;
+  --fs-panel:     28px;
+  --fs-titulo-sm: 32px;
+  --fs-lg:        40px;
+  --fs-xl:        48px;
+  --fs-2xl:       56px;
+  --fs-3xl:       72px;
+  --fs-firma:     22px;
 
-  /* --- Espaciado base --- */
-  --space-xs: 5px;
-  --space-sm: 10px;
-  --space-md: 20px;
-  --space-lg: 40px;
-  --space-xl: 80px;
+  /* --- Espaciado: rejilla de 4px --- */
+  --space-xs:    4px;
+  --space-sm:    8px;
+  --space-ms:   12px;
+  --space-md:   16px;
+  --space-ml:   20px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-2xl:  40px;
+  --space-3xl:  48px;
+  --space-4xl:  64px;
+  --space-5xl:  80px;
+  --space-6xl:  96px;
 
   /* --- Gaps específicos --- */
-  --gap-carousel:    12px;
-  --gap-dots:         8px;
-  --gap-footer-grid:  9px;
-  --gap-seccion:     90px;
+  --gap-carousel:    12px;   /* sincronizado con `gap` en Carousel.astro */
+  --gap-dots:         4px;
+  --gap-footer-grid: 40px;
+  --gap-seccion:     64px;
 
   /* --- Layout --- */
   --max-width:      1200px;
-  --header-height:  90px;
-  --logo-header:     77px;
-  --logo-hero:      450px;
-  --logo-footer:     90px;
-  --card-width:     280px;
-  --card-height:    300px;
-  --card-radius:     12px;
+  --header-height:   80px;
+  --logo-header:     56px;
+  --logo-hero:      360px;
+  --logo-footer:     72px;
+  --card-width:     280px;   /* sincronizado con `cardW` en Carousel.astro */
+  --card-height:    352px;
 
-  /* --- Transiciones --- */
-  --transition: 0.25s ease;
+  /* --- Radios (anidado: interior = exterior − padding) --- */
+  --radius-sm:       6px;
+  --radius-control:  8px;
+  --radius-foto:    12px;
+  --radius-card:    16px;
+
+  /* --- Sombras (neutras, solo para lo que flota) --- */
+  --sombra-flotante: 0 8px 24px rgba(42, 26, 13, 0.12);
+
+  /* --- Movimiento: una curva, pocas duraciones --- */
+  --ease:          cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-rapida:    160ms;   /* hover, press */
+  --dur-media:     220ms;   /* modal */
+  --dur-entrada:   320ms;   /* panel del carrito */
+  --dur-carrusel:  400ms;
+  --transition:    var(--dur-rapida) var(--ease);
 }

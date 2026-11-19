@@ -1,11 +1,11 @@
 ---
 const slides = [
-  { src: '/Imagenes/Carrucel1/1.webp', alt: 'Finca Las Acacias' },
-  { src: '/Imagenes/Carrucel1/2.webp', alt: 'Finca Las Acacias' },
-  { src: '/Imagenes/Carrucel1/3.webp',  alt: 'Finca Las Acacias' },
-  { src: '/Imagenes/Carrucel1/4.webp', alt: 'Finca Las Acacias' },
-  { src: '/Imagenes/Carrucel1/5.webp', alt: 'Finca Las Acacias' },
-  { src: '/Imagenes/Carrucel1/6.webp',  alt: 'Finca Las Acacias' },
+  { src: '/Imagenes/Carrucel1/1.webp', alt: 'Visitante recolectando café con un canasto entre los cafetos' },
+  { src: '/Imagenes/Carrucel1/2.webp', alt: 'Perro de la finca mirando los cafetales en ladera bajo la niebla' },
+  { src: '/Imagenes/Carrucel1/3.webp', alt: 'Grupo de visitantes en la barra durante el tour de café' },
+  { src: '/Imagenes/Carrucel1/4.webp', alt: 'Taza de café frente a las montañas de Salento' },
+  { src: '/Imagenes/Carrucel1/5.webp', alt: 'Mano recogiendo una cereza madura de café' },
+  { src: '/Imagenes/Carrucel1/6.webp', alt: 'Letrero tallado de Finca Las Acacias y una orquídea colgante en la casa' },
 ];
 ---
 <section class="carousel-seccion section-inner" id="cafe" aria-label="Galería de imágenes de la finca">
@@ -13,13 +13,13 @@ const slides = [
     <div class="carousel-track" id="carouselTrack">
       {slides.map(slide => (
         <div class="cafe-card">
-          <img src={slide.src} alt={slide.alt} />
+          <img src={slide.src} alt={slide.alt} width="1080" height="1440" loading="lazy" decoding="async" />
         </div>
       ))}
       {/* clones para loop circular seamless — ocultos a lectores de pantalla */}
       {slides.map(slide => (
         <div class="cafe-card" aria-hidden="true">
-          <img src={slide.src} alt="" />
+          <img src={slide.src} alt="" width="1080" height="1440" loading="lazy" decoding="async" />
         </div>
       ))}
     </div>
@@ -59,6 +59,8 @@ const slides = [
     const cardW       = 280;
     const gap         = 12;
     const AUTOPLAY_MS = 2000;
+    // Sin autoplay para quien pide movimiento reducido
+    const autoplay    = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const REAL        = dots.length; // 6 slides reales
     let current  = 0;
     let startX   = 0;
@@ -86,11 +88,12 @@ const slides = [
       if (current < 0)    goTo(current + REAL, true);
     });
 
-    let timer = setInterval(() => { if (!paused) goTo(current + 1); }, AUTOPLAY_MS);
+    const startAutoplay = () => autoplay ? setInterval(() => { if (!paused) goTo(current + 1); }, AUTOPLAY_MS) : undefined;
+    let timer = startAutoplay();
 
     function resetAutoplay() {
       clearInterval(timer);
-      timer = setInterval(() => { if (!paused) goTo(current + 1); }, AUTOPLAY_MS);
+      timer = startAutoplay();
     }
 
     section?.addEventListener('mouseenter', () => { paused = true; });
