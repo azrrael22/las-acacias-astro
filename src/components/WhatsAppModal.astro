@@ -48,10 +48,9 @@ import Icon from './Icon.astro';
 
 <script>
   import { 
-    generateWhatsAppMessage, 
-    getWhatsAppURL,
-    copyMessageToClipboard,
-    clearCart 
+    generateWhatsAppMessage,
+    buildWhatsAppURL,
+    clearCart
   } from '../scripts/cart';
 
   // ============================================
@@ -67,7 +66,6 @@ import Icon from './Icon.astro';
   const copyBtnText = document.getElementById('copy-btn-text');
   const messageTextarea = document.getElementById('whatsapp-message') as HTMLTextAreaElement;
 
-  let currentCustomerName = '';
   let copyTimer: number | undefined;
 
   // ============================================
@@ -77,7 +75,6 @@ import Icon from './Icon.astro';
   function openModal(customerName: string) {
     if (!modal || !messageTextarea) return;
 
-    currentCustomerName = customerName;
     const message = generateWhatsAppMessage(customerName);
     
     messageTextarea.value = message;
@@ -134,9 +131,8 @@ import Icon from './Icon.astro';
     const message = messageTextarea?.value || '';
     
     if (message.trim()) {
-      // Construir URL manualmente con el mensaje del textarea
-      const encodedMessage = encodeURIComponent(message);
-      const url = `https://wa.me/573175336091?text=${encodedMessage}`;
+      // Construir URL con el mensaje editado del textarea
+      const url = buildWhatsAppURL(message);
       
       // Abrir WhatsApp
       window.open(url, '_blank');

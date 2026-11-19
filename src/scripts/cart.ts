@@ -5,7 +5,7 @@
 // y eventos personalizados para actualizar la UI
 
 import type { Product } from '../data/products';
-import { products, getProductById } from '../data/products';
+import { getProductById } from '../data/products';
 
 // ============================================
 // TYPES
@@ -220,12 +220,17 @@ export function generateWhatsAppMessage(customerName?: string): string {
 }
 
 /**
+ * Construir URL de WhatsApp para un mensaje dado
+ */
+export function buildWhatsAppURL(message: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+/**
  * Obtener URL de WhatsApp con mensaje pre-formateado
  */
 export function getWhatsAppURL(customerName?: string): string {
-  const message = generateWhatsAppMessage(customerName);
-  const encodedMessage = encodeURIComponent(message);
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+  return buildWhatsAppURL(generateWhatsAppMessage(customerName));
 }
 
 /**
