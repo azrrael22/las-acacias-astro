@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { buildWhatsAppURL } from '../data/contacto';
 
-const reservarTourURL = buildWhatsAppURL('Hola, quiero reservar un Coffee Tour en Las Acacias');
+// El tour no se reserva: WhatsApp es para pedir información o resolver dudas
+const infoURL = buildWhatsAppURL('Hola, quiero más información sobre la finca Las Acacias');
+const preguntaTourURL = buildWhatsAppURL('Hola, tengo una pregunta sobre el Coffee Tour en Las Acacias');
 
 const datos = [
   { cifra: '1.850 m', etiqueta: 'sobre el nivel del mar' },
@@ -73,12 +75,12 @@ const transportes = [
         y llévate a casa un café cosechado y procesado a mano.
       </p>
       <div class="acciones">
-        <a href={reservarTourURL}
+        <a href={infoURL}
            class="btn btn-primario btn-lg"
            target="_blank" rel="noopener noreferrer"
-           aria-label="Reservar un Coffee Tour por WhatsApp (se abre en una pestaña nueva)">
+           aria-label="Escríbenos por WhatsApp (se abre en una pestaña nueva)">
           <Icon name="message-circle" />
-          Reservar un Coffee Tour
+          Escríbenos por WhatsApp
         </a>
         <a href="/cafe-origen" class="enlace-flecha">
           Comprar café de origen
@@ -150,16 +152,17 @@ const transportes = [
       </div>
       <ul class="lista-iconos">
         <li><Icon name="clock" size={20} />Todos los días, de 9:00 a. m. a 4:00 p. m.</li>
+        <li><Icon name="check" size={20} />No necesitas reserva: llega dentro del horario</li>
         <li><Icon name="languages" size={20} />En español o inglés</li>
         <li><Icon name="map-pin" size={20} /><span>A 3,5 km de la plaza de Salento · <a href="#como-llegar">Cómo llegar</a></span></li>
       </ul>
       <div class="acciones">
-        <a href={reservarTourURL}
+        <a href={preguntaTourURL}
            class="btn btn-primario btn-lg"
            target="_blank" rel="noopener noreferrer"
-           aria-label="Reservar por WhatsApp (se abre en una pestaña nueva)">
+           aria-label="Pregúntanos por WhatsApp (se abre en una pestaña nueva)">
           <Icon name="message-circle" />
-          Reservar por WhatsApp
+          Pregúntanos por WhatsApp
         </a>
       </div>
     </div>
