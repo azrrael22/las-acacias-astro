@@ -100,7 +100,7 @@
   .como-llegar-mapa { height: 320px; }
   .productos-grid { gap: var(--space-3xl); }
 
-  .site-footer { padding-block: var(--space-3xl) var(--space-lg); }
+  .site-footer { padding-block: var(--space-xl) var(--space-md); }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
