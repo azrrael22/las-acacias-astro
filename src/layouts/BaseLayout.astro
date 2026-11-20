@@ -18,7 +18,9 @@ const {
   description = u.meta.description,
 } = Astro.props;
 
-const ogImage = '/Imagenes/logo.png';
+// Open Graph necesita URLs absolutas (vista previa en WhatsApp/Facebook)
+const ogImage = Astro.site ? new URL('/Imagenes/logo.png', Astro.site).href : '/Imagenes/logo.png';
+const ogUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const otroIdioma = lang === 'es' ? 'en' : 'es';
 
 // hreflang necesita URLs absolutas: se emite cuando `site` está definido en astro.config.mjs
@@ -42,6 +44,7 @@ const xDefault = alternas.find(a => a.lang === DEFAULT_LANG);
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  {ogUrl && <meta property="og:url" content={ogUrl} />}
   <meta property="og:locale" content={u.meta.ogLocale} />
   <meta property="og:locale:alternate" content={ui[otroIdioma].meta.ogLocale} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />

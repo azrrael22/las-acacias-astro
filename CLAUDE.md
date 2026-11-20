@@ -17,6 +17,10 @@ npm run astro ...  # CLI de Astro, p. ej. `npm run astro check` para chequeo de 
 
 No hay suite de tests ni linter configurado en este proyecto. La única verificación automática es `npm run astro check` (tipos y traducciones faltantes en `en`). Node `>=22.12.0`.
 
+### Despliegue
+
+GitHub Pages con dominio propio `www.acaciascoffeefarm.com`: cada push a `master` dispara `.github/workflows/deploy.yml` (`withastro/action` → `actions/deploy-pages`). El dominio vive en dos sitios que deben coincidir: `site` en `astro.config.mjs` y `public/CNAME`. El sitio se sirve en la raíz del dominio, por eso no hay `base` y las rutas absolutas (`/Imagenes/...`, `localizePath()`) funcionan tal cual. `package-lock.json` se versiona: el CI lo necesita.
+
 ## Architecture
 
 - **Astro puro**, sin framework de UI (React/Vue/etc.) y sin integraciones en `astro.config.mjs`. Toda la interactividad del lado del cliente vive en bloques `<script>` dentro de los `.astro` (ver `src/components/CartModal.astro`), tipados con TypeScript inline.
@@ -32,7 +36,7 @@ No hay suite de tests ni linter configurado en este proyecto. La única verifica
 - `ui.ts`: textos compartidos (cabecera, footer, metadatos, tienda, carrito, mensaje de WhatsApp). `en` tiene el tipo de `es`, así que `npm run astro check` falla si falta una traducción.
 - Un archivo por página (`inicio.ts`, `cafe-origen.ts`) con `satisfies Record<Lang, ...>`. Los titulares guardan el énfasis como `<em>` y se pintan con `set:html`.
 - Los mensajes prellenados de WhatsApp siguen el idioma de la página. Precios: `$38.000` en español, `$38,000 COP` en inglés (`formatPrice(precio, lang)`).
-- Los `hreflang` se emiten solo si `site` está definido en `astro.config.mjs` (hoy no lo está).
+- `site` en `astro.config.mjs` (`https://www.acaciascoffeefarm.com`) activa los `hreflang` y vuelve absolutos `og:image` y `og:url` en `BaseLayout.astro`.
 - Íconos: solo SVG de línea de Lucide (24×24, trazo 1.5, `currentColor`) definidos en `src/scripts/icons.ts`. En `.astro` se usa `<Icon name="..." />`; en HTML generado en el cliente, `iconSvg()`. No usar emojis en la interfaz.
 
 ### Tienda y carrito
