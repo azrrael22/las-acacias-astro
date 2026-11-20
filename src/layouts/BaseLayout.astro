@@ -34,6 +34,8 @@ const xDefault = alternas.find(a => a.lang === DEFAULT_LANG);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   {alternas.map(a => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
   {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
   <meta property="og:type" content="website" />

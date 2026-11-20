@@ -72,9 +72,10 @@ tokens.css → atoms.css → molecules.css → organisms.css
 
 - Imágenes estáticas de contenido (logo, fotos de la finca en `Carrucel1/`, productos) están en `public/Imagenes/` y se referencian con rutas absolutas (`/Imagenes/...`). Declara siempre `width`/`height` reales y usa `loading="lazy"` en todo lo que no sea el hero.
 - Las fotos de producto (`public/Imagenes/Productos/`) siguen `GUIA-IMAGENES-PRODUCTOS.md`: lienzo 3:4 de 900×1200, WebP con fondo transparente, menos de 150 KB y el mismo encuadre en todas.
+- El favicon (`public/favicon.ico`, capas de 16/32/48) y `public/apple-touch-icon.png` (180×180) salen de `public/Imagenes/logo.png`, pero solo con la rama de café y la orquídea (sin el anillo ni el texto, que no se leen a 16 px), sobre crema `#fbf7f0`: un círculo en el `.ico` y un cuadrado completo en el de Apple, porque iOS redondea las esquinas por su cuenta. Se declaran en el `<head>` de `BaseLayout.astro`. Si cambia el logo, hay que regenerarlos.
 - Algunos `<img>` (hoy, el logo de `Footer.astro`) usan `onerror` para hacer fallback a assets alojados en `figma.com/api/mcp/asset/...` (provenientes del diseño original en Figma) cuando el archivo local falta o no ha sido reemplazado aún — es un patrón intencional, no un error a "arreglar" quitando el fallback.
 
 ## Otros archivos del repo
 
-- `TIENDA-README.md` e `IMPLEMENTACION-COMPLETA.md` son notas históricas con datos desfasados (precios, número de productos); la fuente de verdad es `src/data/products.ts`. La estructura de carpetas de `README.md` también está desactualizada (menciona `Carousel.astro` y `nuestra-finca.astro`, que ya no existen).
+- `TIENDA-README.md` e `IMPLEMENTACION-COMPLETA.md` son notas históricas con datos desfasados (precios, número de productos); la fuente de verdad es `src/data/products.ts`.
 - `unslop-story/` y `unslop-story.mp4` son material de presentación del rediseño: no forman parte del sitio ni del build y no se tocan al cambiar estilos.
