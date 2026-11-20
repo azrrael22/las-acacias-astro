@@ -11,15 +11,18 @@
 @media (max-width: 1100px) {
   .hero,
   .mision,
-  .vision {
+  .vision,
+  .tienda-hero {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
   .vision .mv-texto { order: 1; }
   .vision .mv-imagen { order: 2; }
-  .hero-texto { max-width: 36rem; }
+  .hero-texto,
+  .tienda-hero-content { max-width: 36rem; }
   .hero-imagen { justify-content: flex-start; }
-  .hero-imagen img {
+  .hero-imagen img,
+  .tienda-hero-imagen img {
     max-width: 100%;
     aspect-ratio: 3 / 2;
     object-position: center 40%;

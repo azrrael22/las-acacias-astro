@@ -189,15 +189,19 @@
   height: var(--logo-hero);
 }
 
-/* ---- .tienda-hero ---- */
-.tienda-hero { text-align: center; }
+/* ---- .tienda-hero (mismo patrón que .hero: texto + foto) ---- */
+.tienda-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--gap-seccion);
+  align-items: center;
+}
 .tienda-hero-content {
-  max-width: 800px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-lg);
+  max-width: 520px;
 }
 .tienda-titulo {
   display: flex;
@@ -227,7 +231,6 @@
   color: var(--color-medio);
   max-width: 640px;
 }
-.tienda-hero .badge-group { justify-content: center; }
 .tienda-nota {
   display: inline-flex;
   align-items: center;
@@ -235,6 +238,14 @@
   font-size: var(--fs-sm);
   line-height: 1.4;
   color: var(--color-tenue);
+}
+.tienda-hero-imagen img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  background-color: var(--color-superficie-alta);
 }
 
 /* ---- .productos-seccion ---- */

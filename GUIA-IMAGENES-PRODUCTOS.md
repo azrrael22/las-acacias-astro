@@ -88,3 +88,16 @@ El lienzo 3:4 se ve a unos 210 × 280 px. Los 900 × 1200 px de la especificaci�
 ## Al reemplazar una foto
 
 Basta con sobrescribir el `.webp` con el mismo nombre; no hay que tocar código. Si la foto llega en PNG, conviértela a WebP con transparencia y respeta el encuadre: la bolsa al 80 % del alto y la base al 8 %.
+
+## Foto del encabezado de la tienda
+
+`presentaciones.webp`, en esta misma carpeta, es la foto de ambiente que acompaña el título de `/cafe-origen`: las bolsas sobre la mesa. No sigue la plantilla de recorte de arriba.
+
+| | |
+|---|---|
+| Lienzo | Horizontal 4:3, **1200 × 896 px** o más, con la misma proporción |
+| Fondo | Foto completa, sin transparencia |
+| Encuadre | Bolsas centradas, con aire arriba y abajo: en tablet y móvil la foto se recorta a 3:2 |
+| Peso | Menos de **150 KB** (WebP con calidad 80) |
+
+Para cambiarla, sobrescribe `presentaciones.webp` con el mismo nombre; no hay que tocar código. Si llega en JPG o PNG, conviértela a WebP en [Squoosh](https://squoosh.app).
