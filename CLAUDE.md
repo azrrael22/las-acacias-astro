@@ -15,7 +15,7 @@ npm run preview   # sirve el build de producción localmente
 npm run astro ...  # CLI de Astro, p. ej. `npm run astro check` para chequeo de tipos
 ```
 
-No hay suite de tests ni linter configurado en este proyecto.
+No hay suite de tests ni linter configurado en este proyecto. La única verificación automática es `npm run astro check` (tipos y traducciones faltantes en `en`). Node `>=22.12.0`.
 
 ## Architecture
 
@@ -34,6 +34,16 @@ No hay suite de tests ni linter configurado en este proyecto.
 - Los mensajes prellenados de WhatsApp siguen el idioma de la página. Precios: `$38.000` en español, `$38,000 COP` en inglés (`formatPrice(precio, lang)`).
 - Los `hreflang` se emiten solo si `site` está definido en `astro.config.mjs` (hoy no lo está).
 - Íconos: solo SVG de línea de Lucide (24×24, trazo 1.5, `currentColor`) definidos en `src/scripts/icons.ts`. En `.astro` se usa `<Icon name="..." />`; en HTML generado en el cliente, `iconSvg()`. No usar emojis en la interfaz.
+
+### Tienda y carrito
+
+- `src/scripts/cart.ts` guarda en `localStorage` (`las-acacias-cart`) solo `{ productId, quantity }` y `customerName`. Al leer, rehidrata cada ítem con `getProductById()` de `products.ts` y descarta los ids que ya no existen: cambiar el `id` de un producto lo saca de los carritos guardados.
+- Los componentes de la tienda no se importan entre sí; se comunican con `CustomEvent` en `window`: `cart:updated` (`CART_UPDATED_EVENT`, lo emite cada escritura del carrito; repintan `FloatingCartButton` y `CartModal`), `cart:open` (botón flotante → `CartModal`) y `cart:checkout` (`CartModal` → `WhatsAppModal`, con `{ customerName }`). `WhatsAppModal` cierra el panel del carrito emitiendo `cart:close`, que él mismo escucha para cerrar `#cart-modal` por id.
+- No hay backend ni pagos: el pedido es un mensaje prellenado (`generateWhatsAppMessage(nombre, lang)`) que se abre con `buildWhatsAppURL()`.
+
+### Contenido: Coffee Tour sin reservas
+
+El Coffee Tour no se reserva: los visitantes llegan dentro del horario (todos los días, 9:00 a. m. – 4:00 p. m.). En textos, CTA, `aria-label` y mensajes prellenados de WhatsApp nunca ofrecer "reservar" o "agendar" el tour; el WhatsApp de la finca es para información y preguntas ("Escríbenos", "Pregúntanos"). Para la tienda de café, WhatsApp sí se usa para enviar el pedido.
 
 ### Dirección visual: editorial de finca
 
@@ -61,4 +71,10 @@ tokens.css → atoms.css → molecules.css → organisms.css
 ### Imágenes y assets
 
 - Imágenes estáticas de contenido (logo, fotos de la finca en `Carrucel1/`, productos) están en `public/Imagenes/` y se referencian con rutas absolutas (`/Imagenes/...`). Declara siempre `width`/`height` reales y usa `loading="lazy"` en todo lo que no sea el hero.
-- Varios `<img>` usan `onerror` para hacer fallback a assets alojados en `figma.com/api/mcp/asset/...` (provenientes del diseño original en Figma) cuando el archivo local falta o no ha sido reemplazado aún — es un patrón intencional, no un error a "arreglar" quitando el fallback.
+- Las fotos de producto (`public/Imagenes/Productos/`) siguen `GUIA-IMAGENES-PRODUCTOS.md`: lienzo 3:4 de 900×1200, WebP con fondo transparente, menos de 150 KB y el mismo encuadre en todas.
+- Algunos `<img>` (hoy, el logo de `Footer.astro`) usan `onerror` para hacer fallback a assets alojados en `figma.com/api/mcp/asset/...` (provenientes del diseño original en Figma) cuando el archivo local falta o no ha sido reemplazado aún — es un patrón intencional, no un error a "arreglar" quitando el fallback.
+
+## Otros archivos del repo
+
+- `TIENDA-README.md` e `IMPLEMENTACION-COMPLETA.md` son notas históricas con datos desfasados (precios, número de productos); la fuente de verdad es `src/data/products.ts`. La estructura de carpetas de `README.md` también está desactualizada (menciona `Carousel.astro` y `nuestra-finca.astro`, que ya no existen).
+- `unslop-story/` y `unslop-story.mp4` son material de presentación del rediseño: no forman parte del sitio ni del build y no se tocan al cambiar estilos.

@@ -100,7 +100,7 @@ export const products: Product[] = [
     peso: '125g',
     tipo: 'molido',
     proceso: 'lavado',
-    precio: 12000, // ← EDITAR PRECIO AQUÍ
+    precio: 14000, // ← EDITAR PRECIO AQUÍ
     imagen: '/Imagenes/Productos/125.webp',
     descripcion: {
       es: 'Presentación pequeña perfecta como recuerdo o para probar por primera vez.',
@@ -113,7 +113,7 @@ export const products: Product[] = [
     peso: '125g',
     tipo: 'grano',
     proceso: 'lavado',
-    precio: 12000, // ← EDITAR PRECIO AQUÍ
+    precio: 14000, // ← EDITAR PRECIO AQUÍ
     imagen: '/Imagenes/Productos/125.webp',
     descripcion: {
       es: 'Muestra de café lavado en grano, ideal para llevar de recuerdo.',
@@ -126,7 +126,7 @@ export const products: Product[] = [
     peso: '250g',
     tipo: 'grano',
     proceso: 'natural',
-    precio: 22000, // ← EDITAR PRECIO AQUÍ
+    precio: 45000, // ← EDITAR PRECIO AQUÍ
     imagen: '/Imagenes/Productos/250.webp',
     descripcion: {
       es: 'Café de proceso natural con notas afrutadas y dulces, en grano entero.',
@@ -139,7 +139,7 @@ export const products: Product[] = [
     peso: '5 libras',
     tipo: 'molido',
     proceso: 'lavado',
-    precio: 120000, // ← EDITAR PRECIO AQUÍ
+    precio: 152000, // ← EDITAR PRECIO AQUÍ
     imagen: '/Imagenes/Productos/5libras.webp',
     descripcion: {
       es: 'Presentación grande de café lavado molido, ideal para familias o negocios.',
@@ -152,7 +152,7 @@ export const products: Product[] = [
     peso: '5 libras',
     tipo: 'grano',
     proceso: 'lavado',
-    precio: 120000, // ← EDITAR PRECIO AQUÍ
+    precio: 152000, // ← EDITAR PRECIO AQUÍ
     imagen: '/Imagenes/Productos/5libras.webp',
     descripcion: {
       es: 'Presentación grande de café lavado en grano, para los verdaderos amantes del café.',
