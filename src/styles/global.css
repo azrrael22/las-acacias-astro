@@ -58,7 +58,7 @@
   .como-llegar-mapa { height: 320px; }
   .como-llegar-grid,
   .productos-grid { grid-template-columns: 1fr; }
-  .site-footer { padding: var(--space-3xl) var(--space-md) var(--space-lg); }
+  .site-footer { padding: var(--space-xl) var(--space-md) var(--space-lg); }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
