@@ -1,11 +1,16 @@
 ---
+import { LANGS, alternatePath, getLangFromUrl, localizePath } from '../i18n';
+import { ui } from '../i18n/ui';
+
 const pathname = Astro.url.pathname;
+const lang = getLangFromUrl(Astro.url);
+const u = ui[lang];
 
 const navLinks = [
-  { href: '/',              label: 'Inicio' },
+  { href: localizePath('/', lang),            label: u.header.inicio },
   //{ href: '/conocenos', label: 'Conócenos' },
-  //{ href: '/#tour',         label: 'Coffee Tour' },
-  { href: '/cafe-origen',   label: 'Café de origen' },
+  //{ href: localizePath('/#tour', lang),     label: 'Coffee Tour' },
+  { href: localizePath('/cafe-origen', lang), label: u.header.tienda },
 ];
 
 function isActive(href: string) {
@@ -14,25 +19,42 @@ function isActive(href: string) {
 }
 ---
 <header class="site-header">
-  <a href="/" class="logo-bloque" aria-label="Las Acacias Coffee Farm — inicio">
+  <a href={localizePath('/', lang)} class="logo-bloque" aria-label={u.header.logoAria}>
     <img class="logo-img img-circular"
          src="/Imagenes/logo.png"
          width="56" height="56"
-         alt="Logo Las Acacias" />
+         alt={u.header.logoAlt} />
     <div class="logo-texto">
       <span class="logo-nombre">Las Acacias</span>
       <span class="logo-subtitulo">Coffee Farm · Salento</span>
     </div>
   </a>
-  <nav class="nav-menu" aria-label="Navegación principal">
-    {navLinks.map(link => (
-      <a
-        href={link.href}
-        class:list={['nav-link', { active: isActive(link.href) }]}
-        aria-current={isActive(link.href) ? 'page' : undefined}
-      >
-        {link.label}
-      </a>
-    ))}
-  </nav>
+  <div class="cabecera-acciones">
+    <nav class="nav-menu" aria-label={u.header.navAria}>
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={['nav-link', { active: isActive(link.href) }]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <!-- MOLÉCULA: Selector de idioma (lleva a la misma página en el otro idioma) -->
+    <div class="selector-idioma" role="group" aria-label={u.idioma.grupo}>
+      {LANGS.map(l => (
+        <a
+          href={alternatePath(pathname, l)}
+          class:list={['nav-link', { active: l === lang }]}
+          lang={l}
+          hreflang={l}
+          aria-label={u.idioma[l]}
+          aria-current={l === lang ? 'true' : undefined}
+        >
+          {l.toUpperCase()}
+        </a>
+      ))}
+    </div>
+  </div>
 </header>

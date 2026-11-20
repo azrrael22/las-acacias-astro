@@ -1,6 +1,8 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { LANGS, DEFAULT_LANG, alternatePath, getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
 import '../styles/global.css';
 
 interface Props {
@@ -8,24 +10,38 @@ interface Props {
   description?: string;
 }
 
+const lang = getLangFromUrl(Astro.url);
+const u = ui[lang];
+
 const {
   title,
-  description = 'Finca cafetera familiar en Salento, Quindío. Vive el café desde la semilla hasta la taza con nuestros tours, cultivo artesanal y café de origen 100% manual.',
+  description = u.meta.description,
 } = Astro.props;
 
 const ogImage = '/Imagenes/logo.png';
+const otroIdioma = lang === 'es' ? 'en' : 'es';
+
+// hreflang necesita URLs absolutas: se emite cuando `site` está definido en astro.config.mjs
+const alternas = Astro.site
+  ? LANGS.map(l => ({ lang: l, href: new URL(alternatePath(Astro.url.pathname, l), Astro.site).href }))
+  : [];
+const xDefault = alternas.find(a => a.lang === DEFAULT_LANG);
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {alternas.map(a => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+  {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content={u.meta.ogLocale} />
+  <meta property="og:locale:alternate" content={ui[otroIdioma].meta.ogLocale} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Great+Vibes&display=swap" rel="stylesheet" />

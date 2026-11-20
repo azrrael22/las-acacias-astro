@@ -1,21 +1,25 @@
 ---
 // Modal de confirmación de WhatsApp (estilos en organisms.css)
 import Icon from './Icon.astro';
+import { getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const u = ui[getLangFromUrl(Astro.url)].whatsapp;
 ---
 
 <div id="whatsapp-modal" class="whatsapp-modal" role="dialog" aria-modal="true" aria-labelledby="whatsapp-modal-title" aria-hidden="true">
   <div class="whatsapp-overlay"></div>
   <div class="whatsapp-content">
     <div class="whatsapp-header">
-      <h2 id="whatsapp-modal-title" class="whatsapp-title">Enviar por WhatsApp</h2>
-      <button id="whatsapp-close-btn" class="btn-icono whatsapp-close-btn" type="button" aria-label="Cerrar">
+      <h2 id="whatsapp-modal-title" class="whatsapp-title">{u.titulo}</h2>
+      <button id="whatsapp-close-btn" class="btn-icono whatsapp-close-btn" type="button" aria-label={u.cerrar}>
         <Icon name="x" />
       </button>
     </div>
 
     <div class="whatsapp-body">
       <label for="whatsapp-message" class="whatsapp-instructions">
-        Puedes editar el mensaje antes de enviarlo
+        {u.instrucciones}
       </label>
 
       <textarea
@@ -27,7 +31,7 @@ import Icon from './Icon.astro';
       <div class="whatsapp-actions">
         <button id="whatsapp-send-btn" class="btn btn-primario btn-lg" type="button">
           <Icon name="send" />
-          <span>Abrir WhatsApp</span>
+          <span>{u.abrir}</span>
         </button>
 
         <button id="whatsapp-copy-btn" class="btn btn-secundario btn-lg whatsapp-btn-copy" type="button">
@@ -35,12 +39,12 @@ import Icon from './Icon.astro';
             <Icon name="copy" class="icon-default" />
             <Icon name="check" class="icon-done" />
           </span>
-          <span id="copy-btn-text">Copiar mensaje</span>
+          <span id="copy-btn-text">{u.copiar}</span>
         </button>
       </div>
 
       <button id="whatsapp-cancel-btn" class="whatsapp-btn-link" type="button">
-        Cancelar
+        {u.cancelar}
       </button>
     </div>
   </div>
@@ -52,6 +56,11 @@ import Icon from './Icon.astro';
     buildWhatsAppURL,
     clearCart
   } from '../scripts/cart';
+  import { getDocumentLang } from '../i18n';
+  import { ui } from '../i18n/ui';
+
+  const lang = getDocumentLang();
+  const t = ui[lang].whatsapp;
 
   // ============================================
   // ELEMENTOS DEL DOM
@@ -75,7 +84,7 @@ import Icon from './Icon.astro';
   function openModal(customerName: string) {
     if (!modal || !messageTextarea) return;
 
-    const message = generateWhatsAppMessage(customerName);
+    const message = generateWhatsAppMessage(customerName, lang);
     
     messageTextarea.value = message;
     modal.classList.add('open');
@@ -92,7 +101,7 @@ import Icon from './Icon.astro';
     window.clearTimeout(copyTimer);
     copyBtn?.classList.remove('copied');
     if (copyBtnText) {
-      copyBtnText.textContent = 'Copiar mensaje';
+      copyBtnText.textContent = t.copiar;
     }
   }
 
@@ -139,7 +148,7 @@ import Icon from './Icon.astro';
       
       // Preguntar si desea vaciar el carrito
       setTimeout(() => {
-        if (confirm('¿Deseas vaciar el carrito?')) {
+        if (confirm(t.confirmarVaciar)) {
           clearCart();
         }
         closeModal();
@@ -158,16 +167,16 @@ import Icon from './Icon.astro';
       
       // Feedback visual: el ícono pasa a check durante 2 s
       copyBtn?.classList.add('copied');
-      if (copyBtnText) copyBtnText.textContent = 'Copiado';
+      if (copyBtnText) copyBtnText.textContent = t.copiado;
 
       window.clearTimeout(copyTimer);
       copyTimer = window.setTimeout(() => {
         copyBtn?.classList.remove('copied');
-        if (copyBtnText) copyBtnText.textContent = 'Copiar mensaje';
+        if (copyBtnText) copyBtnText.textContent = t.copiar;
       }, 2000);
     } catch (error) {
       console.error('Error al copiar:', error);
-      alert('No se pudo copiar el mensaje. Por favor, cópialo manualmente.');
+      alert(t.errorCopiar);
     }
   });
 

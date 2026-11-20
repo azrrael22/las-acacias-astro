@@ -1,14 +1,18 @@
 ---
 // Modal del carrito de compras (estilos en organisms.css)
 import Icon from './Icon.astro';
+import { getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const u = ui[getLangFromUrl(Astro.url)].carrito;
 ---
 
 <div id="cart-modal" class="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title" aria-hidden="true">
   <div class="cart-overlay"></div>
   <div class="cart-panel">
     <div class="cart-header">
-      <h2 id="cart-modal-title" class="cart-title">Tu pedido</h2>
-      <button id="cart-close-btn" class="btn-icono cart-close-btn" type="button" aria-label="Cerrar carrito">
+      <h2 id="cart-modal-title" class="cart-title">{u.titulo}</h2>
+      <button id="cart-close-btn" class="btn-icono cart-close-btn" type="button" aria-label={u.cerrar}>
         <Icon name="x" />
       </button>
     </div>
@@ -16,12 +20,12 @@ import Icon from './Icon.astro';
     <div class="cart-body">
       <!-- Nombre del cliente -->
       <div class="cart-customer-section">
-        <label for="customer-name" class="customer-label">Tu nombre</label>
+        <label for="customer-name" class="customer-label">{u.nombre}</label>
         <input
           type="text"
           id="customer-name"
           class="customer-input"
-          placeholder="Nombre y apellido"
+          placeholder={u.nombrePlaceholder}
           autocomplete="name"
           aria-describedby="customer-name-error"
         />
@@ -34,19 +38,19 @@ import Icon from './Icon.astro';
       <!-- Carrito vacío -->
       <div id="empty-cart-message" class="empty-cart-message">
         <Icon name="shopping-bag" size={24} />
-        <p class="empty-cart-titulo">Tu carrito está vacío</p>
-        <p class="empty-cart-subtitle">Agrega productos para comenzar tu pedido</p>
+        <p class="empty-cart-titulo">{u.vacioTitulo}</p>
+        <p class="empty-cart-subtitle">{u.vacioSubtitulo}</p>
       </div>
     </div>
 
     <div class="cart-footer">
       <div class="cart-total">
-        <span class="total-label">Total</span>
+        <span class="total-label">{u.total}</span>
         <span id="cart-total-amount" class="total-amount">$0</span>
       </div>
       <button id="checkout-btn" class="btn btn-primario btn-lg checkout-btn" type="button">
         <Icon name="send" />
-        Enviar pedido por WhatsApp
+        {u.enviar}
       </button>
       <p id="checkout-error" class="error-message" role="alert"></p>
     </div>
@@ -65,6 +69,11 @@ import Icon from './Icon.astro';
     formatPrice 
   } from '../scripts/cart';
   import { iconSvg } from '../scripts/icons';
+  import { getDocumentLang } from '../i18n';
+  import { ui } from '../i18n/ui';
+
+  const lang = getDocumentLang();
+  const t = ui[lang];
 
   // ============================================
   // ELEMENTOS DEL DOM
@@ -131,31 +140,33 @@ import Icon from './Icon.astro';
     itemsContainer.innerHTML = cart.items.map(item => {
       if (!item.product) return '';
 
-      const { nombre, tipo, precio } = item.product;
-      const tipoLabel = tipo === 'molido' ? 'Molido' : 'Grano';
+      const { tipo, precio } = item.product;
+      const nombre = item.product.nombre[lang];
+      const tipoLabel = t.producto.tipo[tipo];
+      const etiqueta = `${nombre} ${tipoLabel.toLowerCase()}`;
       const subtotal = precio * item.quantity;
 
       return `
         <div class="cart-item" data-product-id="${item.productId}">
           <div class="cart-item-info">
             <h3 class="cart-item-name">${nombre}</h3>
-            <p class="cart-item-meta">${tipoLabel} · ${formatPrice(precio)} c/u</p>
+            <p class="cart-item-meta">${tipoLabel} · ${formatPrice(precio, lang)} ${t.carrito.cadaUno}</p>
           </div>
-          <p class="cart-item-subtotal">${formatPrice(subtotal)}</p>
+          <p class="cart-item-subtotal">${formatPrice(subtotal, lang)}</p>
           <div class="cart-item-controls">
             <div class="quantity-controls">
-              <button class="qty-btn qty-decrease" type="button" data-product-id="${item.productId}" aria-label="Quitar uno de ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('minus', 16)}</button>
-              <span class="qty-display" aria-label="Cantidad">${item.quantity}</span>
-              <button class="qty-btn qty-increase" type="button" data-product-id="${item.productId}" aria-label="Agregar uno de ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('plus', 16)}</button>
+              <button class="qty-btn qty-decrease" type="button" data-product-id="${item.productId}" aria-label="${t.carrito.quitarUno(etiqueta)}">${iconSvg('minus', 16)}</button>
+              <span class="qty-display" aria-label="${t.carrito.cantidad}">${item.quantity}</span>
+              <button class="qty-btn qty-increase" type="button" data-product-id="${item.productId}" aria-label="${t.carrito.agregarUno(etiqueta)}">${iconSvg('plus', 16)}</button>
             </div>
           </div>
-          <button class="btn-icono btn-icono-sm cart-item-remove" type="button" data-product-id="${item.productId}" aria-label="Eliminar ${nombre} ${tipoLabel.toLowerCase()}">${iconSvg('trash-2', 16)}</button>
+          <button class="btn-icono btn-icono-sm cart-item-remove" type="button" data-product-id="${item.productId}" aria-label="${t.carrito.eliminar(etiqueta)}">${iconSvg('trash-2', 16)}</button>
         </div>
       `;
     }).join('');
 
     // Actualizar total
-    totalAmountEl.textContent = formatPrice(getCartTotal());
+    totalAmountEl.textContent = formatPrice(getCartTotal(), lang);
 
     // Agregar event listeners a los controles
     addCartItemListeners();
@@ -247,7 +258,7 @@ import Icon from './Icon.astro';
 
     if (!customerName) {
       if (customerNameError) {
-        customerNameError.textContent = 'Escribe tu nombre para enviar el pedido';
+        customerNameError.textContent = t.carrito.errorNombre;
       }
       customerNameInput?.classList.add('error');
       customerNameInput?.setAttribute('aria-invalid', 'true');
@@ -256,7 +267,7 @@ import Icon from './Icon.astro';
 
     if (cart.items.length === 0) {
       if (checkoutError) {
-        checkoutError.textContent = 'Tu carrito está vacío';
+        checkoutError.textContent = t.carrito.errorVacio;
       }
       hasError = true;
     }

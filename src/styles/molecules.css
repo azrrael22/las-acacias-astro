@@ -42,6 +42,27 @@
   align-items: center;
 }
 
+/* --- .cabecera-acciones (navegación + selector de idioma) --- */
+.cabecera-acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+/* --- .selector-idioma (ES · EN; reutiliza .nav-link) --- */
+.selector-idioma {
+  display: flex;
+  align-items: center;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--color-linea-fuerte);
+}
+.selector-idioma .nav-link {
+  justify-content: center;
+  min-width: var(--alto-control);
+  color: var(--color-medio);
+}
+.selector-idioma .nav-link.active { color: var(--color-oscuro); }
+
 /* --- .encabezado-seccion (rótulo + título + entrada) --- */
 .encabezado-seccion {
   display: flex;

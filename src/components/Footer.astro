@@ -1,5 +1,9 @@
 ---
 import Icon from './Icon.astro';
+import { getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const u = ui[getLangFromUrl(Astro.url)].footer;
 ---
 <footer class="site-footer">
   <div class="footer-grid section-inner">
@@ -10,7 +14,7 @@ import Icon from './Icon.astro';
            onerror="this.src='https://www.figma.com/api/mcp/asset/3b1748ad-dfef-420b-8d35-e7b989d2a85a'"
            width="72" height="72"
            loading="lazy"
-           alt="Logo Las Acacias" />
+           alt={u.logoAlt} />
       <address class="footer-address">
         Finca Las Acacias · Vereda Palestina<br />
         Salento · Quindío · Colombia
@@ -18,36 +22,36 @@ import Icon from './Icon.astro';
     </div>
 
     <div class="footer-col-info">
-      <h2 class="footer-col-titulo">Visítanos</h2>
+      <h2 class="footer-col-titulo">{u.visitanos}</h2>
       <ul class="footer-list">
-        <li>Tours diarios de 9:00 a. m. a 4:00 p. m.</li>
-        <li>Tours en español o inglés</li>
+        <li>{u.horario}</li>
+        <li>{u.idiomasTour}</li>
       </ul>
     </div>
 
     <div class="footer-col-info">
-      <h2 class="footer-col-titulo">Contacto</h2>
+      <h2 class="footer-col-titulo">{u.contacto}</h2>
       <ul class="footer-list">
         <li>
-          <a href="https://instagram.com/las_acacias_coffee_farm" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Instagram (@las_acacias_coffee_farm)">
+          <a href="https://instagram.com/las_acacias_coffee_farm" class="social-link" target="_blank" rel="noopener noreferrer" aria-label={u.instagramAria}>
             <Icon name="instagram" />
             <span>@las_acacias_coffee_farm</span>
           </a>
         </li>
         <li>
-          <a href="https://facebook.com/LasAcaciasCoffee" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Las Acacias en Facebook (Las Acacias Coffee)">
+          <a href="https://facebook.com/LasAcaciasCoffee" class="social-link" target="_blank" rel="noopener noreferrer" aria-label={u.facebookAria}>
             <Icon name="facebook" />
             <span>Las Acacias Coffee</span>
           </a>
         </li>
         <li>
-          <a href="https://wa.me/573175336091" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 317 533 6091">
+          <a href="https://wa.me/573175336091" class="social-link" target="_blank" rel="noopener noreferrer" aria-label={u.whatsappAria('+57 317 533 6091')}>
             <Icon name="phone" />
             <span class="footer-telefono">+57 317 533 6091</span>
           </a>
         </li>
         <li>
-          <a href="https://wa.me/573104638585" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp al +57 310 463 8585">
+          <a href="https://wa.me/573104638585" class="social-link" target="_blank" rel="noopener noreferrer" aria-label={u.whatsappAria('+57 310 463 8585')}>
             <Icon name="phone" />
             <span class="footer-telefono">+57 310 463 8585</span>
           </a>
@@ -58,7 +62,7 @@ import Icon from './Icon.astro';
   </div>
 
   <div class="footer-bottom section-inner">
-    <span class="footer-copyright">© 2026 Las Acacias Coffee Farm · Todos los derechos reservados · Creado por AMRR</span>
-    <span class="footer-firma">Hecho con amor en Salento</span>
+    <span class="footer-copyright">© 2026 Las Acacias Coffee Farm · {u.derechos} · {u.creado}</span>
+    <span class="footer-firma">{u.firma}</span>
   </div>
 </footer>

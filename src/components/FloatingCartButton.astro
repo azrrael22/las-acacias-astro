@@ -1,13 +1,17 @@
 ---
 // Botón flotante del carrito (estilos en organisms.css)
 import Icon from './Icon.astro';
+import { getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const u = ui[getLangFromUrl(Astro.url)].carrito;
 ---
 
 <button
   id="floating-cart-btn"
   class="floating-cart-btn"
   type="button"
-  aria-label="Abrir carrito de compras"
+  aria-label={u.abrir}
 >
   <Icon name="shopping-bag" size={24} />
   <span id="cart-badge" class="cart-badge" aria-hidden="true">0</span>
@@ -15,7 +19,10 @@ import Icon from './Icon.astro';
 
 <script>
   import { getCartCount, CART_UPDATED_EVENT } from '../scripts/cart';
+  import { getDocumentLang } from '../i18n';
+  import { ui } from '../i18n/ui';
 
+  const t = ui[getDocumentLang()].carrito;
   const cartButton = document.getElementById('floating-cart-btn');
   const cartBadge = document.getElementById('cart-badge');
 
@@ -24,12 +31,7 @@ import Icon from './Icon.astro';
       const count = getCartCount();
       cartBadge.textContent = String(count);
       cartBadge.classList.toggle('visible', count > 0);
-      cartButton.setAttribute(
-        'aria-label',
-        count > 0
-          ? `Abrir carrito de compras (${count} ${count === 1 ? 'producto' : 'productos'})`
-          : 'Abrir carrito de compras'
-      );
+      cartButton.setAttribute('aria-label', count > 0 ? t.abrirConCantidad(count) : t.abrir);
     };
 
     updateCartBadge();

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Sitio estático en Astro para **Las Acacias Coffee Farm**, una finca cafetera familiar en Salento, Quindío (Colombia). Todo el contenido visible (textos, `alt`, metadatos) está en español; usa este idioma al escribir o editar contenido de cara al usuario.
+Sitio estático en Astro para **Las Acacias Coffee Farm**, una finca cafetera familiar en Salento, Quindío (Colombia). El sitio es bilingüe: español (idioma por defecto, en la raíz) e inglés (bajo `/en/`). Todo texto visible nuevo (textos, `alt`, `aria-label`, metadatos) se escribe en los dos idiomas, en los diccionarios de `src/i18n/` (ver abajo), nunca como literal en el marcado.
 
 ## Commands
 
@@ -21,10 +21,18 @@ No hay suite de tests ni linter configurado en este proyecto.
 
 - **Astro puro**, sin framework de UI (React/Vue/etc.) y sin integraciones en `astro.config.mjs`. Toda la interactividad del lado del cliente vive en bloques `<script>` dentro de los `.astro` (ver `src/components/CartModal.astro`), tipados con TypeScript inline.
 - `src/layouts/BaseLayout.astro` es el layout único: define `<head>` (título, meta descripción/OG, fuentes de Google Fonts), envuelve el contenido con `Header` + `<main class="contenido">` + `Footer`, e importa `styles/global.css`. También activa el revelado al hacer scroll (ver abajo).
-- `src/pages/*.astro` son las rutas (enrutamiento basado en archivos de Astro). Cada página envuelve su contenido en `<BaseLayout title="..." description="...">`.
+- Las páginas viven en `src/pages/[...lang]/*.astro`: cada una exporta `getStaticPaths() { return langStaticPaths(); }` y se genera dos veces (`/cafe-origen` y `/en/cafe-origen`). Cada página envuelve su contenido en `<BaseLayout title="..." description="...">`.
 - Las secciones dentro de cada página están marcadas con comentarios `<!-- ORGANISMO: Nombre -->`, siguiendo la nomenclatura de Atomic Design usada en el CSS (ver abajo). Al añadir una sección nueva a una página, sigue este mismo patrón de comentario.
 - Los componentes reutilizables están en `src/components/` (`Header.astro`, `Footer.astro`, `Icon.astro` y los de la tienda: `ProductCard`, `FloatingCartButton`, `CartModal`, `WhatsAppModal`); no hay carpeta de "atoms" en componentes, solo en CSS.
-- Datos en `src/data/`: `products.ts` (catálogo) y `contacto.ts` (número de WhatsApp y `buildWhatsAppURL()`, módulo puro que se usa tanto en el frontmatter como en `scripts/cart.ts`).
+- Datos en `src/data/`: `products.ts` (catálogo; `nombre` y `descripcion` son `{ es, en }`) y `contacto.ts` (número de WhatsApp y `buildWhatsAppURL()`, módulo puro que se usa tanto en el frontmatter como en `scripts/cart.ts`).
+
+### Idiomas (`src/i18n/`)
+
+- `index.ts`: `Lang` (`'es' | 'en'`), `langStaticPaths()`, `getLangFromUrl(Astro.url)` (en layout, páginas y componentes; no se pasa `lang` por props), `getDocumentLang()` (en los `<script>` del cliente, lee `<html lang>`), `localizePath()` para enlaces internos y `alternatePath()` para el selector ES · EN de la cabecera.
+- `ui.ts`: textos compartidos (cabecera, footer, metadatos, tienda, carrito, mensaje de WhatsApp). `en` tiene el tipo de `es`, así que `npm run astro check` falla si falta una traducción.
+- Un archivo por página (`inicio.ts`, `cafe-origen.ts`) con `satisfies Record<Lang, ...>`. Los titulares guardan el énfasis como `<em>` y se pintan con `set:html`.
+- Los mensajes prellenados de WhatsApp siguen el idioma de la página. Precios: `$38.000` en español, `$38,000 COP` en inglés (`formatPrice(precio, lang)`).
+- Los `hreflang` se emiten solo si `site` está definido en `astro.config.mjs` (hoy no lo está).
 - Íconos: solo SVG de línea de Lucide (24×24, trazo 1.5, `currentColor`) definidos en `src/scripts/icons.ts`. En `.astro` se usa `<Icon name="..." />`; en HTML generado en el cliente, `iconSvg()`. No usar emojis en la interfaz.
 
 ### Dirección visual: editorial de finca

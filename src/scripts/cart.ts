@@ -5,11 +5,13 @@
 // y eventos personalizados para actualizar la UI
 
 import type { Product } from '../data/products';
-import { getProductById } from '../data/products';
+import { getProductById, formatPrice } from '../data/products';
 import { buildWhatsAppURL } from '../data/contacto';
+import type { Lang } from '../i18n';
+import { ui } from '../i18n/ui';
 
-// Re-exportado para que CartModal y WhatsAppModal sigan importándolo desde aquí
-export { buildWhatsAppURL };
+// Re-exportados para que CartModal y WhatsAppModal sigan importándolos desde aquí
+export { buildWhatsAppURL, formatPrice };
 
 // ============================================
 // TYPES
@@ -39,13 +41,6 @@ export const CART_UPDATED_EVENT = 'cart:updated';
 // ============================================
 // FUNCIONES PRINCIPALES
 // ============================================
-
-/**
- * Formatear precio en pesos colombianos
- */
-export function formatPrice(price: number): string {
-  return `$${price.toLocaleString('es-CO')}`;
-}
 
 /**
  * Obtener el carrito actual desde localStorage
@@ -194,31 +189,33 @@ export function getCustomerName(): string {
 // ============================================
 
 /**
- * Generar mensaje formateado para WhatsApp
+ * Generar mensaje formateado para WhatsApp, en el idioma de la página
  */
-export function generateWhatsAppMessage(customerName?: string): string {
+export function generateWhatsAppMessage(customerName?: string, lang: Lang = 'es'): string {
   const cart = getCart();
-  const name = customerName || cart.customerName || 'Cliente';
-  
+  const t = ui[lang];
+  const name = customerName || cart.customerName || t.pedido.clientePorDefecto;
+
   if (cart.items.length === 0) {
     return '';
   }
 
-  let message = `¡Hola! Soy *${name}* y quiero hacer este pedido:\n\n`;
+  let message = `${t.pedido.saludo(name)}\n\n`;
 
   // Agregar cada producto
   cart.items.forEach(item => {
     const product = getProductById(item.productId);
     if (product) {
       const subtotal = product.precio * item.quantity;
-      message += `• ${product.nombre} (${product.tipo}) x${item.quantity} - ${formatPrice(subtotal)}\n`;
+      const tipo = t.producto.tipo[product.tipo].toLowerCase();
+      message += `• ${product.nombre[lang]} (${tipo}) x${item.quantity} - ${formatPrice(subtotal, lang)}\n`;
     }
   });
 
   // Agregar total
   const total = getCartTotal();
-  message += `\n*Total: ${formatPrice(total)}*\n\n`;
-  message += `¡Gracias!`;
+  message += `\n*${t.pedido.total}: ${formatPrice(total, lang)}*\n\n`;
+  message += t.pedido.gracias;
 
   return message;
 }
@@ -264,18 +261,19 @@ export interface ValidationResult {
 /**
  * Validar que el carrito y los datos estén completos para enviar
  */
-export function validateCheckout(customerName: string): ValidationResult {
+export function validateCheckout(customerName: string, lang: Lang = 'es'): ValidationResult {
   const errors: string[] = [];
   const cart = getCart();
+  const t = ui[lang].pedido;
 
   // Validar nombre del cliente
   if (!customerName || customerName.trim().length === 0) {
-    errors.push('Por favor ingresa tu nombre');
+    errors.push(t.errorNombre);
   }
 
   // Validar que haya productos en el carrito
   if (cart.items.length === 0) {
-    errors.push('Tu carrito está vacío. Agrega productos antes de continuar');
+    errors.push(t.errorVacio);
   }
 
   return {

@@ -21,7 +21,7 @@ Los precios están en pesos colombianos (COP) sin puntos ni comas.
 ```typescript
 {
   id: 'cafe-lavado-500g-molido',
-  nombre: 'Café Lavado 500g',
+  nombre: { es: 'Café Lavado 500g', en: 'Washed Coffee 500 g' },
   precio: 35000, // ← EDITAR AQUÍ (representa $35.000 COP)
   ...
 }
@@ -42,13 +42,15 @@ precio: 40000,
 1. Copia uno de los objetos existentes en el array `products`
 2. Modifica las propiedades:
    - `id`: debe ser único (ejemplo: `'cafe-natural-500g-molido'`)
-   - `nombre`: nombre visible del producto
+   - `nombre`: nombre visible del producto, en español e inglés (`{ es: '...', en: '...' }`)
    - `peso`: peso de la presentación
    - `tipo`: `'molido'` o `'grano'`
    - `proceso`: `'lavado'` o `'natural'`
    - `precio`: precio en COP (sin puntos)
    - `imagen`: ruta de la imagen (ejemplo: `'/Imagenes/Productos/500g.jpg'`)
-   - `descripcion`: descripción breve del producto
+   - `descripcion`: descripción breve, también en los dos idiomas (`{ es: '...', en: '...' }`)
+
+La versión en inglés se ve en `/en/cafe-origen`, con los precios como `$38,000 COP`.
 
 **Para quitar un producto:**
 1. Elimina el objeto completo del array `products` (desde `{` hasta `},`)

@@ -1,44 +1,48 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProductCard from '../components/ProductCard.astro';
-import FloatingCartButton from '../components/FloatingCartButton.astro';
-import CartModal from '../components/CartModal.astro';
-import WhatsAppModal from '../components/WhatsAppModal.astro';
-import Icon from '../components/Icon.astro';
-import { products } from '../data/products';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import FloatingCartButton from '../../components/FloatingCartButton.astro';
+import CartModal from '../../components/CartModal.astro';
+import WhatsAppModal from '../../components/WhatsAppModal.astro';
+import Icon from '../../components/Icon.astro';
+import { products } from '../../data/products';
+import { getLangFromUrl, langStaticPaths } from '../../i18n';
+import { cafeOrigen } from '../../i18n/cafe-origen';
+import { ui } from '../../i18n/ui';
 
-const title = 'Café de origen · Las Acacias Coffee Farm · Salento';
-const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Quindío. Disponible en grano y molido, diferentes presentaciones. Envíos a toda Colombia.';
+// Se genera en /cafe-origen (español) y en /en/cafe-origen (inglés). Textos en src/i18n/cafe-origen.ts
+export function getStaticPaths() {
+  return langStaticPaths();
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = cafeOrigen[lang];
+const u = ui[lang];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={t.title} description={t.description}>
 
   <!-- ORGANISMO: Hero de la Tienda -->
   <section class="hero hero--tienda" id="tienda">
     <div class="hero-texto">
-      <p class="rotulo">Tienda · Salento · Quindío</p>
+      <p class="rotulo">{t.hero.rotulo}</p>
       <h1 class="hero-titular">
-        <span>Café de origen</span>
-        <span><em>Las Acacias</em></span>
+        {t.hero.titular.map(linea => <span set:html={linea} />)}
       </h1>
-      <p class="hero-descripcion">
-        Nuestro café es 100% artesanal, cultivado y procesado a mano en nuestra finca familiar
-        en Salento, Quindío. Cada bolsa representa el trabajo dedicado de varias generaciones
-        y el amor por el café colombiano de altura.
-      </p>
+      <p class="hero-descripcion">{t.hero.descripcion}</p>
       <div class="badge-group">
         <span class="badge-item">
           <span class="badge-dot badge-dot-verde" aria-hidden="true"></span>
-          Proceso 100% manual
+          {u.tienda.badgeManual}
         </span>
         <span class="badge-item">
           <span class="badge-dot badge-dot-header" aria-hidden="true"></span>
-          Envíos a toda Colombia
+          {u.tienda.badgeEnvios}
         </span>
       </div>
       <p class="hero-nota">
         <Icon name="truck" size={16} />
-        Coordinamos la entrega por WhatsApp
+        {t.hero.nota}
       </p>
     </div>
     <div class="hero-imagen">
@@ -46,15 +50,15 @@ const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Q
            width="1200" height="896"
            fetchpriority="high"
            decoding="async"
-           alt="Bolsas kraft de Café de Origen Las Acacias de 500 g, 250 g y 125 g sobre una mesa de madera con granos de café tostado" />
+           alt={u.tienda.presentacionesAlt} />
     </div>
   </section>
 
   <!-- ORGANISMO: Grid de Productos -->
   <section class="productos-seccion section-inner" aria-labelledby="productos-titulo">
     <div class="encabezado-seccion" data-revelar>
-      <p class="rotulo"><span class="rotulo-num">01</span>Presentaciones</p>
-      <h2 class="titulo-seccion" id="productos-titulo">Nuestros <em>cafés</em></h2>
+      <p class="rotulo"><span class="rotulo-num">01</span>{t.productos.rotulo}</p>
+      <h2 class="titulo-seccion" id="productos-titulo" set:html={t.productos.titulo} />
     </div>
     <div class="productos-grid" data-revelar>
       {products.map(product => (

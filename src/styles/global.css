@@ -77,6 +77,12 @@
     padding-block: var(--space-ms) var(--space-xs);
   }
   .nav-menu { gap: var(--space-lg); }
+  .cabecera-acciones {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+  .selector-idioma { padding-left: var(--space-sm); }
 
   .contenido {
     gap: var(--space-4xl);

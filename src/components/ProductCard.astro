@@ -1,6 +1,8 @@
 ---
 import type { Product } from '../data/products';
 import { formatPrice } from '../data/products';
+import { getLangFromUrl } from '../i18n';
+import { ui } from '../i18n/ui';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -8,9 +10,13 @@ interface Props {
 }
 
 const { product } = Astro.props;
-const priceFormatted = formatPrice(product.precio);
-const proceso = product.proceso === 'lavado' ? 'Lavado' : 'Natural';
-const tipo = product.tipo === 'molido' ? 'Molido' : 'Grano';
+const lang = getLangFromUrl(Astro.url);
+const u = ui[lang].producto;
+
+const nombre = product.nombre[lang];
+const priceFormatted = formatPrice(product.precio, lang);
+const proceso = u.proceso[product.proceso];
+const tipo = u.tipo[product.tipo];
 ---
 
 <article class="product-card" data-product-id={product.id}>
@@ -18,22 +24,22 @@ const tipo = product.tipo === 'molido' ? 'Molido' : 'Grano';
     <img src={product.imagen}
          width="900" height="1200"
          loading="lazy" decoding="async"
-         alt={`Bolsa de ${product.nombre}, ${tipo.toLowerCase()}`} />
+         alt={u.bolsaAlt(nombre, tipo)} />
   </div>
   <div class="product-info">
-    <h3 class="product-name">{product.nombre}</h3>
+    <h3 class="product-name">{nombre}</h3>
     <p class="product-meta">{proceso} · {tipo}</p>
     {product.descripcion && (
-      <p class="product-description">{product.descripcion}</p>
+      <p class="product-description">{product.descripcion[lang]}</p>
     )}
     <div class="product-footer">
       <span class="product-price">{priceFormatted}</span>
-      <button class="btn btn-secundario btn-sm btn-add-to-cart" type="button" aria-label={`Agregar ${product.nombre} ${tipo.toLowerCase()} al carrito`}>
+      <button class="btn btn-secundario btn-sm btn-add-to-cart" type="button" aria-label={u.agregarAria(nombre, tipo)}>
         <span class="btn-icon-swap" aria-hidden="true">
           <Icon name="plus" size={16} class="icon-default" />
           <Icon name="check" size={16} class="icon-done" />
         </span>
-        <span class="btn-text">Agregar</span>
+        <span class="btn-text">{u.agregar}</span>
       </button>
     </div>
   </div>
@@ -41,8 +47,11 @@ const tipo = product.tipo === 'molido' ? 'Molido' : 'Grano';
 
 <script>
   import { addToCart } from '../scripts/cart';
+  import { getDocumentLang } from '../i18n';
+  import { ui } from '../i18n/ui';
 
   // Astro incluye este script una sola vez aunque haya varias tarjetas
+  const t = ui[getDocumentLang()].producto;
   const buttons = document.querySelectorAll<HTMLButtonElement>('.btn-add-to-cart');
   const timers = new WeakMap<HTMLButtonElement, number>();
 
@@ -57,12 +66,12 @@ const tipo = product.tipo === 'molido' ? 'Molido' : 'Grano';
       // Feedback visual: el botón pasa a verde con check durante 1,5 s
       const label = button.querySelector('.btn-text');
       button.classList.add('added');
-      if (label) label.textContent = 'Agregado';
+      if (label) label.textContent = t.agregado;
 
       window.clearTimeout(timers.get(button));
       timers.set(button, window.setTimeout(() => {
         button.classList.remove('added');
-        if (label) label.textContent = 'Agregar';
+        if (label) label.textContent = t.agregar;
       }, 1500));
     });
   });
