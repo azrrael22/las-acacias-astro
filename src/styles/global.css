@@ -9,24 +9,54 @@
 
 /* ---- Responsive: tablet ---- */
 @media (max-width: 1100px) {
+  /* Rejillas a sangre: texto arriba, foto de borde a borde debajo */
   .hero,
+  .coffee-tour {
+    grid-template-columns:
+      [full-start] var(--gutter)
+      [content-start] minmax(0, 1fr)
+      [content-end] var(--gutter)
+      [full-end];
+    row-gap: var(--space-2xl);
+  }
+  .hero-texto,
+  .coffee-tour-texto {
+    grid-column: content-start / content-end;
+    grid-row: 1;
+    max-width: var(--ancho-texto);
+    padding: 0;
+  }
+  .hero-texto { padding-top: var(--space-3xl); }
+  .hero-imagen,
+  .coffee-tour-imagen {
+    grid-column: full-start / full-end;
+    grid-row: 2;
+    height: auto;
+  }
+  .hero-imagen img,
+  .coffee-tour-imagen img {
+    height: auto;
+    aspect-ratio: 3 / 2;
+    border-radius: 0;
+  }
+  .hero--tienda { padding-top: 0; }
+  .hero--tienda .hero-imagen img { aspect-ratio: 1200 / 896; }
+
+  .proceso-grid { gap: var(--space-lg); }
+  .adelanto-tienda-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+  .adelanto-tienda-texto { max-width: var(--ancho-texto); }
+  .datos-finca { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
   .mision,
-  .vision,
-  .tienda-hero {
+  .vision {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
   .vision .mv-texto { order: 1; }
   .vision .mv-imagen { order: 2; }
-  .hero-texto,
-  .tienda-hero-content { max-width: 36rem; }
-  .hero-imagen { justify-content: flex-start; }
-  .hero-imagen img,
-  .tienda-hero-imagen img {
-    max-width: 100%;
-    aspect-ratio: 3 / 2;
-    object-position: center 40%;
-  }
   .mv-imagen { display: flex; justify-content: flex-start; }
   .mv-imagen img { width: 280px; height: 280px; }
   .productos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -35,33 +65,42 @@
 
 /* ---- Responsive: móvil ---- */
 @media (max-width: 700px) {
+  :root { --gutter: var(--space-md); }
+
+  /* La cabecera apilada mide ~130px: deja de ser sticky para no tapar la pantalla */
+  html { scroll-padding-top: 0; }
   .site-header {
+    position: static;
     flex-direction: column;
     height: auto;
-    gap: var(--space-sm);
-    padding: var(--space-ms) var(--space-md);
+    gap: var(--space-xs);
+    padding-block: var(--space-ms) var(--space-xs);
   }
   .nav-menu { gap: var(--space-lg); }
+
   .contenido {
-    padding: var(--space-xl) var(--space-md) var(--space-4xl);
-    gap: var(--space-3xl);
+    gap: var(--space-4xl);
+    padding-block: var(--space-xl) var(--space-4xl);
   }
-  .hero-bold,
-  .hero-italic,
-  .tienda-bold { font-size: var(--fs-lg); }
-  .tienda-italic { font-size: var(--fs-titulo-sm); }
-  .hero-descripcion,
-  .tienda-descripcion,
-  .mv-descripcion,
-  .como-llegar-subtitulo { font-size: var(--fs-base); }
+  .contenido > .datos-seccion { margin-top: calc(-1 * var(--space-xl)); }
+  .hero-texto { padding-top: var(--space-xl); }
   .hero-imagen img { aspect-ratio: 1 / 1; }
-  .mv-titulo { font-size: var(--fs-xl); }
-  .como-llegar-titulo { font-size: var(--fs-lg); }
-  .productos-seccion-titulo { font-size: var(--fs-titulo-sm); }
-  .como-llegar-mapa { height: 320px; }
+  .hero--tienda .hero-imagen img { aspect-ratio: 1200 / 896; }
+  .hero-descripcion,
+  .encabezado-seccion .entrada { font-size: var(--fs-base); }
+
+  .datos-finca { gap: var(--space-lg) var(--space-md); }
+  .proceso-grid,
   .como-llegar-grid,
   .productos-grid { grid-template-columns: 1fr; }
-  .site-footer { padding: var(--space-xl) var(--space-md) var(--space-lg); }
+  .proceso-grid { gap: var(--space-3xl); }
+  .proceso-grid > .paso:nth-child(2) { margin-top: 0; }
+  .paso-foto { aspect-ratio: 4 / 3; }
+  .adelanto-tienda { padding-block: var(--space-4xl); }
+  .como-llegar-mapa { height: 320px; }
+  .productos-grid { gap: var(--space-3xl); }
+
+  .site-footer { padding-block: var(--space-3xl) var(--space-lg); }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
@@ -79,6 +118,22 @@
   .cart-panel { max-width: 100%; }
   .whatsapp-actions { grid-template-columns: 1fr; }
   .whatsapp-textarea { min-height: 200px; }
+}
+
+/* ---- Revelado al hacer scroll (mejora progresiva) ----
+   BaseLayout añade .revelar-js a <html> solo con JS y sin movimiento reducido;
+   sin esa clase todo se ve en su estado final. --i escalona a los hermanos. */
+.revelar-js [data-revelar] {
+  opacity: 0;
+  transform: translateY(var(--revelar-y));
+  transition:
+    opacity var(--dur-revelar) var(--ease),
+    transform var(--dur-revelar) var(--ease);
+  transition-delay: calc(var(--i, 0) * var(--retraso-paso));
+}
+.revelar-js [data-revelar].revelado {
+  opacity: 1;
+  transform: none;
 }
 
 /* ---- Movimiento reducido ---- */

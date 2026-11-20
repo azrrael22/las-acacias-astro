@@ -19,12 +19,21 @@ No hay suite de tests ni linter configurado en este proyecto.
 
 ## Architecture
 
-- **Astro puro**, sin framework de UI (React/Vue/etc.) y sin integraciones en `astro.config.mjs`. Toda la interactividad del lado del cliente vive en bloques `<script>` dentro de los `.astro` (ver `src/components/Carousel.astro`), tipados con TypeScript inline.
-- `src/layouts/BaseLayout.astro` es el layout único: define `<head>` (título, meta descripción/OG, fuentes de Google Fonts), envuelve el contenido con `Header` + `<main class="contenido">` + `Footer`, e importa `styles/global.css`.
+- **Astro puro**, sin framework de UI (React/Vue/etc.) y sin integraciones en `astro.config.mjs`. Toda la interactividad del lado del cliente vive en bloques `<script>` dentro de los `.astro` (ver `src/components/CartModal.astro`), tipados con TypeScript inline.
+- `src/layouts/BaseLayout.astro` es el layout único: define `<head>` (título, meta descripción/OG, fuentes de Google Fonts), envuelve el contenido con `Header` + `<main class="contenido">` + `Footer`, e importa `styles/global.css`. También activa el revelado al hacer scroll (ver abajo).
 - `src/pages/*.astro` son las rutas (enrutamiento basado en archivos de Astro). Cada página envuelve su contenido en `<BaseLayout title="..." description="...">`.
 - Las secciones dentro de cada página están marcadas con comentarios `<!-- ORGANISMO: Nombre -->`, siguiendo la nomenclatura de Atomic Design usada en el CSS (ver abajo). Al añadir una sección nueva a una página, sigue este mismo patrón de comentario.
-- Los componentes reutilizables están en `src/components/` (`Header.astro`, `Footer.astro`, `Carousel.astro`, `Icon.astro` y los de la tienda: `ProductCard`, `FloatingCartButton`, `CartModal`, `WhatsAppModal`); no hay carpeta de "atoms" en componentes, solo en CSS.
+- Los componentes reutilizables están en `src/components/` (`Header.astro`, `Footer.astro`, `Icon.astro` y los de la tienda: `ProductCard`, `FloatingCartButton`, `CartModal`, `WhatsAppModal`); no hay carpeta de "atoms" en componentes, solo en CSS.
+- Datos en `src/data/`: `products.ts` (catálogo) y `contacto.ts` (número de WhatsApp y `buildWhatsAppURL()`, módulo puro que se usa tanto en el frontmatter como en `scripts/cart.ts`).
 - Íconos: solo SVG de línea de Lucide (24×24, trazo 1.5, `currentColor`) definidos en `src/scripts/icons.ts`. En `.astro` se usa `<Icon name="..." />`; en HTML generado en el cliente, `iconSvg()`. No usar emojis en la interfaz.
+
+### Dirección visual: editorial de finca
+
+- Tipografía: **Fraunces** para titulares (su itálica marca el énfasis: `<em>` dentro de `.titulo-seccion` o `.hero-titular`), **Figtree** para interfaz y texto, y **Great Vibes** solo en el logotipo y la firma del footer.
+- Cada sección de contenido abre con `.rotulo` (`<span class="rotulo-num">01</span>Nombre`, sin mayúsculas) + `h2.titulo-seccion`, agrupados en `.encabezado-seccion` con una `p.entrada` opcional.
+- `.section-inner` centra el contenido y aplica el margen lateral `--gutter` (40px, 16px en móvil). `.hero` y `.coffee-tour` usan una rejilla con líneas nombradas (`full`, `content`, `mitad`) para que la foto sangre hasta el borde del viewport; las fotos de la finca son verticales de 1080×1440, por eso nunca van a todo el ancho en escritorio.
+- Revelado al hacer scroll: añade `data-revelar` (y `style="--i: n"` para escalonar hermanos). Es mejora progresiva: sin JS o con `prefers-reduced-motion` todo se ve en su estado final. No lo pongas en el hero.
+- Controles táctiles de al menos 44px (`--alto-control`); `--alto-control-sm` (40px) solo en controles compactos.
 
 ### CSS: Atomic Design
 
@@ -35,14 +44,13 @@ tokens.css → atoms.css → molecules.css → organisms.css
 ```
 
 - **`tokens.css`**: única fuente de verdad para colores, tipografías, tamaños de fuente, espaciados, gaps, layout (`--max-width`, `--header-height`, etc.) y transiciones, todo como custom properties en `:root`. Nunca hardcodear un color, tamaño de fuente o espaciado en otro archivo: agrega o reutiliza un token.
-- **`atoms.css`**: reset base, `:focus-visible` global + clases de un solo elemento reutilizadas entre componentes (`.img-circular`, `.nav-link`, `.badge-item`, `.btn` con `.btn-primario`/`.btn-secundario`, `.btn-icono`, `.social-link`, `.carousel-dot`, `.cafe-card`).
+- **`atoms.css`**: reset base, `:focus-visible` global + clases de un solo elemento reutilizadas entre componentes (`.img-circular`, `.rotulo`, `.titulo-seccion`, `.nav-link`, `.enlace-flecha`, `.ornamento`, `.badge-item`, `.btn` con `.btn-primario`/`.btn-secundario`, `.btn-icono`, `.social-link`).
 - Espaciado en rejilla de 4px (`--space-xs` 4 … `--space-6xl` 96). Pesos 400–600 como máximo. El verde (`--color-verde`) es el único acento de acción; el azul cielo se reserva para la cabecera, los rótulos del footer y la firma. Movimiento con `--ease` y las duraciones `--dur-*`.
-- **`molecules.css`** / **`organisms.css`**: composiciones progresivamente más grandes; los nombres de clase de las secciones de página (`.hero`, `.como-llegar`, `.mision`, `.vision`, `.footer-grid`, etc.) viven aquí.
-- **`global.css`**: solo imports, media queries responsive (breakpoints en 1100px tablet y 700px móvil) y un par de utilidades transversales (`.visually-hidden`, reset de `.footer-list`).
+- **`molecules.css`** / **`organisms.css`**: composiciones progresivamente más grandes; los nombres de clase de las secciones de página (`.hero`, `.datos-finca`, `.proceso`, `.coffee-tour`, `.adelanto-tienda`, `.como-llegar`, `.mision`, `.vision`, `.footer-grid`, etc.) viven aquí.
+- **`global.css`**: solo imports, media queries responsive (breakpoints en 1100px tablet y 700px móvil) y un par de utilidades transversales (revelado `[data-revelar]`, `.visually-hidden`, reset de `.footer-list`).
 - Los media queries responsive se centralizan al final de `global.css`, no dispersos por archivo de componente.
 
 ### Imágenes y assets
 
-- Imágenes estáticas de contenido (logo, carrusel) están en `public/Imagenes/` y se referencian con rutas absolutas (`/Imagenes/...`).
+- Imágenes estáticas de contenido (logo, fotos de la finca en `Carrucel1/`, productos) están en `public/Imagenes/` y se referencian con rutas absolutas (`/Imagenes/...`). Declara siempre `width`/`height` reales y usa `loading="lazy"` en todo lo que no sea el hero.
 - Varios `<img>` usan `onerror` para hacer fallback a assets alojados en `figma.com/api/mcp/asset/...` (provenientes del diseño original en Figma) cuando el archivo local falta o no ha sido reemplazado aún — es un patrón intencional, no un error a "arreglar" quitando el fallback.
-- El carrusel (`Carousel.astro`) implementa loop infinito duplicando las slides como clones `aria-hidden`, con soporte de arrastre por mouse y touch, y autoplay pausable en hover. Las constantes `cardW`/`gap` del script deben mantenerse sincronizadas con `--card-width`/`--gap-carousel` en `tokens.css` si se cambian los tamaños de tarjeta.

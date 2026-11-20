@@ -14,13 +14,14 @@ const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Q
 <BaseLayout title={title} description={description}>
 
   <!-- ORGANISMO: Hero de la Tienda -->
-  <section class="tienda-hero section-inner" id="tienda">
-    <div class="tienda-hero-content">
-      <h1 class="tienda-titulo">
-        <span class="tienda-bold">Café de origen</span>
-        <span class="tienda-italic">Las Acacias</span>
+  <section class="hero hero--tienda" id="tienda">
+    <div class="hero-texto">
+      <p class="rotulo">Tienda · Salento · Quindío</p>
+      <h1 class="hero-titular">
+        <span>Café de origen</span>
+        <span><em>Las Acacias</em></span>
       </h1>
-      <p class="tienda-descripcion">
+      <p class="hero-descripcion">
         Nuestro café es 100% artesanal, cultivado y procesado a mano en nuestra finca familiar
         en Salento, Quindío. Cada bolsa representa el trabajo dedicado de varias generaciones
         y el amor por el café colombiano de altura.
@@ -35,12 +36,12 @@ const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Q
           Envíos a toda Colombia
         </span>
       </div>
-      <p class="tienda-nota">
+      <p class="hero-nota">
         <Icon name="truck" size={16} />
         Coordinamos la entrega por WhatsApp
       </p>
     </div>
-    <div class="tienda-hero-imagen">
+    <div class="hero-imagen">
       <img src="/Imagenes/Productos/presentaciones.webp"
            width="1200" height="896"
            fetchpriority="high"
@@ -50,9 +51,12 @@ const description = 'Compra nuestro café 100% artesanal cultivado en Salento, Q
   </section>
 
   <!-- ORGANISMO: Grid de Productos -->
-  <section class="productos-seccion section-inner">
-    <h2 class="productos-seccion-titulo">Nuestros productos</h2>
-    <div class="productos-grid">
+  <section class="productos-seccion section-inner" aria-labelledby="productos-titulo">
+    <div class="encabezado-seccion" data-revelar>
+      <p class="rotulo"><span class="rotulo-num">01</span>Presentaciones</p>
+      <h2 class="titulo-seccion" id="productos-titulo">Nuestros <em>cafés</em></h2>
+    </div>
+    <div class="productos-grid" data-revelar>
       {products.map(product => (
         <ProductCard product={product} />
       ))}

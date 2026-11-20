@@ -2,14 +2,15 @@
    ORGANISMS — Las Acacias Coffee Farm
    ============================================ */
 
-/* ---- Utilidad compartida: centrado de secciones ---- */
+/* ---- Utilidad compartida: centrado de secciones con margen lateral ---- */
 .section-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
   width: 100%;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-/* ---- .site-header ---- */
+/* ---- .site-header (alineado con el contenido de .section-inner) ---- */
 .site-header {
   position: sticky;
   top: 0;
@@ -19,7 +20,7 @@
   justify-content: space-between;
   gap: var(--space-lg);
   background-color: var(--color-header);
-  padding: 0 var(--space-2xl);
+  padding-inline: max(var(--gutter), calc((100% - var(--max-width)) / 2));
   height: var(--header-height);
   width: 100%;
 }
@@ -28,112 +29,174 @@
 .contenido {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5xl);
-  padding: var(--space-3xl) var(--space-2xl) var(--space-6xl);
+  gap: var(--space-6xl);
+  padding-block: var(--space-3xl) var(--space-6xl);
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
+}
+/* El hero a sangre pega a la cabecera */
+.contenido:has(> .hero:first-child) { padding-top: 0; }
+
+/* ---- Rejilla a sangre: hero (foto a la derecha) y coffee tour (foto a la izquierda)
+   Las columnas laterales absorben el sobrante del viewport; la foto se extiende
+   desde la mitad del contenido hasta el borde de la pantalla. ---- */
+.hero,
+.coffee-tour {
+  --mitad-contenido: calc(var(--max-width) / 2);
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [content-start] minmax(0, var(--mitad-contenido))
+    [mitad] minmax(0, var(--mitad-contenido))
+    [content-end] minmax(var(--gutter), 1fr)
+    [full-end];
+  align-items: center;
 }
 
 /* ---- .hero ---- */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--gap-seccion);
-  align-items: center;
-}
 .hero-texto {
+  grid-column: content-start / mitad;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
-  max-width: 520px;
-}
-.hero-ubicacion {
-  font-weight: 500;
-  font-size: var(--fs-sm);
-  line-height: 1.4;
-  color: var(--color-verde);
-  margin-bottom: var(--space-ml);
+  gap: var(--space-lg);
+  padding-block: var(--space-5xl);
+  padding-inline-end: var(--gap-seccion);
 }
 .hero-titular {
-  display: flex;
-  flex-direction: column;
-}
-.hero-bold {
   font-family: var(--fuente-titulo);
   font-weight: 500;
-  font-size: var(--fs-2xl);
-  line-height: 1.08;
+  font-size: var(--fs-display);
+  line-height: 1.02;
   letter-spacing: -0.03em;
   color: var(--color-oscuro);
 }
-.hero-italic {
-  font-family: var(--fuente-cursiva);
+.hero-titular > span { display: block; }
+.hero-titular em {
   font-style: italic;
   font-weight: 400;
-  font-size: var(--fs-2xl);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
   color: var(--color-medio);
 }
 .hero-descripcion {
   font-size: var(--fs-lead);
   line-height: 1.65;
   color: var(--color-medio);
-  max-width: 36rem;
-  margin-top: var(--space-lg);
+  max-width: var(--ancho-texto);
 }
-.hero .badge-group { margin-top: var(--space-lg); }
+.hero .acciones { margin-top: var(--space-sm); }
+.hero-nota {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--color-tenue);
+}
 .hero-imagen {
-  display: flex;
-  justify-content: flex-end;
+  grid-column: mitad / full-end;
+  grid-row: 1;
+  align-self: start;
+  height: clamp(560px, calc(100svh - var(--header-height)), 880px);
 }
 .hero-imagen img {
   width: 100%;
-  max-width: 480px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  border-end-start-radius: var(--radius-sangre);
+  background-color: var(--color-superficie-alta);
+}
+
+/* Variante de la tienda: foto horizontal sin recorte, con aire arriba */
+.hero--tienda { padding-top: var(--space-3xl); }
+.hero--tienda .hero-imagen {
+  align-self: center;
   height: auto;
-  aspect-ratio: 4 / 5;
+}
+.hero--tienda .hero-imagen img {
+  height: auto;
+  aspect-ratio: 1200 / 896;
+  border-start-start-radius: var(--radius-sangre);
+}
+
+/* ---- .datos-finca (franja de cifras entre dos líneas) ---- */
+.contenido > .datos-seccion { margin-top: calc(-1 * var(--space-3xl)); }
+.datos-finca {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-xl);
+  padding-block: var(--space-xl);
+  border-block: 1px solid var(--color-linea-fuerte);
+  list-style: none;
+}
+
+/* ---- .proceso (01 La experiencia: tres pasos escalonados) ---- */
+.proceso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+.proceso-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xl);
+  align-items: start;
+}
+.proceso-grid > .paso:nth-child(2) { margin-top: var(--space-5xl); }
+
+/* ---- .coffee-tour (02: espejo del hero, foto a la izquierda) ---- */
+.coffee-tour-imagen {
+  grid-column: full-start / mitad;
+  grid-row: 1;
+  height: clamp(520px, 80svh, 760px);
+}
+.coffee-tour-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  border-start-end-radius: var(--radius-sangre);
+  border-end-end-radius: var(--radius-sangre);
+  background-color: var(--color-superficie-alta);
+}
+.coffee-tour-texto {
+  grid-column: mitad / content-end;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-inline-start: var(--gap-seccion);
+}
+
+/* ---- .adelanto-tienda (03: banda a todo el ancho sobre superficie) ---- */
+.adelanto-tienda {
+  background-color: var(--color-superficie);
+  padding-block: var(--space-6xl);
+}
+.adelanto-tienda-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--gap-seccion);
+  align-items: center;
+}
+.adelanto-tienda-imagen img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 896;
   object-fit: cover;
   border-radius: var(--radius-card);
   background-color: var(--color-superficie-alta);
 }
-
-/* ---- .carousel-seccion ---- */
-.carousel-seccion {
+.adelanto-tienda-texto {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-}
-.carousel-viewport {
-  overflow: hidden;
-  width: 100%;
-}
-.carousel-track {
-  display: flex;
-  gap: var(--gap-carousel);
-  transition: transform var(--dur-carrusel) var(--ease);
+  gap: var(--space-xl);
 }
 
-/* ---- .como-llegar ---- */
+/* ---- .como-llegar (04) ---- */
 .como-llegar {
   display: flex;
   flex-direction: column;
-}
-.como-llegar-titulo {
-  font-family: var(--fuente-titulo);
-  font-weight: 500;
-  font-size: var(--fs-xl);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--color-oscuro);
-  text-align: center;
-  margin-bottom: var(--space-ms);
-}
-.como-llegar-subtitulo {
-  font-size: var(--fs-lead);
-  line-height: 1.5;
-  color: var(--color-medio);
-  text-align: center;
-  margin-bottom: var(--space-2xl);
+  gap: var(--space-3xl);
 }
 .como-llegar-mapa {
   width: 100%;
@@ -142,7 +205,6 @@
   border-radius: var(--radius-card);
   overflow: hidden;
   background-color: var(--color-superficie-alta);
-  margin-bottom: var(--space-lg);
 }
 .como-llegar-mapa iframe {
   display: block;
@@ -153,8 +215,11 @@
 .como-llegar-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-lg);
+  gap: var(--space-2xl) var(--space-3xl);
 }
+
+/* ---- .cierre (ornamento antes del footer) ---- */
+.cierre { margin-top: calc(-1 * var(--space-3xl)); }
 
 /* ---- .mision / .vision ---- */
 .mision,
@@ -167,102 +232,21 @@
 .vision { grid-template-columns: auto 1fr; }
 .vision .mv-texto { order: 2; }
 .vision .mv-imagen { order: 1; }
-
-.mv-titulo {
-  font-family: var(--fuente-titulo);
-  font-weight: 500;
-  font-size: var(--fs-3xl);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--color-oscuro);
-  margin-bottom: var(--space-lg);
-}
-.mv-descripcion {
-  font-size: var(--fs-lead);
-  line-height: 1.65;
-  color: var(--color-medio);
-  max-width: 36rem;
-  margin-bottom: var(--space-lg);
-}
 .mv-imagen img {
   width: var(--logo-hero);
   height: var(--logo-hero);
 }
 
-/* ---- .tienda-hero (mismo patrón que .hero: texto + foto) ---- */
-.tienda-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--gap-seccion);
-  align-items: center;
-}
-.tienda-hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-lg);
-  max-width: 520px;
-}
-.tienda-titulo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-.tienda-bold {
-  font-family: var(--fuente-titulo);
-  font-weight: 500;
-  font-size: var(--fs-2xl);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  color: var(--color-oscuro);
-}
-.tienda-italic {
-  font-family: var(--fuente-cursiva);
-  font-style: italic;
-  font-weight: 400;
-  font-size: var(--fs-xl);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--color-medio);
-}
-.tienda-descripcion {
-  font-size: var(--fs-lead);
-  line-height: 1.65;
-  color: var(--color-medio);
-  max-width: 640px;
-}
-.tienda-nota {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: var(--fs-sm);
-  line-height: 1.4;
-  color: var(--color-tenue);
-}
-.tienda-hero-imagen img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-card);
-  background-color: var(--color-superficie-alta);
-}
-
 /* ---- .productos-seccion ---- */
-.productos-seccion-titulo {
-  font-family: var(--fuente-titulo);
-  font-weight: 500;
-  font-size: var(--fs-lg);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--color-oscuro);
-  text-align: center;
-  margin-bottom: var(--space-xl);
+.productos-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
 }
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-lg);
+  gap: var(--space-4xl) var(--space-xl);
   width: 100%;
 }
 
@@ -358,7 +342,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  padding: var(--space-ml) var(--space-lg);
+  padding: var(--space-md) var(--space-ms) var(--space-md) var(--space-lg);
   border-bottom: 1px solid var(--color-linea);
 }
 .cart-title {
@@ -366,6 +350,7 @@
   font-weight: 500;
   font-size: var(--fs-panel);
   line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--color-oscuro);
 }
 
@@ -393,7 +378,7 @@
   transition: border-color var(--transition);
 }
 .customer-input {
-  height: 44px;
+  height: var(--alto-control);
   padding: 0 var(--space-ms);
   font-size: var(--fs-base);
 }
@@ -545,6 +530,7 @@
   font-weight: 500;
   font-size: var(--fs-card);
   line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--color-oscuro);
 }
 .whatsapp-body { padding: var(--space-lg); }
@@ -573,7 +559,7 @@
 .whatsapp-btn-link {
   display: block;
   width: 100%;
-  height: 40px;
+  height: var(--alto-control);
   border: none;
   border-radius: var(--radius-control);
   background: none;
@@ -590,7 +576,7 @@
 .site-footer {
   background-color: var(--color-oscuro);
   color: var(--color-footer-texto);
-  padding: var(--space-xl) var(--space-2xl) var(--space-lg);
+  padding-block: var(--space-4xl) var(--space-lg);
   width: 100%;
 }
 .site-footer :focus-visible { outline-color: var(--color-footer-acent); }
@@ -598,15 +584,24 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-footer-grid);
-  padding-bottom: var(--space-xl);
+  padding-bottom: var(--space-3xl);
 }
 .footer-bottom {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
   padding-top: var(--space-ml);
-  border-top: 1px solid var(--color-footer-linea);
+}
+/* La línea respeta el margen lateral de .section-inner */
+.footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline: var(--gutter);
+  height: 1px;
+  background-color: var(--color-footer-linea);
 }
 .footer-copyright {
   font-size: var(--fs-xs);

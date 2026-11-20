@@ -1,32 +1,90 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Carousel from '../components/Carousel.astro';
+import Icon from '../components/Icon.astro';
+import { buildWhatsAppURL } from '../data/contacto';
+
+const reservarTourURL = buildWhatsAppURL('Hola, quiero reservar un Coffee Tour en Las Acacias');
+
+const datos = [
+  { cifra: '1.850 m', etiqueta: 'sobre el nivel del mar' },
+  { cifra: '3,5 km',  etiqueta: 'desde la plaza de Salento' },
+  { cifra: '100%',    etiqueta: 'proceso manual' },
+  { cifra: 'ES · EN', etiqueta: 'tours en español o inglés' },
+];
+
+// Textos de los pasos: borrador derivado de la copia del sitio, pendiente de revisión de la familia
+const pasos = [
+  {
+    src: '/Imagenes/Carrucel1/5.webp',
+    alt: 'Mano recogiendo una cereza madura de café',
+    titulo: 'La cosecha',
+    texto: 'Recolectamos el café a mano, cereza por cereza, entre los cafetales de la finca.',
+  },
+  {
+    src: '/Imagenes/Carrucel1/3.webp',
+    alt: 'Grupo de visitantes en la barra durante el tour de café',
+    titulo: 'El recorrido',
+    texto: 'Recorre con nosotros el cultivo, el beneficio y el tueste, y prueba el café en la barra.',
+  },
+  {
+    src: '/Imagenes/Carrucel1/4.webp',
+    alt: 'Taza de café frente a las montañas de Salento',
+    titulo: 'La taza',
+    texto: 'Un café cosechado y procesado a mano, servido frente a las montañas de Salento.',
+  },
+];
+
+const transportes = [
+  {
+    icono: '/Imagenes/Llegada/caballo_1.png',
+    titulo: 'A caballo',
+    texto: 'Una opción de transporte muy atractiva es realizar un recorrido a caballo desde el casco urbano de Salento hasta la finca. Esta experiencia permite disfrutar del paisaje de una manera diferente y relajada, convirtiendo el trayecto en parte de la aventura. Es una alternativa ideal para quienes desean agregar un toque especial y auténtico a su visita.',
+  },
+  {
+    icono: '/Imagenes/Llegada/Jeep_4.png',
+    titulo: 'En Jeep',
+    texto: 'Puedes llegar a la finca en un tradicional Jeep Willys, utilizando un servicio público o privado desde Salento. Estos emblemáticos vehículos de la región tienen capacidad para grupos de hasta 10 personas y ofrecen una experiencia auténtica, permitiendo disfrutar del paisaje cafetero durante el recorrido de una forma cómoda y memorable.',
+  },
+  {
+    icono: '/Imagenes/Llegada/caminando.png',
+    titulo: 'Caminando',
+    texto: 'Si disfrutas de la aventura y el contacto con la naturaleza, puedes llegar caminando desde la plaza principal de Salento. La finca se encuentra a solo 3,5 km, en un recorrido de aproximadamente una hora. El trayecto es mayormente en descenso, lo que lo hace cómodo y agradable. Además, es una ruta segura y frecuentada por viajeros de todo el mundo.',
+  },
+  {
+    icono: '/Imagenes/Llegada/carro.png',
+    titulo: 'En carro',
+    texto: 'Desde Salento, toma la vía que pasa junto al cementerio y continúa por la misma carretera durante aproximadamente 3 kilómetros, sin tomar desvíos. Nos encontrarás al costado derecho de la vía. Además, el recorrido cuenta con una señalización clara y visible que facilita la llegada a la finca.',
+  },
+];
 ---
 <BaseLayout title="Las Acacias · Coffee Farm · Salento">
 
   <!-- ORGANISMO: Hero -->
-  <section class="hero section-inner" id="home">
+  <section class="hero" id="home">
     <div class="hero-texto">
-      <p class="hero-ubicacion">Salento · Quindío · 1.850 m s. n. m.</p>
+      <p class="rotulo">Salento · Quindío · 1.850 m s. n. m.</p>
       <h1 class="hero-titular">
-        <span class="hero-bold">Vive el café</span>
-        <span class="hero-italic">desde la semilla</span>
-        <span class="hero-bold">hasta la taza</span>
+        <span>Vive el café</span>
+        <span><em>desde la semilla</em></span>
+        <span>hasta la taza</span>
       </h1>
       <p class="hero-descripcion">
         Una finca cafetera familiar en la cordillera central colombiana.
         Recorre el cultivo, el beneficio y el tueste con nosotros,
         y llévate a casa un café cosechado y procesado a mano.
       </p>
-      <div class="badge-group">
-        <span class="badge-item">
-          <span class="badge-dot badge-dot-verde" aria-hidden="true"></span>
-          Proceso 100% manual
-        </span>
-        <span class="badge-item">
-          <span class="badge-dot badge-dot-header" aria-hidden="true"></span>
-          Finca familiar
-        </span>
+      <div class="acciones">
+        <a href={reservarTourURL}
+           class="btn btn-primario btn-lg"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Reservar un Coffee Tour por WhatsApp (se abre en una pestaña nueva)">
+          <Icon name="message-circle" />
+          Reservar un Coffee Tour
+        </a>
+        <a href="/cafe-origen" class="enlace-flecha">
+          Comprar café de origen
+          <Icon name="arrow-right" />
+        </a>
       </div>
     </div>
     <div class="hero-imagen">
@@ -38,14 +96,122 @@ import Carousel from '../components/Carousel.astro';
     </div>
   </section>
 
-  <!-- ORGANISMO: Carousel -->
-  <Carousel />
+  <!-- ORGANISMO: Datos de la finca -->
+  <section class="datos-seccion section-inner" aria-label="La finca en cifras">
+    <ul class="datos-finca">
+      {datos.map(dato => (
+        <li class="dato">
+          <span class="dato-cifra">{dato.cifra}</span>
+          <span class="dato-etiqueta">{dato.etiqueta}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
 
-  <!-- ORGANISMO: Cómo llegar -->
-  <section class="como-llegar section-inner" id="tour">
-    <h2 class="como-llegar-titulo">Cómo llegar</h2>
-    <p class="como-llegar-subtitulo">Estamos a solo 3,5 km de la plaza de Salento</p>
-    <div class="como-llegar-mapa">
+  <!-- ORGANISMO: Proceso (01 La experiencia) -->
+  <section class="proceso section-inner" id="experiencia" aria-labelledby="experiencia-titulo">
+    <div class="encabezado-seccion" data-revelar>
+      <p class="rotulo"><span class="rotulo-num">01</span>La experiencia</p>
+      <h2 class="titulo-seccion" id="experiencia-titulo">Del cafetal <em>a tu taza</em></h2>
+      <p class="entrada">
+        Cada etapa del café se hace a mano en la finca, y puedes vivirlas todas en una sola visita.
+      </p>
+    </div>
+    <div class="proceso-grid">
+      {pasos.map((paso, i) => (
+        <figure class="paso" data-revelar style={`--i: ${i}`}>
+          <img class="paso-foto" src={paso.src} alt={paso.alt}
+               width="1080" height="1440" loading="lazy" decoding="async" />
+          <figcaption class="paso-pie">
+            <span class="paso-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="paso-titulo">{paso.titulo}</h3>
+            <p class="paso-texto">{paso.texto}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <!-- ORGANISMO: Coffee Tour (02) -->
+  <section class="coffee-tour" id="tour" aria-labelledby="tour-titulo">
+    <div class="coffee-tour-imagen">
+      <img src="/Imagenes/Carrucel1/2.webp"
+           width="1080" height="1440"
+           loading="lazy" decoding="async"
+           alt="Perro de la finca mirando los cafetales en ladera bajo la niebla" />
+    </div>
+    <div class="coffee-tour-texto" data-revelar>
+      <div class="encabezado-seccion">
+        <p class="rotulo"><span class="rotulo-num">02</span>Coffee Tour</p>
+        <h2 class="titulo-seccion" id="tour-titulo">Visítanos en <em>la finca</em></h2>
+        <p class="entrada">
+          Recorre con nosotros el cultivo, el beneficio y el tueste del café,
+          y conoce de cerca el trabajo de una finca familiar.
+        </p>
+      </div>
+      <ul class="lista-iconos">
+        <li><Icon name="clock" size={20} />Todos los días, de 9:00 a. m. a 4:00 p. m.</li>
+        <li><Icon name="languages" size={20} />En español o inglés</li>
+        <li><Icon name="map-pin" size={20} /><span>A 3,5 km de la plaza de Salento · <a href="#como-llegar">Cómo llegar</a></span></li>
+      </ul>
+      <div class="acciones">
+        <a href={reservarTourURL}
+           class="btn btn-primario btn-lg"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Reservar por WhatsApp (se abre en una pestaña nueva)">
+          <Icon name="message-circle" />
+          Reservar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANISMO: Adelanto de la tienda (03) -->
+  <section class="adelanto-tienda" aria-labelledby="tienda-titulo">
+    <div class="adelanto-tienda-grid section-inner" data-revelar>
+      <div class="adelanto-tienda-imagen">
+        <img src="/Imagenes/Productos/presentaciones.webp"
+             width="1200" height="896"
+             loading="lazy" decoding="async"
+             alt="Bolsas kraft de Café de Origen Las Acacias de 500 g, 250 g y 125 g sobre una mesa de madera con granos de café tostado" />
+      </div>
+      <div class="adelanto-tienda-texto">
+        <div class="encabezado-seccion">
+          <p class="rotulo"><span class="rotulo-num">03</span>Café de origen</p>
+          <h2 class="titulo-seccion" id="tienda-titulo">Llévate la finca <em>a casa</em></h2>
+          <p class="entrada">
+            Café 100% artesanal, cultivado y procesado a mano en nuestra finca familiar.
+            En grano o molido, en varias presentaciones.
+          </p>
+        </div>
+        <div class="badge-group">
+          <span class="badge-item">
+            <span class="badge-dot badge-dot-verde" aria-hidden="true"></span>
+            Proceso 100% manual
+          </span>
+          <span class="badge-item">
+            <span class="badge-dot badge-dot-header" aria-hidden="true"></span>
+            Envíos a toda Colombia
+          </span>
+        </div>
+        <div class="acciones">
+          <a href="/cafe-origen" class="btn btn-primario btn-lg">
+            Ver el café de origen
+            <Icon name="arrow-right" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANISMO: Cómo llegar (04) -->
+  <section class="como-llegar section-inner" id="como-llegar" aria-labelledby="como-llegar-titulo">
+    <div class="encabezado-seccion" data-revelar>
+      <p class="rotulo"><span class="rotulo-num">04</span>Cómo llegar</p>
+      <h2 class="titulo-seccion" id="como-llegar-titulo">El camino <em>a la finca</em></h2>
+      <p class="entrada">Estamos a solo 3,5 km de la plaza de Salento.</p>
+    </div>
+    <div class="como-llegar-mapa" data-revelar>
       <iframe
         src="https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%ADo,+Colombia&daddr=Las+Acacias+Coffee+Farm,+Palestina,+Salento,+Quind%C3%ADo&output=embed"
         title="Ruta desde la Plaza de Salento hasta Finca Las Acacias"
@@ -55,27 +221,19 @@ import Carousel from '../components/Carousel.astro';
       </iframe>
     </div>
     <div class="como-llegar-grid">
-      <article class="transport-card">
-        <img class="transport-icon" src="/Imagenes/Llegada/caballo_1.png" width="64" height="64" loading="lazy" alt="" />
-        <h3 class="transport-titulo">A caballo</h3>
-        <p class="transport-desc">Una opción de transporte muy atractiva es realizar un recorrido a caballo desde el casco urbano de Salento hasta la finca. Esta experiencia permite disfrutar del paisaje de una manera diferente y relajada, convirtiendo el trayecto en parte de la aventura. Es una alternativa ideal para quienes desean agregar un toque especial y auténtico a su visita.</p>
-      </article>
-      <article class="transport-card">
-        <img class="transport-icon" src="/Imagenes/Llegada/Jeep_4.png" width="64" height="64" loading="lazy" alt="" />
-        <h3 class="transport-titulo">En Jeep</h3>
-        <p class="transport-desc">Puedes llegar a la finca en un tradicional Jeep Willys, utilizando un servicio público o privado desde Salento. Estos emblemáticos vehículos de la región tienen capacidad para grupos de hasta 10 personas y ofrecen una experiencia auténtica, permitiendo disfrutar del paisaje cafetero durante el recorrido de una forma cómoda y memorable.</p>
-      </article>
-      <article class="transport-card">
-        <img class="transport-icon" src="/Imagenes/Llegada/caminando.png" width="64" height="64" loading="lazy" alt="" />
-        <h3 class="transport-titulo">Caminando</h3>
-        <p class="transport-desc">Si disfrutas de la aventura y el contacto con la naturaleza, puedes llegar caminando desde la plaza principal de Salento. La finca se encuentra a solo 3,5 km, en un recorrido de aproximadamente una hora. El trayecto es mayormente en descenso, lo que lo hace cómodo y agradable. Además, es una ruta segura y frecuentada por viajeros de todo el mundo.</p>
-      </article>
-      <article class="transport-card">
-        <img class="transport-icon" src="/Imagenes/Llegada/carro.png" width="64" height="64" loading="lazy" alt="" />
-        <h3 class="transport-titulo">En carro</h3>
-        <p class="transport-desc">Desde Salento, toma la vía que pasa junto al cementerio y continúa por la misma carretera durante aproximadamente 3 kilómetros, sin tomar desvíos. Nos encontrarás al costado derecho de la vía. Además, el recorrido cuenta con una señalización clara y visible que facilita la llegada a la finca.</p>
-      </article>
+      {transportes.map((t, i) => (
+        <article class="transport-item" data-revelar style={`--i: ${i % 2}`}>
+          <img class="transport-icon" src={t.icono} width="48" height="48" loading="lazy" alt="" />
+          <h3 class="transport-titulo">{t.titulo}</h3>
+          <p class="transport-desc">{t.texto}</p>
+        </article>
+      ))}
     </div>
   </section>
+
+  <!-- ORGANISMO: Cierre -->
+  <div class="cierre section-inner">
+    <div class="ornamento" aria-hidden="true"><Icon name="sprout" size={24} /></div>
+  </div>
 
 </BaseLayout>

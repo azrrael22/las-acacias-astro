@@ -42,6 +42,19 @@
   align-items: center;
 }
 
+/* --- .encabezado-seccion (rótulo + título + entrada) --- */
+.encabezado-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-ml);
+  max-width: var(--ancho-texto);
+}
+.encabezado-seccion .entrada {
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--color-medio);
+}
+
 /* --- .badge-group --- */
 .badge-group {
   display: flex;
@@ -50,40 +63,130 @@
   flex-wrap: wrap;
 }
 
-/* --- .transport-card --- */
-.transport-card {
+/* --- .acciones (CTA principal + enlace secundario) --- */
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md) var(--space-xl);
+}
+
+/* --- .dato (cifra grande + etiqueta) --- */
+.dato {
   display: flex;
   flex-direction: column;
-  gap: var(--space-ms);
-  padding: var(--space-lg);
-  background-color: var(--color-superficie);
-  border: 1px solid var(--color-linea);
-  border-radius: var(--radius-card);
+  gap: var(--space-xs);
 }
-.transport-card .transport-icon {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-  margin-bottom: var(--space-sm);
+.dato-cifra {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  font-size: var(--fs-cifra);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--color-oscuro);
 }
-.transport-card .transport-titulo {
+.dato-etiqueta {
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--color-tenue);
+}
+
+/* --- .paso (foto + pie numerado; --i escalona el revelado) --- */
+.paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-ml);
+}
+.paso-foto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-foto);
+  background-color: var(--color-superficie-alta);
+}
+.paso-pie {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-xs) var(--space-md);
+  align-items: baseline;
+}
+.paso-num {
+  grid-row: span 2;
+  font-family: var(--fuente-titulo);
+  font-style: italic;
+  font-size: var(--fs-card);
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+  color: var(--color-tenue);
+}
+.paso-titulo {
   font-family: var(--fuente-titulo);
   font-weight: 500;
   font-size: var(--fs-card);
   line-height: 1.2;
   color: var(--color-oscuro);
 }
-.transport-card .transport-desc {
+.paso-texto {
   font-size: var(--fs-ui);
   line-height: 1.6;
   color: var(--color-medio);
 }
 
-/* --- .carousel-controls --- */
-.carousel-controls {
+/* --- .lista-iconos (ícono + texto, una fila por dato) --- */
+.lista-iconos {
   display: flex;
-  justify-content: center;
-  gap: var(--gap-dots);
+  flex-direction: column;
+  list-style: none;
+  border-top: 1px solid var(--color-linea);
+}
+.lista-iconos li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-ms);
+  min-height: var(--space-4xl);
+  padding-block: var(--space-ms);
+  border-bottom: 1px solid var(--color-linea);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--color-oscuro);
+}
+.lista-iconos .icon { color: var(--color-verde); }
+.lista-iconos a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-linea-fuerte);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--transition);
+}
+.lista-iconos a:hover { text-decoration-color: currentColor; }
+
+/* --- .transport-item (sin caja: línea superior + ícono + texto) --- */
+.transport-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-xs) var(--space-ml);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-linea-fuerte);
+}
+.transport-item .transport-icon {
+  grid-row: span 2;
+  width: var(--space-3xl);
+  height: var(--space-3xl);
+  object-fit: contain;
+}
+.transport-item .transport-titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: var(--fs-card);
+  line-height: 1.2;
+  color: var(--color-oscuro);
+}
+.transport-item .transport-desc {
+  font-size: var(--fs-ui);
+  line-height: 1.65;
+  color: var(--color-medio);
 }
 
 /* --- .footer-brand --- */
@@ -126,26 +229,23 @@
 /* --- .footer-telefono --- */
 .footer-telefono { font-variant-numeric: tabular-nums; }
 
-/* --- .product-card --- */
+/* --- .product-card (editorial: tesela de foto + texto, sin caja) --- */
 .product-card {
   display: flex;
   flex-direction: column;
+  gap: var(--space-ml);
   height: 100%;
-  background-color: var(--color-superficie);
-  border: 1px solid var(--color-linea);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  transition: border-color var(--transition);
 }
-.product-card:hover { border-color: var(--color-linea-fuerte); }
 
 /* Bolsa recortada sin fondo (3:4) sobre el fondo de estudio; la sombra la
    pone el sitio (ver GUIA-IMAGENES-PRODUCTOS.md) */
 .product-image {
   display: flex;
   justify-content: center;
-  height: 280px;
+  height: 320px;
+  padding-block: var(--space-md);
   background-color: var(--color-foto);
+  border-radius: var(--radius-card);
 }
 .product-image img {
   height: 100%;
@@ -153,13 +253,14 @@
   aspect-ratio: 3 / 4;
   object-fit: contain;
   filter: drop-shadow(var(--sombra-producto));
+  transition: transform var(--dur-media) var(--ease);
 }
+.product-card:hover .product-image img { transform: translateY(-2px); }
 .product-info {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   flex: 1;
-  padding: var(--space-ml);
 }
 .product-name {
   font-family: var(--fuente-titulo);
@@ -177,7 +278,7 @@
 .product-description {
   flex: 1;
   font-size: var(--fs-sm);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--color-medio);
 }
 .product-footer {
@@ -187,6 +288,7 @@
   gap: var(--space-ms);
   margin-top: auto;
   padding-top: var(--space-ms);
+  border-top: 1px solid var(--color-linea);
 }
 .product-price {
   font-family: var(--fuente-titulo);
@@ -195,7 +297,7 @@
   font-variant-numeric: lining-nums tabular-nums;
   color: var(--color-oscuro);
 }
-.btn-add-to-cart { min-width: 112px; }
+.btn-add-to-cart { min-width: 120px; }
 .btn-add-to-cart.added,
 .btn-add-to-cart.added:hover {
   background-color: var(--color-verde);
@@ -211,7 +313,7 @@
 .quantity-controls {
   display: inline-flex;
   align-items: center;
-  height: 32px;
+  height: var(--alto-control-sm);
   padding: 2px;
   background-color: var(--color-superficie);
   border: 1px solid var(--color-linea);
@@ -220,8 +322,8 @@
 .qty-btn {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 26px;
+  width: 36px;
+  height: 34px;
   padding: 0;
   border: none;
   border-radius: var(--radius-sm);
@@ -235,7 +337,7 @@
   color: var(--color-oscuro);
 }
 .qty-display {
-  min-width: 28px;
+  min-width: 32px;
   text-align: center;
   font-size: var(--fs-sm);
   font-weight: 500;

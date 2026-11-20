@@ -4,7 +4,7 @@
 :root {
   /* --- Neutros: papel crema + tinta café --- */
   --color-fondo:                 #f4ebdd;   /* página */
-  --color-superficie:            #fbf7f0;   /* tarjetas, paneles, inputs */
+  --color-superficie:            #fbf7f0;   /* tarjetas, paneles, inputs, banda de la tienda */
   --color-superficie-alta:       #ece2d2;   /* botón secundario, stepper */
   --color-superficie-alta-hover: #e5d9c5;
   --color-foto:                  #f2f1ee;   /* fondo de estudio de las fotos de producto */
@@ -28,14 +28,10 @@
   --color-footer-linea:  rgba(244, 235, 221, 0.15);
   --color-footer-acent:  #8fbfcc;
 
-  /* --- Carrusel --- */
-  --color-dot-inactivo:  #c8b8a2;
-
   /* --- Tipografías --- */
-  --fuente-display:  'Great Vibes', cursive;          /* solo marca escrita y firma */
-  --fuente-titulo:   'Playfair Display', serif;       /* titulares */
-  --fuente-cursiva:  'Cormorant Garamond', serif;     /* solo la línea itálica de los titulares */
-  --fuente-cuerpo:   'Montserrat', sans-serif;        /* interfaz y texto */
+  --fuente-display:  'Great Vibes', cursive;                 /* solo logotipo y firma */
+  --fuente-titulo:   'Fraunces', Georgia, serif;             /* titulares; su itálica marca el énfasis */
+  --fuente-cuerpo:   'Figtree', system-ui, sans-serif;       /* interfaz y texto */
 
   /* --- Tamaños de fuente --- */
   --fs-xs:        12px;
@@ -50,9 +46,12 @@
   --fs-titulo-sm: 32px;
   --fs-lg:        40px;
   --fs-xl:        48px;
-  --fs-2xl:       56px;
-  --fs-3xl:       72px;
-  --fs-firma:     22px;
+  --fs-firma:     26px;
+
+  /* Display fluido (editorial): crece con el viewport entre un mínimo y un máximo */
+  --fs-display: clamp(44px, 3.4vw + 20px, 76px);   /* h1 del hero */
+  --fs-seccion: clamp(32px, 2.4vw + 20px, 56px);   /* h2 de cada sección */
+  --fs-cifra:   clamp(32px, 1.6vw + 24px, 48px);   /* cifras de la franja de datos */
 
   /* --- Espaciado: rejilla de 4px --- */
   --space-xs:    4px;
@@ -69,25 +68,29 @@
   --space-6xl:  96px;
 
   /* --- Gaps específicos --- */
-  --gap-carousel:    12px;   /* sincronizado con `gap` en Carousel.astro */
-  --gap-dots:         4px;
   --gap-footer-grid: 40px;
   --gap-seccion:     64px;
 
   /* --- Layout --- */
   --max-width:      1200px;
+  --gutter:         var(--space-2xl);   /* margen lateral de .section-inner; cambia por breakpoint en global.css */
+  --ancho-texto:    36rem;              /* medida de lectura */
   --header-height:   80px;
   --logo-header:     56px;
   --logo-hero:      360px;
   --logo-footer:     72px;
-  --card-width:     280px;   /* sincronizado con `cardW` en Carousel.astro */
-  --card-height:    352px;
+
+  /* --- Controles (área táctil mínima 44px) --- */
+  --alto-control:     44px;
+  --alto-control-sm:  40px;
+  --alto-control-lg:  52px;
 
   /* --- Radios (anidado: interior = exterior − padding) --- */
   --radius-sm:       6px;
   --radius-control:  8px;
   --radius-foto:    12px;
   --radius-card:    16px;
+  --radius-sangre:  28px;   /* esquina interior de las fotos a sangre */
 
   /* --- Sombras (neutras, solo para lo que flota) --- */
   --sombra-flotante: 0 8px 24px rgba(42, 26, 13, 0.12);
@@ -98,6 +101,8 @@
   --dur-rapida:    160ms;   /* hover, press */
   --dur-media:     220ms;   /* modal */
   --dur-entrada:   320ms;   /* panel del carrito */
-  --dur-carrusel:  400ms;
+  --dur-revelar:   480ms;   /* entrada de secciones al hacer scroll */
+  --revelar-y:     12px;    /* desplazamiento inicial del revelado */
+  --retraso-paso:  80ms;    /* escalonado entre elementos hermanos (--i) */
   --transition:    var(--dur-rapida) var(--ease);
 }

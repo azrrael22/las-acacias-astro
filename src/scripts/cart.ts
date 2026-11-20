@@ -6,6 +6,10 @@
 
 import type { Product } from '../data/products';
 import { getProductById } from '../data/products';
+import { buildWhatsAppURL } from '../data/contacto';
+
+// Re-exportado para que CartModal y WhatsAppModal sigan importándolo desde aquí
+export { buildWhatsAppURL };
 
 // ============================================
 // TYPES
@@ -27,7 +31,7 @@ export interface Cart {
 // ============================================
 
 const CART_STORAGE_KEY = 'las-acacias-cart';
-const WHATSAPP_NUMBER = '573175336091'; // ← EDITAR NÚMERO DE WHATSAPP AQUÍ
+// El número de WhatsApp vive en src/data/contacto.ts
 
 // Evento personalizado para notificar cambios en el carrito
 export const CART_UPDATED_EVENT = 'cart:updated';
@@ -217,13 +221,6 @@ export function generateWhatsAppMessage(customerName?: string): string {
   message += `¡Gracias!`;
 
   return message;
-}
-
-/**
- * Construir URL de WhatsApp para un mensaje dado
- */
-export function buildWhatsAppURL(message: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
 /**

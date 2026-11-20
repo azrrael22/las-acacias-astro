@@ -28,7 +28,13 @@ const ogImage = '/Imagenes/logo.png';
   <meta property="og:image" content={ogImage} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600&family=Cormorant+Garamond:ital,wght@1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <!-- Revelado al hacer scroll: se activa antes del primer pintado para que no parpadee -->
+  <script is:inline>
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('revelar-js');
+    }
+  </script>
 </head>
 <body>
   <Header />
@@ -36,5 +42,20 @@ const ogImage = '/Imagenes/logo.png';
     <slot />
   </main>
   <Footer />
+
+  <script>
+    // Muestra cada [data-revelar] la primera vez que entra en pantalla
+    if (document.documentElement.classList.contains('revelar-js')) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('revelado');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('[data-revelar]').forEach((el) => observer.observe(el));
+    }
+  </script>
 </body>
 </html>

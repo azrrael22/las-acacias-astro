@@ -6,10 +6,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <h1 class="visually-hidden">Conócenos</h1>
 
   <!-- ORGANISMO: Misión -->
-  <section class="mision section-inner">
-    <div class="mv-texto">
-      <h2 class="mv-titulo">Misión</h2>
-      <p class="mv-descripcion">
+  <section class="mision section-inner" aria-labelledby="mision-titulo">
+    <div class="mv-texto encabezado-seccion">
+      <p class="rotulo"><span class="rotulo-num">01</span>Lo que hacemos</p>
+      <h2 class="titulo-seccion" id="mision-titulo">Misión</h2>
+      <p class="entrada">
         Una finca cafetera familiar en la cordillera central colombiana.
         Recorre el cultivo, el beneficio y el tueste con nosotros,
         y llévate a casa un café cosechado y procesado a mano.
@@ -35,17 +36,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- ORGANISMO: Visión -->
-  <section class="vision section-inner">
+  <section class="vision section-inner" aria-labelledby="vision-titulo" data-revelar>
     <div class="mv-imagen">
       <img class="img-circular"
            src="/Imagenes/logo.png"
            onerror="this.src='https://www.figma.com/api/mcp/asset/d9a81a27-53bf-446b-90db-b6edaa48547b'"
            width="360" height="360"
+           loading="lazy"
            alt="Logo Las Acacias Coffee Farm" />
     </div>
-    <div class="mv-texto">
-      <h2 class="mv-titulo">Visión</h2>
-      <p class="mv-descripcion">
+    <div class="mv-texto encabezado-seccion">
+      <p class="rotulo"><span class="rotulo-num">02</span>Hacia dónde vamos</p>
+      <h2 class="titulo-seccion" id="vision-titulo">Visión</h2>
+      <p class="entrada">
         Una finca cafetera familiar en la cordillera central colombiana.
         Recorre el cultivo, el beneficio y el tueste con nosotros,
         y llévate a casa un café cosechado y procesado a mano.

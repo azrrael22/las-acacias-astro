@@ -4,7 +4,7 @@
 
 /* --- Reset base --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
 body {
   background-color: var(--color-fondo);
   color: var(--color-oscuro);
@@ -15,6 +15,8 @@ body {
 img { display: block; max-width: 100%; }
 address { font-style: normal; }
 button, input, textarea { font: inherit; color: inherit; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
 
 /* --- Foco visible para teclado --- */
 :focus-visible {
@@ -35,22 +37,98 @@ button, input, textarea { font: inherit; color: inherit; }
   display: block;
 }
 
+/* --- .rotulo (abre cada sección: número + línea + nombre) --- */
+.rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-ms);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  color: var(--color-medio);
+}
+.rotulo-num {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-ms);
+  font-family: var(--fuente-titulo);
+  font-size: var(--fs-base);
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--color-tenue);
+}
+.rotulo-num::after {
+  content: '';
+  width: var(--space-xl);
+  height: 1px;
+  background-color: var(--color-linea-fuerte);
+}
+
+/* --- .titulo-seccion (h2 editorial; el <em> es la línea en itálica) --- */
+.titulo-seccion {
+  font-family: var(--fuente-titulo);
+  font-weight: 500;
+  font-size: var(--fs-seccion);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-oscuro);
+}
+.titulo-seccion em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-medio);
+}
+
 /* --- .nav-link --- */
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alto-control);
   font-weight: 500;
   font-size: var(--fs-ui);
   color: var(--color-oscuro);
-  text-decoration: none;
   line-height: 1.4;
-  padding-block: var(--space-xs);
-  transition: color var(--transition);
-}
-.nav-link:hover,
-.nav-link.active { color: var(--color-verde); }
-.nav-link.active {
+  /* El texto se queda en --color-oscuro: el verde sobre el cielo no llega a 4,5:1,
+     así que el estado se marca con el subrayado (basta 3:1 para indicadores) */
   text-decoration: underline;
+  text-decoration-color: transparent;
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
+  transition: text-decoration-color var(--transition);
+}
+.nav-link:hover  { text-decoration-color: var(--color-medio); }
+.nav-link.active { text-decoration-color: var(--color-verde); }
+
+/* --- .enlace-flecha (acción secundaria en texto) --- */
+.enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: var(--alto-control);
+  font-weight: 500;
+  font-size: var(--fs-base);
+  color: var(--color-verde);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: color var(--transition);
+}
+.enlace-flecha .icon { transition: transform var(--transition); }
+.enlace-flecha:hover { color: var(--color-verde-hover); }
+.enlace-flecha:hover .icon { transform: translateX(2px); }
+
+/* --- .ornamento (línea + brote: eco del dibujo de línea del empaque) --- */
+.ornamento {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--color-tenue);
+}
+.ornamento::before,
+.ornamento::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-linea-fuerte);
 }
 
 /* --- .badge-item + .badge-dot (el punto de color es la firma del sitio) --- */
@@ -79,8 +157,8 @@ button, input, textarea { font: inherit; color: inherit; }
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  height: 40px;
-  padding: 0 var(--space-md);
+  height: var(--alto-control);
+  padding: 0 var(--space-ml);
   border: 1px solid transparent;
   border-radius: var(--radius-control);
   font-family: var(--fuente-cuerpo);
@@ -97,8 +175,8 @@ button, input, textarea { font: inherit; color: inherit; }
     transform var(--transition);
 }
 .btn:active { transform: scale(0.97); }
-.btn-sm { height: 36px; padding: 0 var(--space-ms); }
-.btn-lg { height: 48px; padding: 0 var(--space-lg); font-size: var(--fs-base); }
+.btn-sm { height: var(--alto-control-sm); padding: 0 var(--space-md); }
+.btn-lg { height: var(--alto-control-lg); padding: 0 var(--space-lg); font-size: var(--fs-base); }
 
 .btn-primario {
   background-color: var(--color-verde);
@@ -136,8 +214,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .btn-icono {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: var(--alto-control);
+  height: var(--alto-control);
   padding: 0;
   border: none;
   border-radius: var(--radius-control);
@@ -152,8 +230,8 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--color-oscuro);
 }
 .btn-icono-sm {
-  width: 32px;
-  height: 32px;
+  width: var(--alto-control-sm);
+  height: var(--alto-control-sm);
   color: var(--color-tenue);
 }
 
@@ -162,7 +240,7 @@ button, input, textarea { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  min-height: 32px;
+  min-height: var(--alto-control-sm);
   color: var(--color-footer-texto);
   font-size: var(--fs-sm);
   line-height: 1.4;
@@ -175,43 +253,3 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .social-link:hover,
 .social-link:hover .icon { color: var(--color-footer-acent); }
-
-/* --- .carousel-dot (área táctil de 24, punto de 8) --- */
-.carousel-dot {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: none;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.carousel-dot::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-dot-inactivo);
-  transition: background-color var(--transition);
-}
-.carousel-dot:hover::before  { background-color: var(--color-oscuro); }
-.carousel-dot.active::before { background-color: var(--color-medio); }
-
-/* --- .cafe-card (slide del carrusel) --- */
-.cafe-card {
-  flex-shrink: 0;
-  width: var(--card-width);
-  height: var(--card-height);
-  border-radius: var(--radius-foto);
-  overflow: hidden;
-  position: relative;
-  background-color: var(--color-superficie-alta);
-}
-.cafe-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
