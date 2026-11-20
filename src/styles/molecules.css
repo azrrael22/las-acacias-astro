@@ -139,8 +139,8 @@
 }
 .product-card:hover { border-color: var(--color-linea-fuerte); }
 
-/* La foto se recorta a 380:500 (quita las bandas laterales del archivo)
-   y sus bordes se funden con el fondo de estudio */
+/* Bolsa recortada sin fondo (3:4) sobre el fondo de estudio; la sombra la
+   pone el sitio (ver GUIA-IMAGENES-PRODUCTOS.md) */
 .product-image {
   display: flex;
   justify-content: center;
@@ -150,10 +150,9 @@
 .product-image img {
   height: 100%;
   width: auto;
-  aspect-ratio: 380 / 500;
-  object-fit: cover;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
-          mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  filter: drop-shadow(var(--sombra-producto));
 }
 .product-info {
   display: flex;

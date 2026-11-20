@@ -91,6 +91,7 @@
 
   /* --- Sombras (neutras, solo para lo que flota) --- */
   --sombra-flotante: 0 8px 24px rgba(42, 26, 13, 0.12);
+  --sombra-producto: 0 12px 16px rgba(42, 26, 13, 0.14);   /* bolsas recortadas sin fondo */
 
   /* --- Movimiento: una curva, pocas duraciones --- */
   --ease:          cubic-bezier(0.22, 1, 0.36, 1);
