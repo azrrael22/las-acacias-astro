@@ -76,3 +76,7 @@ Para el detalle completo de convenciones y patrones del proyecto, consulta [CLAU
 - [GUIA-IMAGENES-PRODUCTOS.md](GUIA-IMAGENES-PRODUCTOS.md): cómo preparar las fotos de las bolsas de café.
 - [TIENDA-README.md](TIENDA-README.md): notas históricas de la tienda. Sus precios y nombres de imagen están desfasados; la fuente de verdad es `src/data/products.ts`.
 - [Documentación oficial de Astro](https://docs.astro.build).
+
+## 🔒 Licencia
+
+Proyecto propietario: © 2026 Las Acacias Coffee Farm, todos los derechos reservados. El código, las fotos, los textos y la marca no se pueden copiar ni reutilizar sin permiso escrito. Ver [LICENSE](LICENSE).
