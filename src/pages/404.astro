@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { localizePath } from '../i18n';
+import { ui } from '../i18n/ui';
+
+// GitHub Pages sirve dist/404.html para cualquier ruta que no existe, también bajo /en/:
+// por eso la página muestra el aviso en los dos idiomas. Lleva noindex.
+const es = ui.es.error404;
+const en = ui.en.error404;
+---
+<BaseLayout title={es.title} description={es.description} noindex>
+
+  <!-- ORGANISMO: Página no encontrada -->
+  <section class="no-encontrado section-inner">
+    <div class="no-encontrado-bloque">
+      <div class="encabezado-seccion">
+        <p class="rotulo">{es.rotulo}</p>
+        <h1 class="titulo-seccion" set:html={es.titulo} />
+        <p class="entrada">{es.texto}</p>
+      </div>
+      <div class="acciones">
+        <a href={localizePath('/', 'es')} class="btn btn-primario btn-lg">
+          {es.volver}
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+
+    <div class="ornamento" aria-hidden="true"><Icon name="sprout" size={24} /></div>
+
+    <div class="no-encontrado-bloque" lang="en">
+      <div class="encabezado-seccion">
+        <h2 class="titulo-seccion" set:html={en.titulo} />
+        <p class="entrada">{en.texto}</p>
+      </div>
+      <div class="acciones">
+        <a href={localizePath('/', 'en')} class="btn btn-secundario btn-lg" hreflang="en">
+          {en.volver}
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

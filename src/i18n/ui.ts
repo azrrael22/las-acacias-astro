@@ -8,8 +8,9 @@ import type { Lang } from './index';
 
 const es = {
   meta: {
-    description: 'Finca cafetera familiar en Salento, Quindío. Vive el café desde la semilla hasta la taza con nuestros tours, cultivo artesanal y café de origen 100% manual.',
+    description: 'Coffee tour en una finca cafetera familiar a 3,5 km de Salento, Quindío. Todos los días de 9:00 a. m. a 4:00 p. m., sin reserva. Café de origen 100% manual.',
     ogLocale: 'es_CO',
+    ogImagenAlt: 'Perro de la finca mirando los cafetales en ladera de Las Acacias, en Salento',
   },
   header: {
     logoAria: 'Las Acacias Coffee Farm — inicio',
@@ -87,12 +88,22 @@ const es = {
     errorNombre: 'Por favor ingresa tu nombre',
     errorVacio: 'Tu carrito está vacío. Agrega productos antes de continuar',
   },
+  // 404.astro muestra los dos idiomas a la vez: GitHub Pages sirve el mismo 404.html para todo
+  error404: {
+    title: 'Página no encontrada · Las Acacias Coffee Farm',
+    description: 'La página que buscas no existe o cambió de dirección.',
+    rotulo: 'Error 404',
+    titulo: 'Esta página <em>no existe</em>',
+    texto: 'Puede que el enlace esté mal escrito o que la página haya cambiado de dirección.',
+    volver: 'Volver al inicio',
+  },
 };
 
 const en: typeof es = {
   meta: {
-    description: 'Family-run coffee farm in Salento, Quindío, Colombia. Experience coffee from seed to cup with our farm tours, hand-grown crop and 100% handcrafted single-origin coffee.',
+    description: 'Coffee tour at a family-run farm 3.5 km from Salento, Quindío, Colombia. Open daily 9:00 a.m. to 4:00 p.m., no booking needed. 100% handcrafted coffee.',
     ogLocale: 'en_US',
+    ogImagenAlt: 'The farm dog looking out over the hillside coffee fields of Las Acacias, in Salento',
   },
   header: {
     logoAria: 'Las Acacias Coffee Farm — home',
@@ -169,6 +180,14 @@ const en: typeof es = {
     gracias: 'Thank you!',
     errorNombre: 'Please enter your name',
     errorVacio: 'Your cart is empty. Add some products before continuing',
+  },
+  error404: {
+    title: 'Page not found · Las Acacias Coffee Farm',
+    description: "The page you're looking for doesn't exist or has moved.",
+    rotulo: 'Error 404',
+    titulo: 'This page <em>doesn’t exist</em>',
+    texto: 'The link may be mistyped, or the page may have moved.',
+    volver: 'Go to the home page',
   },
 };
 

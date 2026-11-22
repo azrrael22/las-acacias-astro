@@ -10,7 +10,7 @@ const navLinks = [
   { href: localizePath('/', lang),            label: u.header.inicio },
   //{ href: '/conocenos', label: 'Conócenos' },
   //{ href: localizePath('/#tour', lang),     label: 'Coffee Tour' },
-  { href: localizePath('/cafe-origen', lang), label: u.header.tienda },
+  { href: localizePath('/cafe-origen/', lang), label: u.header.tienda },
 ];
 
 function isActive(href: string) {
@@ -21,7 +21,7 @@ function isActive(href: string) {
 <header class="site-header">
   <a href={localizePath('/', lang)} class="logo-bloque" aria-label={u.header.logoAria}>
     <img class="logo-img img-circular"
-         src="/Imagenes/logo.png"
+         src="/Imagenes/logo-144.webp"
          width="56" height="56"
          alt={u.header.logoAlt} />
     <div class="logo-texto">

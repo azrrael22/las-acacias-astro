@@ -1,6 +1,8 @@
 ---
+import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { NEGOCIO } from '../data/contacto';
 import { LANGS, DEFAULT_LANG, alternatePath, getLangFromUrl } from '../i18n';
 import { ui } from '../i18n/ui';
 import '../styles/global.css';
@@ -8,6 +10,10 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Páginas que no deben indexarse (404): sin canonical ni hreflang */
+  noindex?: boolean;
+  /** Datos estructurados (ver src/data/schema.ts) */
+  jsonLd?: object | object[];
 }
 
 const lang = getLangFromUrl(Astro.url);
@@ -16,15 +22,18 @@ const u = ui[lang];
 const {
   title,
   description = u.meta.description,
+  noindex = false,
+  jsonLd,
 } = Astro.props;
 
-// Open Graph necesita URLs absolutas (vista previa en WhatsApp/Facebook)
-const ogImage = Astro.site ? new URL('/Imagenes/logo.png', Astro.site).href : '/Imagenes/logo.png';
-const ogUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+// Open Graph necesita URLs absolutas (vista previa en WhatsApp/Facebook).
+// og-las-acacias.jpg: 1200×630 y menos de 300 KB, para que WhatsApp la muestre
+const ogImage = Astro.site ? new URL('/Imagenes/og-las-acacias.jpg', Astro.site).href : '/Imagenes/og-las-acacias.jpg';
+const ogUrl = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const otroIdioma = lang === 'es' ? 'en' : 'es';
 
 // hreflang necesita URLs absolutas: se emite cuando `site` está definido en astro.config.mjs
-const alternas = Astro.site
+const alternas = Astro.site && !noindex
   ? LANGS.map(l => ({ lang: l, href: new URL(alternatePath(Astro.url.pathname, l), Astro.site).href }))
   : [];
 const xDefault = alternas.find(a => a.lang === DEFAULT_LANG);
@@ -36,20 +45,29 @@ const xDefault = alternas.find(a => a.lang === DEFAULT_LANG);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
+  {ogUrl && <link rel="canonical" href={ogUrl} />}
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   {alternas.map(a => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
   {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={NEGOCIO.nombre} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={u.meta.ogImagenAlt} />
   {ogUrl && <meta property="og:url" content={ogUrl} />}
   <meta property="og:locale" content={u.meta.ogLocale} />
   <meta property="og:locale:alternate" content={ui[otroIdioma].meta.ogLocale} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Fuentes servidas desde el sitio (astro.config.mjs → fonts); se precargan las del primer pintado -->
+  <Font cssVariable="--font-fraunces" preload={[{ style: 'normal' }]} />
+  <Font cssVariable="--font-figtree" preload />
+  <Font cssVariable="--font-great-vibes" />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   <!-- Revelado al hacer scroll: se activa antes del primer pintado para que no parpadee -->
   <script is:inline>
     if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

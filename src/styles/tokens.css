@@ -29,9 +29,10 @@
   --color-footer-acent:  #8fbfcc;
 
   /* --- Tipografías --- */
-  --fuente-display:  'Great Vibes', cursive;                 /* solo logotipo y firma */
-  --fuente-titulo:   'Fraunces', Georgia, serif;             /* titulares; su itálica marca el énfasis */
-  --fuente-cuerpo:   'Figtree', system-ui, sans-serif;       /* interfaz y texto */
+  /* Las --font-* las define <Font /> (astro.config.mjs → fonts) e incluyen los fallbacks */
+  --fuente-display:  var(--font-great-vibes);   /* solo logotipo y firma */
+  --fuente-titulo:   var(--font-fraunces);      /* titulares; su itálica marca el énfasis */
+  --fuente-cuerpo:   var(--font-figtree);       /* interfaz y texto */
 
   /* --- Tamaños de fuente --- */
   --fs-xs:        12px;

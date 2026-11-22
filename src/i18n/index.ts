@@ -1,7 +1,7 @@
 // ============================================
 // IDIOMAS — Las Acacias Coffee Farm
 // ============================================
-// Español en la raíz (/, /cafe-origen) e inglés bajo /en/.
+// Español en la raíz (/, /cafe-origen/) e inglés bajo /en/.
 // Módulo puro: se usa en el frontmatter (con Astro.url) y en los
 // scripts del cliente (con getDocumentLang()).
 
@@ -31,7 +31,8 @@ export function getDocumentLang(): Lang {
   return document.documentElement.lang === 'en' ? 'en' : DEFAULT_LANG;
 }
 
-/** '/cafe-origen' → '/en/cafe-origen' · '/' → '/en/' · '/#tour' → '/en/#tour' */
+/** '/cafe-origen/' → '/en/cafe-origen/' · '/' → '/en/' · '/#tour' → '/en/#tour'
+ *  Las rutas llevan siempre la barra final (trailingSlash: 'always' en astro.config.mjs) */
 export function localizePath(path: string, lang: Lang): string {
   return lang === DEFAULT_LANG ? path : `/en${path}`;
 }

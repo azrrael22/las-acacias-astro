@@ -250,6 +250,18 @@
   width: 100%;
 }
 
+/* ---- .no-encontrado (404: el mismo aviso en español y en inglés) ---- */
+.no-encontrado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+.no-encontrado-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
 /* ---- .floating-cart-btn ---- */
 .floating-cart-btn {
   position: fixed;

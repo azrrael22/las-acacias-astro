@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import { buildWhatsAppURL } from '../../data/contacto';
+import { srcsetFoto, SIZES_MITAD, SIZES_TERCIO } from '../../data/fotos';
+import { negocioJsonLd } from '../../data/schema';
 import { getLangFromUrl, langStaticPaths, localizePath } from '../../i18n';
 import { inicio } from '../../i18n/inicio';
 import { ui } from '../../i18n/ui';
@@ -18,10 +20,12 @@ const u = ui[lang];
 // El tour no se reserva: WhatsApp es para pedir información o resolver dudas
 const infoURL = buildWhatsAppURL(t.mensajes.info);
 const preguntaTourURL = buildWhatsAppURL(t.mensajes.preguntaTour);
-const tiendaURL = localizePath('/cafe-origen', lang);
+const tiendaURL = localizePath('/cafe-origen/', lang);
+// Datos estructurados del negocio (LocalBusiness + TouristAttraction) y del sitio
+const jsonLd = Astro.site ? negocioJsonLd(lang, Astro.site) : undefined;
 const mapaURL = `https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%ADo,+Colombia&daddr=Las+Acacias+Coffee+Farm,+Palestina,+Salento,+Quind%C3%ADo&hl=${lang}&output=embed`;
 ---
-<BaseLayout title={t.title}>
+<BaseLayout title={t.title} jsonLd={jsonLd}>
 
   <!-- ORGANISMO: Hero -->
   <section class="hero" id="home">
@@ -47,6 +51,8 @@ const mapaURL = `https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%A
     </div>
     <div class="hero-imagen">
       <img src="/Imagenes/Carrucel1/1.webp"
+           srcset={srcsetFoto('/Imagenes/Carrucel1/1.webp')}
+           sizes={SIZES_MITAD}
            width="1080" height="1440"
            fetchpriority="high"
            decoding="async"
@@ -77,6 +83,7 @@ const mapaURL = `https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%A
       {t.pasos.map((paso, i) => (
         <figure class="paso" data-revelar style={`--i: ${i}`}>
           <img class="paso-foto" src={paso.src} alt={paso.alt}
+               srcset={srcsetFoto(paso.src)} sizes={SIZES_TERCIO}
                width="1080" height="1440" loading="lazy" decoding="async" />
           <figcaption class="paso-pie">
             <span class="paso-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -92,6 +99,8 @@ const mapaURL = `https://maps.google.com/maps?saddr=Plaza+de+Salento,+Quind%C3%A
   <section class="coffee-tour" id="tour" aria-labelledby="tour-titulo">
     <div class="coffee-tour-imagen">
       <img src="/Imagenes/Carrucel1/2.webp"
+           srcset={srcsetFoto('/Imagenes/Carrucel1/2.webp')}
+           sizes={SIZES_MITAD}
            width="1080" height="1440"
            loading="lazy" decoding="async"
            alt={t.tour.imagenAlt} />

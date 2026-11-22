@@ -48,16 +48,17 @@ const fotos = {
   taza: '/Imagenes/Carrucel1/4.webp',
 };
 
+// Iconos de 96×96 (se muestran a 48 px)
 const iconos = {
-  caballo: '/Imagenes/Llegada/caballo_1.png',
-  jeep: '/Imagenes/Llegada/Jeep_4.png',
-  caminando: '/Imagenes/Llegada/caminando.png',
-  carro: '/Imagenes/Llegada/carro.png',
+  caballo: '/Imagenes/Llegada/caballo.webp',
+  jeep: '/Imagenes/Llegada/jeep.webp',
+  caminando: '/Imagenes/Llegada/caminando.webp',
+  carro: '/Imagenes/Llegada/carro.webp',
 };
 
 export const inicio = {
   es: {
-    title: 'Las Acacias · Coffee Farm · Salento',
+    title: 'Coffee Tour en Salento · Finca cafetera Las Acacias',
     // El tour no se reserva: WhatsApp es para pedir información o resolver dudas
     mensajes: {
       info: 'Hola, quiero más información sobre la finca Las Acacias',
@@ -154,7 +155,7 @@ export const inicio = {
   },
 
   en: {
-    title: 'Las Acacias · Coffee Farm · Salento',
+    title: 'Coffee Tour in Salento, Colombia · Las Acacias Coffee Farm',
     // The tour isn't booked: WhatsApp is for information and questions
     mensajes: {
       info: "Hi, I'd like more information about Las Acacias farm",
